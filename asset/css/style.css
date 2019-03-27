@@ -1,0 +1,135 @@
+/* ********************************* Navbar ********************************* */
+.sidenav {
+  box-shadow: 1px 1px 10px;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #eceeee;
+  opacity: -80%;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 50px;
+}
+
+.sidenav a {
+  text-decoration: none;
+  font-size: 18px;
+  color: 	#2a2a2c;
+  display: block;
+  padding-left: 15px;
+}
+
+
+.burger-bar {
+  color: white;
+  margin-left: 2%;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 30px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.img-logo {
+  width: 45px;
+  height: auto;
+}
+.img-logo-size {
+  margin-top: -30px;
+  width: 100px;
+  height: auto;
+}
+
+/* ********************************* /Navbar ********************************* */
+/* ********************************* Jam ********************************* */
+.jam {
+  font-size: 28px;
+  font-weight: bold;
+  color: rgb(44, 138, 250);
+}
+
+.icon-fa {
+  font-size: 28px;
+  color: rgb(44, 138, 250);
+}
+
+/* ********************************* Jam ********************************* */
+
+/* Pesanan Saya */
+  .pemesanan>td{
+    color: rgb(26, 123, 194);
+  }
+/* Pesanan Saya */
+
+
+/* ********************************* Footer  ********************************* */
+.page-footer {
+  color: #389ae5;
+  background-color: #f6f6f6;
+  margin-top: 80px;
+}
+
+.img-footer {
+  height: 90px;
+  position: relative;
+}
+
+hr.stripe {
+  margin-top: 10px;
+  background-color: #88897f;
+  width: 100%;
+}
+
+.text-footer a {
+  color: #aaaaaa;
+}
+
+.text-footer a:hover {
+  text-decoration: none;
+  color: #389ae5;
+}
+
+.copy {
+  color: #6794a9;
+}
+
+/* ********************************* End Footer  ********************************* */
+/* Rsponsive */
+@media only screen and (min-width: 768px) {
+  .cd-side-nav {
+    position: relative;
+    float: left;
+    width: 110px;
+    /* reset style */
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .cd-main-content .content-wrapper {
+    margin-left: 110px;
+  }
+}
+
+/* Rsponsive */
