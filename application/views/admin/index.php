@@ -14,7 +14,7 @@
           <!-- Page Heading -->
           <h1 class="h3 text-gray-800">Ruang</h1>
             <div class="text-right m-3">
-              <a href="<?= base_url('Ruang/add/') ?>" class="btn btn-primary">Tambah Ruang <i class="fas fa-plus pl-2"></i></a>
+              <a href="<?= base_url('admin/addRuang') ?>" class="btn btn-primary">Tambah Ruang <i class="fas fa-plus pl-2"></i></a>
             </div>
           <div class="card mb-3">
             <div class="row no-gutters">
@@ -46,10 +46,10 @@
 											<?= $r->status ?>
 										</td>
 										<td width="250">
-											<a href="<?= site_url('ruang/edit/'.$r->id) ?>"
+											<a href="<?= site_url('admin/editRuang/'.$r->id) ?>"
 											 class="btn btn-small text-success"><i class="fas fa-edit"></i> Edit
                      </a>
-                       <a onclick="deleteConfirm('<?= site_url('Ruang/delete/'.$r->id) ?>')" href="#!" class="btn btn-small text-danger">
+                       <a onclick="deleteConfirm('<?= site_url('admin/deleteRuang/'.$r->id) ?>')" href="#!" class="btn btn-small text-danger">
                          <i class="fas fa-trash"></i> Hapus
                        </a>
 										</td>

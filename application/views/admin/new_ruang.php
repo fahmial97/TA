@@ -7,7 +7,7 @@
 					<div class="card-body">
 
 						<!-- <form method="post" enctype="multipart/form-data" > -->
-							<?= form_open_multipart('Ruang/add');?>
+							<?= form_open_multipart('admin/addRuang');?>
 
               <div class="form-group">
                 <label for="image">Foto</label>

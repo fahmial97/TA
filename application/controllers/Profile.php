@@ -34,7 +34,7 @@ class Profile extends CI_Controller{
 
      if ($validation->run()) {
        // setting konfigurasi upload
-        $config['upload_path']    = './asset/img/ruang/';
+        $config['upload_path']    = './asset/img/profile/';
         $config['allowed_types']  = 'gif|jpg|png';
         $config['max_width']      = 2048;
         $config['max_height']     = 2048;
