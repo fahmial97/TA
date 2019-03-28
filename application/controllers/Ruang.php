@@ -67,9 +67,25 @@ class Ruang extends CI_Controller
        $validation->set_rules($tb_ruang->rules());
 
        if ($validation->run()) {
-        $tb_ruang->update($id);  //variabel $id ditambahin buat ngambil id di urlnya
-           $this->session->set_flashdata('success', 'Berhasil disimpan');
-           redirect('admin'); //selesai proses di redirect
+         // setting konfigurasi upload
+          $config['upload_path']    = './asset/img/ruang/';
+          $config['allowed_types']  = 'gif|jpg|png';
+          $config['max_width']      = 2048;
+          $config['max_height']     = 2048;
+        // load library upload
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('image')) {
+            $error = $this->upload->display_errors();
+            // menampilkan pesan error
+            $this->session->set_flashdata('error','Maaf File/Ukuran Gambar Tidak Sesuai');
+            redirect('admin'); //selesai proses di redirect
+        } else {
+            $result = $this->upload->data();
+            $tb_ruang->update($id,$result);
+            $this->session->set_flashdata('success', 'Berhasil disimpan');
+             redirect('admin'); //selesai proses di redirect
+        }
+
        }
 
        $data["tb_ruang"] = $tb_ruang->getById($id);

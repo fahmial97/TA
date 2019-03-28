@@ -1,3 +1,18 @@
+<footer class="text-center">
+  <p>copyright @2019</p>
+
+</footer>
+    </div>
+      <!-- End of Main Content -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+
 <!-- Logout Delete Confirmation-->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -16,6 +31,7 @@
     </div>
   </div>
 </div>
+
 
   <!-- Bootstrap core JavaScript-->
   <script src="<?= base_url('asset/'); ?>vendor/jquery/jquery.min.js"></script>

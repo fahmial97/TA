@@ -37,15 +37,15 @@
           </a>
               <hr class="sidebar-divider my-0">
           <li class="nav-item">
-              <a class="nav-link" href="index.html">
+              <a class="nav-link" href="<?= base_url('admin/'); ?>">
               <i class="fas fa-fw fa-tachometer-alt"></i>
               <span>Dashboard</span></a>
           </li>
               <hr class="sidebar-divider">
           <li class="nav-item">
-            <a class="nav-link" href="charts.html">
+            <a class="nav-link" href="<?= base_url('admin/mahasiswa') ?>">
               <i class="fas fa-user"></i>
-              <span>My Profile</span></a>
+              <span>Mahasiswa</span></a>
           </li>
               <hr class="sidebar-divider">
 

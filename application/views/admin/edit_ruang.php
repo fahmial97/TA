@@ -5,9 +5,7 @@
 						<a href="<?= site_url('admin/') ?>"><i class="fas fa-arrow-left"></i> Back</a>
 					</div>
 					<div class="card-body">
-
 						<form method="post" enctype="multipart/form-data" >
-
               <div class="form-group">
                 <label for="image">Foto</label>
                 <input class="form-control-file <?= form_error('image') ? 'is-invalid':'' ?>"

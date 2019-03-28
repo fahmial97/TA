@@ -28,7 +28,7 @@
                     <th>Gambar</th>
 										<th>Nomor ruang</th>
 										<th>Status</th>
-                    <th>action</th>
+                    <th>Action</th>
                     <th></th>
 									</tr>
 								</thead>
@@ -47,7 +47,7 @@
 										</td>
 										<td width="250">
 											<a href="<?= site_url('ruang/edit/'.$r->id) ?>"
-											 class="btn btn-small"><i class="fas fa-edit"></i> Edit
+											 class="btn btn-small text-success"><i class="fas fa-edit"></i> Edit
                      </a>
                        <a onclick="deleteConfirm('<?= site_url('Ruang/delete/'.$r->id) ?>')" href="#!" class="btn btn-small text-danger">
                          <i class="fas fa-trash"></i> Hapus

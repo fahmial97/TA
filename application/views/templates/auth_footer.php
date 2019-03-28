@@ -1,23 +1,4 @@
 
-      </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <div class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; 2019</span>
-          </div>
-        </div>
-      </div>
-      <!-- End of Footer -->
-
-    </div>
-    <!-- End of Content Wrapper -->
-
-  </div>
-  <!-- End of Page Wrapper -->
-
 
   <!-- Bootstrap core JavaScript-->
   <script src="<?= base_url('asset/'); ?>vendor/jquery/jquery.min.js"></script>
