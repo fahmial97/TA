@@ -19,7 +19,7 @@ class Admin extends CI_Controller
   {
 
     $data['judul'] = 'Halaman Admin';
-    $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
+    $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row();
     $data["tb_ruang"] = $this->m_ruang->getAll();
 
     $this->load->view('templates/admin_header',$data);
@@ -118,9 +118,15 @@ class Admin extends CI_Controller
   public function mahasiswa()
   {
 
+<<<<<<< HEAD
     $data['judul'] = 'List mahasiswa';
     $data['user'] = $this->profile_model->getAll();
     $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
+=======
+    $data['judul'] = 'Halaman Admin';
+    $data['all_user'] = $this->profile_model->getAll();
+    $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row();
+>>>>>>> 9e34cb4c202744aedf53b2d19d8c45fcb28a249e
 
     $this->load->view('templates/admin_header',$data);
     $this->load->view('admin/mahasiswa', $data) ;

@@ -15,6 +15,31 @@ class profile_model extends CI_Model{
 	 public $password;
 	 public $role_id;
 
+	function rules()
+    {
+        return [
+            ['field' => 'nama',
+            'label' => 'Nama',
+            'rules' => 'required'],
+
+            ['field' => 'fakultas',
+            'label' => 'Fakultas',
+            'rules' => 'required'],
+
+            ['field' => 'email',
+            'label' => 'Email',
+            'rules' => 'required'],
+
+            ['field' => 'no_telpon',
+            'label' => 'Nomer Telpon',
+            'rules' => 'required'],
+
+            ['field' => 'password',
+            'label' => 'Password',
+            'rules' => 'required'],
+        ];
+    }
+
 	function getAll()
  {
 		 return $this->db->get($this->_table)->result();

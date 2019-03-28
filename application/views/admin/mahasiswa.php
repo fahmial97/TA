@@ -16,13 +16,13 @@
 
            <tbody>
               <?php
-                foreach($user as $u):?>
+                foreach($all_user as $u):?>
                  <tr>
-                   <td><?= $u->nama ?></td>
-                   <td><?= $u->nim;?> </td>
-                   <td><?= $u->email;?> </td>
-                   <td><?= $u->fakultas;?> </td>
-                   <td><?= $u->no_telpon;?> </td>
+                   <td><?= $u->nama; ?></td>
+                   <td><?= $u->nim; ?> </td>
+                   <td><?= $u->email; ?> </td>
+                   <td><?= $u->fakultas; ?> </td>
+                   <td><?= $u->no_telpon; ?> </td>
                  </tr>
                  <?php endforeach;?>
            </tbody>
