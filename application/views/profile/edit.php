@@ -1,53 +1,48 @@
 <div class="container">
-      <form method="post" enctype="multipart/form-data" >
-        <div class="form-group">
+
+      <form method="post" enctype="multipart/form-data" action="<?= base_url('profile/editUser/'.$dataEdit->id.''); ?>">
+        <div class="form-group">  
           <label for="image">Foto</label>
-          <input class="form-control-file <?= form_error('image') ? 'is-invalid':'' ?>"
-           type="file" name="image" placeholder="" value="<?=$user->image ?>"/>
+          <input class="form-control-file"
+           type="file" name="image" placeholder="" value=""/>
           <div class="invalid-feedback">
-            <?= form_error('image') ?>
           </div>
         </div>
 
         <div class="form-group">
           <label for="no_ruang">Nama</label>
-          <input class="form-control <?= form_error('nama') ? 'is-invalid':'' ?>"
-           type="text" name="nama" value="<?=$user->nama ?>"/>
+          <input class="form-control "
+           type="text" name="nama" value="<?=$dataEdit->nama ?>"/>
           <div class="invalid-feedback">
-            <?= form_error('nama') ?>
           </div>
         </div>
 
         <div class="form-group">
           <label for="Status">Fakultas</label>
-          <input class="form-control <?= form_error('fakultas') ? 'is-invalid':'' ?>"
-           type="text" name="fakultas"  placeholder="" value="<?=$user->fakultas ?>"/>
+          <input class="form-control"
+           type="text" name="fakultas"  placeholder="" value="<?=$dataEdit->fakultas ?>"/>
           <div class="invalid-feedback">
-            <?= form_error('fakultas') ?>
           </div>
         </div>
         <div class="form-group">
           <label for="Status">Email</label>
-          <input class="form-control <?= form_error('email') ? 'is-invalid':'' ?>"
-           type="text" name="email" placeholder="" value="<?=$user->email ?>"/>
+          <input class="form-control"
+           type="text" name="email" placeholder="" value="<?=$dataEdit->email ?>"/>
           <div class="invalid-feedback">
-            <?= form_error('email') ?>
           </div>
         </div>
         <div class="form-group">
           <label for="Status">Nomor Telpon</label>
-          <input class="form-control <?= form_error('no_telpon') ? 'is-invalid':'' ?>"
-           type="number" name="no_telpon"  placeholder="" value="<?=$user->no_telpon ?>"/>
+          <input class="form-control"
+           type="number" name="no_telpon"  placeholder="" value="<?=$dataEdit->no_telpon ?>"/>
           <div class="invalid-feedback">
-            <?= form_error('no_telpon') ?>
           </div>
         </div>
         <div class="form-group">
           <label for="Status">Password</label>
-          <input class="form-control <?= form_error('password') ? 'is-invalid':'' ?>"
-           type="text" name="password" min="0" placeholder="" value="<?=$user->password ?>"/>
+          <input class="form-control "
+           type="text" name="password" min="0" placeholder="" value="<?=$dataEdit->password ?>"/>
           <div class="invalid-feedback">
-            <?= form_error('password') ?>
           </div>
         </div>
 

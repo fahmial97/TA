@@ -21,12 +21,21 @@ class Profile extends CI_Controller{
     $this->load->view('templates/footer');
   }
 
-  function edit($id)
+  function getDataEdit($id)
  {
     $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
     $data['judul'] = 'Edit Ruang';
+    $data['dataEdit'] = $this->profile_model->getById($id);
 
-     if (!isset($id)) redirect('profile/mahasiswa');
+
+    $this->load->view('templates/header', $data);
+    $this->load->view('profile/edit', $data);
+    $this->load->view('templates/footer');
+ }
+
+ public function editUser($id)
+ {
+   if (!isset($id)) redirect('profile/mahasiswa');
 
      $user = $this->profile_model;
      $validation = $this->form_validation;
@@ -34,7 +43,7 @@ class Profile extends CI_Controller{
 
      if ($validation->run()) {
        // setting konfigurasi upload
-        $config['upload_path']    = './asset/img/ruang/';
+        $config['upload_path']    = './asset/img/profile/';
         $config['allowed_types']  = 'gif|jpg|png';
         $config['max_width']      = 2048;
         $config['max_height']     = 2048;
@@ -57,11 +66,6 @@ class Profile extends CI_Controller{
 
      $data["user"] = $user->getById($id);
      if (!$data["user"]) show_404();
-
-     $this->load->view('templates/header', $data);
-     $this->load->view('profile/edit', $data);
-     $this->load->view('templates/footer');
-
  }
 
 
