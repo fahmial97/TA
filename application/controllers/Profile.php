@@ -8,6 +8,10 @@ class Profile extends CI_Controller{
     parent::__construct();
     $this->load->model('profile_model');
     $this->load->helper('url');
+
+    if (!$this->session->userdata('nim')) {
+      redirect('blocked/booking');
+    }
   }
 
   public function mahasiswa()
@@ -69,36 +73,22 @@ class Profile extends CI_Controller{
  }
 
 
-  // public function update()
-  // {
-  //   $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
-  //   $this->form_validation->set_rules('fakultas', 'Fakultas', 'required|trim');
-  //   $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
-  //     'is_unique' => 'Email Sudah pernah digunakan!'
-  //   ]);
-  //   $this->form_validation->set_rules('no_telpon', 'No_telpon', 'required|trim');
-  //   $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[5]|matches[password2]', [
-  //     'matches' => 'password tidak sama!',
-  //     'min_length' => 'password terlalu singkat!'
-  //   ]);
-  //   $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
-  //
-  //
-  // 	$data = array(
-  //     'nama' => htmlspecialchars($this->input->post('nama', true)),
-  //     'fakultas' => htmlspecialchars($this->input->post('fakultas', true)),
-  //     'email' => htmlspecialchars($this->input->post('email', true)),
-  //     'no_telpon' => htmlspecialchars($this->input->post('no_telpon', true)),
-  //     'image' => 'default.jpg',
-  //     'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-  // 	);
-  //
-  // 	$where = array(
-  // 		'nim' => $nim
-  // 	);
-  //
-  // 	$this->profile->update_data($where,$data,'user');
-  // 	redirect('profile/mahasiswa');
-  // }
+ public function ubahPassword()
+ {
+   $data['judul'] = 'My Profile';
+   $data['user'] = $this->profile_model->getAll();
+   $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
+
+   $this->form_validation->set_rules('password_ini', 'Password_ini', 'reuqired|trim');
+   $this->form_validation->set_rules('new_password1', 'New Password', 'reuqired|trim|min_length[5]|matches[new_password2]');
+   $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'reuqired|trim|min_length[5]|matches[new_password1]');
+
+
+   if ($this->form_validation->run() == false) {
+     $this->load->view('templates/header', $data);
+     $this->load->view('profile/password', $data);
+     $this->load->view('templates/footer');
+   }
+ }
 
 }

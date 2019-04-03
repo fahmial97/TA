@@ -43,5 +43,4 @@
  <p class="card-text text-right"><small class="text-muted">Segera Menuju Perpustakaan untuk mengisi Ruang</small></p>
 
 
-
 </div> <!-- /container-->

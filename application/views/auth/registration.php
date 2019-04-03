@@ -1,11 +1,15 @@
 
   <div class="container">
+    <div class="text-center pt-4" href="<?= base_url();?>">
+      <img src="<?=base_url('asset/img/logo_ruang.png') ?>"style="width:200px" alt="">
+    </div>
 
-    <div class="card o-hidden border-0 shadow-lg my-5 col-lg-7 mx-auto">
+    <div class="card o-hidden border-0 shadow-lg my-2 col-lg-7 mx-auto">
       <div class="card-body p-0">
         <!-- Nested Row within Card Body -->
         <div class="row">
           <div class="col-lg">
+
             <div class="p-5">
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">Halaman Register</h1>
@@ -42,16 +46,13 @@
                     <input type="password" class="form-control form-control-user" id="password2" name="password2" placeholder="Ulangi Password">
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-user btn-block">
+                <button type="submit" class="btn btn-success btn-user btn-block">
                   Register
                 </button>
               </form>
               <hr>
               <div class="text-center">
-                <a class="small" href="forgot-password.html">Lupa Password?</a>
-              </div>
-              <div class="text-center">
-                <a class="small" href="<?=base_url ('auth'); ?>">Sudah punya akun? Silahkan Login!</a>
+                <a class="small" href="<?=base_url ('auth'); ?>">Sudah punya akun? Login Disini!</a>
               </div>
             </div>
           </div>

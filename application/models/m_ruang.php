@@ -60,4 +60,6 @@ class m_ruang extends CI_Model{
       {
           return $this->db->delete($this->_table, ['id'=>$id]);
       }
+
+
   }

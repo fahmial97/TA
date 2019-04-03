@@ -12,58 +12,73 @@
           <?php endif; ?>
 
           <!-- Page Heading -->
-          <h1 class="h3 text-gray-800">Ruang</h1>
-            <div class="text-right m-3">
-              <a href="<?= base_url('admin/addRuang') ?>" class="btn btn-primary">Tambah Ruang <i class="fas fa-plus pl-2"></i></a>
-            </div>
-          <div class="card mb-3">
-            <div class="row no-gutters">
-              <div class="col-md-10">
-                <div class="card-body">
-                <table class="table table-responsive-sm ">
-                  <thead class="table-primary">
+          <h1 class="h3 text-gray-800">Riwayat Peminjaman</h1>
+                <table class="table table-responsive ">
+                  <thead class="bg-info text-white">
                     <?php $no = 1; ?>
 									<tr>
                     <th>#</th>
                     <th>Gambar</th>
-										<th>Nomor ruang</th>
-										<th>Status</th>
-                    <th>Action</th>
-                    <th></th>
+                    <th>No Ruang</th>
+										<th>Jam Mulai</th>
+                    <th>Jam Selesai</th>
+                    <th>Nama</th>
+                    <th>Nim</th>
+                    <th>No Telpon</th>
 									</tr>
 								</thead>
 								<tbody class="table table-hover">
-									<?php foreach ($tb_ruang as $r): ?>
+									<?php foreach ($proses_peminjaman as $pp): ?>
 									<tr>
                     <td><?= $no++; ?></td>
                     <td>
-											<img src="<?= base_url('asset/img/ruang/'.$r->image) ?>" width="200" />
-										</td>
-										<td width="150">
-											<?= $r->no_ruang ?>
+                      <img src="<?= base_url('asset/img/ruang/'.$pp->image) ?>" width="100" />
+
+                    </td>
+                    <td>
+											<?= $pp->no_ruang ?>
 										</td>
 										<td>
-											<?= $r->status ?>
+											<?= date('H:i',$pp->jam_pinjam);?>
 										</td>
-										<td width="250">
-											<a href="<?= site_url('admin/editRuang/'.$r->id) ?>"
-											 class="btn btn-small text-success"><i class="fas fa-edit"></i> Edit
-                     </a>
-                       <a onclick="deleteConfirm('<?= site_url('admin/deleteRuang/'.$r->id) ?>')" href="#!" class="btn btn-small text-danger">
-                         <i class="fas fa-trash"></i> Hapus
-                       </a>
+										<td>
+											<?= date('H:i',$pp->jam_selesai); ?>
 										</td>
+                    <td>
+                      <?= $pp->nama?> <br>
+                      <?php
+                          $data = $pp->nama_pinjam;
+                          $data = explode (",",$data);
+                          foreach ($data as $key => $value) {
+                          echo ''.$value.'<br>';
+                          }
+                        ?>
+                    </td>
+                    <td>
+                      <?= $pp->nim?> <br>
+                      <?php
+                          $data = $pp->nim_pinjam;
+                          $data = explode (",",$data);
+                          foreach ($data as $key => $value) {
+                          echo ''.$value.'<br>';
+                          }
+                        ?>
+                    </td>
+                    <td>
+                      <?= $pp->no_telpon?> <br>
+                      <?php
+                          $data = $pp->no_telpon_pinjam;
+                          $data = explode (",",$data);
+                          foreach ($data as $key => $value) {
+                          echo ''.$value.'<br>';
+                          }
+                        ?>
+                    </td>
 									</tr>
 									<?php endforeach; ?>
 
 								</tbody>
                    </table>
-
-                 </div>
-               </div>
-            </div>
-          </div>
-
         </div>
         <!-- /.container-fluid -->
 

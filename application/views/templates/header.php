@@ -14,9 +14,9 @@
 
   <body>
 
-    <nav class="navbar navbar-expand-sm navbar-dark sticky-top mb-5 text-center" style="background-color:	#0e5e8c;">
+    <nav class="navbar navbar-expand-sm navbar-dark pt-3 sticky-top mb-5 text-center" style="background-color:	#0e5e8c;">
       <div class="container">
-
+<!-- Navbar-sm -->
         <div id="mySidenav" class="sidenav d-sm-none text-left">
           <a href="javascript:void(0)" class="closebtn">&times;</a>
           <?php
@@ -34,7 +34,7 @@
            ?>
           <a class="nav-link" href="<?= base_url();?>"><i class="fas fa-home fa-fw pr-5"></i>Home<hr class="mt-0 mb-1"></a>
           <a class="nav-link" href="<?= base_url();?>ruang"><i class="fas fa-chalkboard fa-fw pr-5"></i>Ruang<hr class="mt-0 mb-1"></a>
-          <a class="nav-link" href="<?= base_url();?>pesan"><i class="fas fa-bookmark fa-fw pr-5"></i>Pesanan saya<hr class="mt-0 mb-1"></a>
+          <a class="nav-link" href="<?= base_url();?>ruang/dataBooking"><i class="fas fa-bookmark fa-fw pr-5"></i>Pesanan saya<hr class="mt-0 mb-1"></a>
           <?php
           if ($this->session->userdata('nim')) {
             echo '<a class="nav-link" href="'.base_url('auth/logout').'" data-toggle="modal" data-target="#logoutModal">
@@ -47,8 +47,15 @@
            ?>
 
         </div>
+  <!-- / Navbar-sm -->
+
+
+
+  <!-- / Navbar-Medium -->
           <span class="d-sm-none burger-bar" id="btnRes"><i class="fas fa-bars"></i></span>
-          <a class="navbar-brand" href="<?= base_url();?>">Ruang Diskusi</a>
+          <a class="navbar-brand" href="<?= base_url();?>">
+            <img src="<?=base_url('asset/img/logo_ruang.png') ?>" class="logo_ruang" alt="">
+          </a>
           <div class="d-md-none">
             <?php
               if (!$this->session->userdata('nim')) {
@@ -62,14 +69,14 @@
           <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link" href="<?= base_url();?>">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="<?= base_url();?>ruang">Ruang</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="<?= base_url();?>pesan">Pesanan saya</a>
+              <li class="nav-item <?php if($this->uri->segment(2) == 'data-booking'){echo "active";} ?>">
+                <a class="nav-link" href="<?= base_url();?>ruang/data-booking">Pesanan saya</a>
               </li>
             </ul>
             <?php
@@ -87,6 +94,10 @@
                       <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                       Profile
                     </a>
+                    <a class="dropdown-item" href="'.base_url('profile/ubahPassword').'">
+                      <i class="fas fa-lock-open fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Ubah Password
+                    </a>
                     <hr class="sidebar-divider">
                     <a class="dropdown-item" href="'.base_url('auth/logout').'" data-toggle="modal" data-target="#logoutModal">
                       <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -101,6 +112,7 @@
             }
              ?>
           </div>
+  <!-- / Navbar-Medium -->
 
 
       </div>   <!-- /Container -->
@@ -124,3 +136,16 @@
         </div>
       </div>
     </div>
+
+    <script>
+      $("ul > li").hover(
+          function() {
+              $(this).addClass('active');
+          }, function() {
+              $( this ).removeClass('active');
+          }
+      );
+      $( "ul > li" ).click(function(){
+              $(this).toggleClass('active');
+      });
+</script>

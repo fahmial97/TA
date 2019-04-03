@@ -86,5 +86,46 @@ $(document).ready(function() {
   /** Jam RealTime */
 
 
+  $("#btn-tambah-form").click(function(){
+
+    let data = parseInt($('[name="no-data"]').val())
+    let no = data + 1
+    $('[name="no-data"]').val(no)
+
+    if (data < 5) {
+      $(".insert-form").append(
+        `  <div class="row mb-3">
+            <h6 class="pl-3 pt-md-2"> Data ${no} :</h6>
+            <div class="col-sm mb-2">
+              <input type="text" class="form-control form-control-user" id="fullname" name="nama_pinjam[]" placeholder="Nama" required>
+
+            </div>
+            <div class="col-sm mb-2">
+              <input type="number" class="form-control form-control-user" id="nim" name="nim_pinjam[]" placeholder="NIM" required>
+
+            </div>
+            <div class="col-sm mb-2">
+              <input type="number" class="form-control form-control-user" id="no_telp" name="no_telpon_pinjam[]" placeholder="Nomor Telepon">
+            </div>
+          </div>
+        `);
+    }else{
+    }
+
+    if (data == 4) {
+      $('.list-btn-hidden').addClass('d-none')
+    }
+});
+
+    $('#btn-reset-form').click(function() {
+      $('.insert-form').empty()
+      $('[name="no-data"]').val('3')
+      $('.list-btn-hidden').removeClass('d-none')
+
+      if (data == 3) {
+        $('.list-reset').addClass('d-none')
+      }
+    })
+
 
 });

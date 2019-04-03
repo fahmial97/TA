@@ -27,31 +27,37 @@
     <div id="wrapper">
 
       <!-- Sidebar -->
-      <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion " id="accordionSidebar">
           <!-- Sidebar - Brand -->
-          <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-            <div class="sidebar-brand-icon rotate-n-15">
-              <i class="fas fa-person-booth"></i>
-            </div>
-            <div class="sidebar-brand-text mx-3">Admin Page </div>
-          </a>
+          <div class="sidebar-brand d-flex align-items-center justify-content-center">
+            <a class="sidebar-brand-text mx-3" href="<?= base_url();?>">
+              <img src="<?=base_url('asset/img/logo_ruang.png') ?>" style="width: 140px;"alt="">
+            </a>
+
+          </div>
               <hr class="sidebar-divider my-0">
           <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('admin/ruang'); ?>">
+              <i class="fas fa-fw fa-chair"></i>
+              <span>Ruang</span></a>
+          </li>
+            <hr class="sidebar-divider my-0">
+          <li class="nav-item">
               <a class="nav-link" href="<?= base_url('admin/'); ?>">
-              <i class="fas fa-fw fa-tachometer-alt"></i>
-              <span>Dashboard</span></a>
+              <i class="fas fa-fw fa-bookmark"></i>
+              <span>Peminjaman Ruang</span></a>
           </li>
               <hr class="sidebar-divider">
           <li class="nav-item">
             <a class="nav-link" href="<?= base_url('admin/mahasiswa') ?>">
-              <i class="fas fa-user"></i>
+              <i class="fas fa-fw fa-users"></i>
               <span>Mahasiswa</span></a>
           </li>
               <hr class="sidebar-divider">
 
           <li class="nav-item">
             <a class="nav-link" href="<?= base_url('auth/logout'); ?>">
-              <i class="fas fa-sign-out-alt"></i>
+              <i class="fas fa-fw fa-sign-out-alt"></i>
               <span>Logout</span></a>
           </li>
           <hr class="sidebar-divider d-none d-md-block">
@@ -70,7 +76,11 @@
             </button>
 
             <!-- Topbar Navbar -->
+            <div class=" text-left" style="color:rgb(4, 112, 158);">
+            <i class="fas fa-users-cog pr-2"></i>Admin Page
+            </div>
             <ul class="navbar-nav ml-auto">
+
               <div class="topbar-divider d-none d-sm-block"></div>
               <!-- Nav Item - User Information -->
               <li class="nav-item dropdown no-arrow">

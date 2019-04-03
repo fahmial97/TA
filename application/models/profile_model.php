@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class profile_model extends CI_Model{
 
+
 	private $_table = "user";
 
 	 public $id;
@@ -20,23 +21,19 @@ class profile_model extends CI_Model{
         return [
             ['field' => 'nama',
             'label' => 'Nama',
-            'rules' => 'required'],
+            'rules' => 'required|trim'],
 
             ['field' => 'fakultas',
             'label' => 'Fakultas',
-            'rules' => 'required'],
+            'rules' => 'required|trim'],
 
             ['field' => 'email',
             'label' => 'Email',
-            'rules' => 'required'],
+            'rules' => 'required|trim'],
 
             ['field' => 'no_telpon',
             'label' => 'Nomer Telpon',
-            'rules' => 'required'],
-
-            ['field' => 'password',
-            'label' => 'Password',
-            'rules' => 'required'],
+            'rules' => 'required|trim'],
         ];
     }
 
@@ -57,10 +54,14 @@ class profile_model extends CI_Model{
 				'nama' => $this->input->post('nama'),
 				'fakultas' => $this->input->post('fakultas'),
 				'email' => $this->input->post('email'),
-				'no_telpon' => $this->input->post('no_telpon'),
-				'password' => $this->input->post('password')
+				'no_telpon' => $this->input->post('no_telpon')
 				];
 
 			$this->db->update($this->_table, $data, ['id'=>$id]);
+	}
+
+	public function delete($id)
+	{
+			return $this->db->delete($this->_table, ['id'=>$id]);
 	}
 }

@@ -23,6 +23,13 @@
 }
 
 
+
+.logo_ruang{
+  width: 150px;
+ margin-top: -20px;
+}
+
+
 .burger-bar {
   color: white;
   margin-left: 2%;
@@ -53,13 +60,13 @@
 }
 
 .img-logo {
-  width: 45px;
+  width: 50px;
   height: auto;
 }
 .img-logo-size {
   margin-top: -30px;
-  width: 100px;
-  height: auto;
+  max-width: 200px;
+  max-height: 100px;
 }
 
 /* ********************************* /Navbar ********************************* */

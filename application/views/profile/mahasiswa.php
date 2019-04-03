@@ -15,7 +15,7 @@
   <div class="card mb-3" style="max-width:1000px">
     <div class="row no-gutters">
       <div class="col-md-4">
-        <img src="<?= base_url('asset/img/profile/') . $user['image']; ?>" class="card-img">
+        <img src="<?= base_url('asset/img/profile/') . $user['image']; ?>" class="card-img" style="width:300px;">
       </div>
       <div class="col-md-8">
         <div class="card-body">
@@ -37,13 +37,11 @@
                    <td>Email</td>
                    <td><?= $user['email']; ?></td>
                  </tr>
-                 <tr>
-                   <td>Password</td>
-                   <td><?= $user['password'] ?></td>
-                 </tr>
            </table>
            <div class="text-right">
-             <a class="btn btn-primary" href="<?= base_url('')?>profile/getDataEdit/<?= $user['id'] ?>" role="button">edit</a>
+             <a class="btn btn-outline-info btn-sm" href="<?= base_url('')?>profile/getDataEdit/<?= $user['id'] ?>" role="button">
+               Edit <i class="fas fa-user-edit pl-2"></i>
+             </a>
            </div>
           <p class="card-text"><small class="text-muted">Bergabung Sejak <?= date('d F Y', $user['date_created']); ?></small></p>
 

@@ -1,4 +1,4 @@
-<footer class="text-center">
+<footer class="text-center mt-5 pt-5">
   <p>copyright @2019</p>
 
 </footer>
@@ -13,7 +13,7 @@
   <!-- End of Page Wrapper -->
 
 
-<!-- Logout Delete Confirmation-->
+<!-- Modal Delete Ruang -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -32,6 +32,24 @@
   </div>
 </div>
 
+<!-- Modal Delete Mahasiswa -->
+<div class="modal fade" id="deleteModalMahasiswa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">Data Mahasiswa yang dihapus tidak akan bisa dikembalikan.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a id="btn-deleteMahasiswa" class="btn btn-danger" href="#">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!-- Bootstrap core JavaScript-->
   <script src="<?= base_url('asset/'); ?>vendor/jquery/jquery.min.js"></script>

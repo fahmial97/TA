@@ -2,7 +2,6 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-
 class Admin extends CI_Controller
 {
 
@@ -12,10 +11,27 @@ class Admin extends CI_Controller
     parent::__construct();
     $this->load->model("m_ruang");
     $this->load->model("profile_model");
+    $this->load->model("m_pinjam");
     $this->load->library('form_validation');
-  }
 
+    if (!$this->session->userdata('nim')) {
+      redirect('auth/loginadmin');
+    }
+  }
   public function index()
+  {
+
+    $data['judul'] = 'Halaman Admin';
+    $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row();
+    $data["proses_peminjaman"] = $this->m_pinjam->getAllPinjam();
+
+    $this->load->view('templates/admin_header',$data);
+    $this->load->view('admin/index', $data) ;
+    $this->load->view('templates/admin_footer');
+
+}
+// ======================== Ruang =======================
+  public function ruang()
   {
 
     $data['judul'] = 'Halaman Admin';
@@ -23,14 +39,14 @@ class Admin extends CI_Controller
     $data["tb_ruang"] = $this->m_ruang->getAll();
 
     $this->load->view('templates/admin_header',$data);
-    $this->load->view('admin/index', $data) ;
+    $this->load->view('admin/ruang', $data) ;
     $this->load->view('templates/admin_footer');
 
 }
 
   function addRuang()
   {
-     $data['user']  = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
+     $data['user']  = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row();
      $data['judul'] = 'Tambah Ruang';
 
       $tb_ruang = $this->m_ruang;
@@ -65,7 +81,7 @@ class Admin extends CI_Controller
 
    function editRuang($id)
   {
-     $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
+     $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row();
      $data['judul'] = 'Edit Ruang';
 
       if (!isset($id)) redirect('admin');
@@ -115,22 +131,31 @@ class Admin extends CI_Controller
 
   }
 
+
+  // ==================================================================================================
+  // ========================================== Mahasiswa ============================================
+  // ==================================================================================================
+
   public function mahasiswa()
   {
-
-<<<<<<< HEAD
-    $data['judul'] = 'List mahasiswa';
-    $data['user'] = $this->profile_model->getAll();
-    $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
-=======
-    $data['judul'] = 'Halaman Admin';
+    $data['judul'] = 'List Mahasiswa';
     $data['all_user'] = $this->profile_model->getAll();
     $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row();
->>>>>>> 9e34cb4c202744aedf53b2d19d8c45fcb28a249e
+
 
     $this->load->view('templates/admin_header',$data);
     $this->load->view('admin/mahasiswa', $data) ;
     $this->load->view('templates/admin_footer');
   }
+
+  function deleteMahasiswa($id)
+ {
+     if (!isset($id)) show_404();
+
+     $this->profile_model->delete($id);
+     $this->session->set_flashdata('success', 'Data Berhasil Mahasiswa  Dihapus');
+      redirect('admin/mahasiswa');
+
+ }
 
 }
