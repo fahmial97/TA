@@ -8,18 +8,13 @@ class m_ruang extends CI_Model{
    public $id;
    public $image = "default.jpg";
    public $no_ruang;
-   public $status;
+   public $id_status;
 
  function rules()
     {
         return [
             ['field' => 'no_ruang',
             'label' => 'Nomor ruang',
-            'rules' => 'required'],
-
-
-            ['field' => 'status',
-            'label' => 'Status',
             'rules' => 'required']
         ];
     }
@@ -35,11 +30,17 @@ class m_ruang extends CI_Model{
           return $this->db->get_where($this->_table, ["id" => $id])->row();
       }
 
+
+      public function getAllStatus()
+      {
+        return $this->db->get('status')->result_array();
+      }
+
       public function save($result)
       {
           $post = $this->input->post();
           $this->no_ruang = $post["no_ruang"];
-          $this->status = $post["status"];
+          $this->id_status = $post["status"];
           $this->image = $result['file_name'];
           $this->db->insert($this->_table, $this);
       }
@@ -50,7 +51,7 @@ class m_ruang extends CI_Model{
           $data = [
             'image' => $result['file_name'],
             'no_ruang' => $this->input->post('no_ruang'),
-            'status' => $this->input->post('status')
+            'id_status' => $this->input->post('id_status')
             ];
 
           $this->db->update($this->_table, $data, ['id'=>$id]);

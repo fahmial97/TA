@@ -28,13 +28,6 @@
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
                       <?= form_error('password','<small class="text-danger">', '</small>'); ?>
-
-                    </div>
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
-                      </div>
                     </div>
                     <button type="submit" class="btn btn-success btn-user btn-block">
                       Login

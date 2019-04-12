@@ -1,3 +1,13 @@
+/* Font */
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Font */
+
+
 /* ********************************* Navbar ********************************* */
 .sidenav {
   box-shadow: 1px 1px 10px;
@@ -17,16 +27,16 @@
 .sidenav a {
   text-decoration: none;
   font-size: 18px;
-  color: 	#2a2a2c;
+  color: #2a2a2c;
   display: block;
   padding-left: 15px;
 }
 
 
 
-.logo_ruang{
+.logo_ruang {
   width: 150px;
- margin-top: -20px;
+  margin-top: -20px;
 }
 
 
@@ -63,6 +73,7 @@
   width: 50px;
   height: auto;
 }
+
 .img-logo-size {
   margin-top: -30px;
   max-width: 200px;
@@ -85,11 +96,11 @@
 /* ********************************* Jam ********************************* */
 
 /* Pesanan Saya */
-  .pemesanan>td{
-    color: rgb(26, 123, 194);
-  }
-/* Pesanan Saya */
+.pemesanan>td {
+  color: rgb(26, 123, 194);
+}
 
+/* Pesanan Saya */
 
 /* ********************************* Footer  ********************************* */
 .page-footer {
@@ -123,6 +134,8 @@ hr.stripe {
 }
 
 /* ********************************* End Footer  ********************************* */
+
+
 /* Rsponsive */
 @media only screen and (min-width: 768px) {
   .cd-side-nav {

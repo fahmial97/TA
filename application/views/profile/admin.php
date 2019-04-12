@@ -11,39 +11,43 @@
     </div>
   <?php endif; ?>
   <!-- Page Heading -->
-  <h1 class="h3 mb-4 text-gray-800">Profile</h1>
+  <h1 class="h3 mb-4 text-gray-800">My Profile</h1>
   <div class="card mb-3" style="max-width:1000px">
     <div class="row no-gutters">
       <div class="col-md-4">
-        <img src="<?= base_url('asset/img/profile/') . $user['image']; ?>" class="card-img" style="width:300px;">
+        <img src="<?= base_url('asset/img/profile/') . $admin['image']; ?>" class="card-img" style="width:300px;">
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title"><?= $user['nama']; ?></h5>
-          <table class="table table-responsive-sm">
+          <table class="table table-responsive-sm table-striped">
             <tr>
-              <td>NIM</td>
-              <td><?= $user['nim']; ?></td>
+              <td>Nama</td>
+              <td><?= $admin['nama']; ?></td>
             </tr>
             <tr>
-              <td>Fakultas</td>
-              <td><?= $user['fakultas']; ?></td>
+              <td>NIP</td>
+              <td><?= $admin['nip']; ?></td>
             </tr>
             <tr>
               <td>No.Telpon</td>
-              <td><?= $user['no_telpon']; ?></td>
+              <td><?= $admin['no_telpon']; ?></td>
             </tr>
             <tr>
               <td>Email</td>
-              <td><?= $user['email']; ?></td>
+              <td><?= $admin['email']; ?></td>
             </tr>
+            <tr>
+              <td>Jabatan</td>
+              <td><?= $admin['role_id']; ?></td>
+            </tr>
+
           </table>
           <div class="text-right">
-            <a class="btn btn-outline-info btn-sm" href="<?= base_url('') ?>profile/getDataEdit/<?= $user['id'] ?>" role="button">
+            <a class="btn btn-outline-info btn-sm" href="<?= base_url('') ?>profile/getDataEditAdmin/<?= $admin['id'] ?>" role="button">
               Edit <i class="fas fa-user-edit pl-2"></i>
             </a>
           </div>
-          <p class="card-text"><small class="text-muted">Bergabung Sejak <?= date('d F Y', $user['date_created']); ?></small></p>
+          <p class="card-text"><small class="text-muted">Bergabung Sejak <?= date('d F Y H:I', $admin['date_created']); ?></small></p>
 
         </div>
       </div>

@@ -11,15 +11,17 @@
           </div>
           <?php endif; ?>
 
+
           <!-- Page Heading -->
           <h1 class="h3 text-gray-800">Riwayat Peminjaman</h1>
-                <table class="table table-responsive ">
+                <table class="table table-responsive table-striped">
                   <thead class="bg-info text-white">
                     <?php $no = 1; ?>
 									<tr>
                     <th>#</th>
                     <th>Gambar</th>
                     <th>No Ruang</th>
+                    <th>Tanggal</th>
 										<th>Jam Mulai</th>
                     <th>Jam Selesai</th>
                     <th>Nama</th>
@@ -31,6 +33,7 @@
 									<?php foreach ($proses_peminjaman as $pp): ?>
 									<tr>
                     <td><?= $no++; ?></td>
+
                     <td>
                       <img src="<?= base_url('asset/img/ruang/'.$pp->image) ?>" width="100" />
 
@@ -38,11 +41,15 @@
                     <td>
 											<?= $pp->no_ruang ?>
 										</td>
+                    <td>
+                      <?= date('l', $pp->jam_pinjam).'<br>'; ?>
+                      <?= date('d-m-y', $pp->jam_pinjam);?>
+                    </td>
 										<td>
-											<?= date('H:i',$pp->jam_pinjam);?>
+											<?= date('H : i',$pp->jam_pinjam);?>
 										</td>
 										<td>
-											<?= date('H:i',$pp->jam_selesai); ?>
+											<?= date('H : i',$pp->jam_selesai); ?>
 										</td>
                     <td>
                       <?= $pp->nama?> <br>
@@ -74,8 +81,14 @@
                           }
                         ?>
                     </td>
+                    <td>
+                      <a onclick="deleteConfirm('<?= site_url('ruang/deleteDataBooking/'.$pp->id) ?>')" href="#!" class="btn btn-small text-danger">
+                        <i class="fas fa-trash"></i> Hapus
+                      </a>
+                    </td>
 									</tr>
 									<?php endforeach; ?>
+
 
 								</tbody>
                    </table>
@@ -84,7 +97,7 @@
 
         <script>
           function deleteConfirm(url){
-          	$('#btn-delete').attr('href', url);
-          	$('#deleteModal').modal();
+          	$('#btn-deletePeminjaman').attr('href', url);
+          	$('#deletePeminjaman').modal();
           }
         </script>

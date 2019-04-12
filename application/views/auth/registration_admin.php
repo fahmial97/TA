@@ -15,10 +15,10 @@
                 <h1 class="h4 text-gray-900 mb-4">Register Admin</h1>
               </div>
 
-              <form class="user" method="post" action="<?=base_url('auth/registration'); ?>">
+              <form class="user" method="post" action="<?=base_url('auth/registrationAdmin'); ?>">
                 <div class="form-group">
-                  <input type="number" class="form-control form-control-user" id="nim" name="nim" placeholder="NIM" value="<?= set_value('nim'); ?>">
-                  <?= form_error('nim','<small class="text-danger">', '</small>'); ?>
+                  <input type="number" class="form-control form-control-user" id="nip" name="nip" placeholder="NIP" value="<?= set_value('nip'); ?>">
+                  <?= form_error('nip','<small class="text-danger">', '</small>'); ?>
                 </div>
 
                   <div class="form-group">
@@ -30,20 +30,16 @@
                   <?= form_error('email','<small class="text-danger">', '</small>'); ?>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-user" id="fakultas" name="fakultas" placeholder="Fakultas" value="<?= set_value('fakultas'); ?>">
-                  <?= form_error('fakultas','<small class="text-danger">', '</small>'); ?>
-                </div>
-                <div class="form-group">
                   <input type="number" class="form-control form-control-user" id="no_telp" name="no_telpon" placeholder="Nomor Telepon" value="<?= set_value('no_telpon'); ?>">
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="password" class="form-control form-control-user" id="password1" name="password1" placeholder="Password">
-                    <?= form_error('password1','<small class="text-danger">', '</small>'); ?>
+                    <input type="password" class="form-control form-control-user" id="password_admin1" name="password_admin1" placeholder="Password">
+                    <?= form_error('password_admin1','<small class="text-danger">', '</small>'); ?>
 
                   </div>
                   <div class="col-sm-6">
-                    <input type="password" class="form-control form-control-user" id="password2" name="password2" placeholder="Ulangi Password">
+                    <input type="password" class="form-control form-control-user" id="password_admin2" name="password_admin2" placeholder="Ulangi Password">
                   </div>
                 </div>
                 <button type="submit" class="btn btn-success btn-user btn-block">
@@ -51,9 +47,6 @@
                 </button>
               </form>
               <hr>
-              <div class="text-center">
-                <a class="small" href="<?=base_url ('auth/loginadmin'); ?>">Sudah punya akun? Login Disini!</a>
-              </div>
             </div>
           </div>
         </div>

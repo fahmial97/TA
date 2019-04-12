@@ -29,12 +29,15 @@
 							</div>
 
 							<div class="form-group">
-								<label for="Status">Status</label>
-								<input class="form-control <?= form_error('status') ? 'is-invalid':'' ?>"
-								 type="number" name="status" min="0" />
-								<div class="invalid-feedback">
-									<?= form_error('status') ?>
-								</div>
+								<label for="status">Status</label>
+								<select class="custom-select" name="status" id="status">
+									<option selected>Pilih Status</option>
+									<?php foreach ($status as $s): ?>
+										<option value="<?= $s['id'] ?>"><?= $s['nama_status'] ?></option>
+									<?php endforeach; ?>
+								</select>
+
+								<?= form_error('status') ?>
 							</div>
 
               <div class="text-right">

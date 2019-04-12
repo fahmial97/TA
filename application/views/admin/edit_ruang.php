@@ -4,6 +4,7 @@
 					<div class="card-header text-right">
 						<a href="<?= site_url('admin/') ?>"><i class="fas fa-arrow-left"></i> Back</a>
 					</div>
+
 					<div class="card-body">
 						<form method="post" enctype="multipart/form-data" >
               <div class="form-group">
@@ -25,12 +26,15 @@
 							</div>
 
 							<div class="form-group">
-								<label for="Status">Status</label>
-								<input class="form-control <?= form_error('status') ? 'is-invalid':'' ?>"
-								 type="number" name="status" min="0" placeholder="" value="<?=$tb_ruang->status ?>"/>
-								<div class="invalid-feedback">
-									<?= form_error('status') ?>
-								</div>
+								<label for="status">Status</label>
+								<select class="custom-select" name="status" id="status">
+									<option selected><?=$tb_ruang->status ?></option>
+									<?php foreach ($status as $s): ?>
+										<option value="<?= $s['id'] ?>"><?= $s['nama_status'] ?></option>
+									<?php endforeach; ?>
+								</select>
+
+								<?= form_error('status') ?>
 							</div>
 
               <div class="text-right">

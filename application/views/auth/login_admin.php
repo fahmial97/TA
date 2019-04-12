@@ -1,9 +1,6 @@
-
   <div class="container ">
-
     <!-- Outer Row -->
     <div class="row justify-content-center">
-
       <div class="col-lg-6 mb-5">
         <div class="text-center pt-4" href="<?= base_url();?>">
           <img src="<?=base_url('asset/img/logo_ruang.png') ?>"style="width:200px" alt="">
@@ -19,7 +16,7 @@
                   </div>
                   <?= $this->session->flashdata('message'); ?>
 
-                  <form class="user" method="post" action="<?= base_url('auth'); ?>">
+                  <form class="user" method="post" action="<?= base_url('auth/loginAdmin'); ?>">
                     <div class="form-group">   <!-- aria-describedby="emailHelp" -->
                       <input type="number" class="form-control form-control-user" id="nip" name="nip"  placeholder="NIP" value="<?= set_value('nip'); ?>">
                       <?= form_error('nip','<small class="text-danger">', '</small>'); ?>
@@ -28,16 +25,12 @@
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
                       <?= form_error('password','<small class="text-danger">', '</small>'); ?>
-
                     </div>
-                    <button type="submit" class="btn btn-success btn-user btn-block">
-                      Login
-                    </button>
+                      <button type="submit" class="btn btn-success btn-user btn-block">
+                        Login
+                      </button>
                   </form>
                   <hr>
-                  <div class="text-center">
-                    <a class="small" href="<?= base_url ('auth/registrationAdmin');?>">Belum Punya akun? Daftar Disini!</a>
-                  </div>
                 </div>
               </div>
             </div>

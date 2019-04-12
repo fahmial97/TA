@@ -39,7 +39,7 @@
                     <?= $r->no_ruang ?>
                   </td>
                   <td>
-                    <?= $r->status ?>
+                    <?= $r->id_status ?>
                   </td>
                   <td width="250">
                     <a href="<?= site_url('admin/editRuang/'.$r->id) ?>"
@@ -58,8 +58,8 @@
       <!-- /.container-fluid -->
 
       <script>
-        function deleteConfirm(url){
-          $('#btn-delete').attr('href', url);
-          $('#deleteModal').modal();
-        }
+      function deleteConfirm(url){
+        $('#btn-delete').attr('href', url);
+        $('#deleteModal').modal();
+      }
       </script>

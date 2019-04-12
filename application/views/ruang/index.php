@@ -25,7 +25,7 @@
         <div class="col-md-7 text-center text-md-left">
           <div class="card-body ">
             <h4 class="card-title border-bottom "> <?= $r->no_ruang ?></h4>
-            <p class="card-text"><?= $r->status ?></p>
+            <div class="badge p-2 m-2 <?= statusHelpers($r->id_status)['style'] ?>"><?= statusHelpers($r->id_status)['status'] ?></div>
             <div class="text-md-right pt-md-5 mt-md-5 pl-md-5 ">
               <a class="btn btn-info" href=" <?= base_url('ruang/booking/')?><?= $r->id ?>">
                <i class="far fa-bookmark pr-2"></i> Pinjam
