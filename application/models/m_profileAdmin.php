@@ -40,12 +40,54 @@ class m_profileAdmin extends CI_Model
 
     function getAll()
     {
-        //   $this->db->select('admin'.'role_id','user_role.'.'id');
-        //   $this->db->from('admin');
-        // $this->db->join('user_role', 'user_role.id = admin.role_id');
-
-        return $this->db->get($this->_table)->result();
+        return $this->db->get($this->_table)->result_array();
     }
+
+    public function getAllStatus()
+    {
+      return $this->db->get('status')->result_array();
+    }
+
+    public function save($result)
+    {
+      $this->form_validation->set_rules('nip', 'Nip', 'required|trim|is_unique[admin.nip]', [
+        'is_unique' => 'Nip Sudah pernah digunakan!'
+      ]);
+      $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
+      $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[admin.email]', [
+        'is_unique' => 'Email Sudah pernah digunakan!'
+      ]);
+      $this->form_validation->set_rules('no_telpon', 'No_telpon', 'required|trim');
+      $this->form_validation->set_rules('password_admin1', 'Password', 'required|trim|min_length[5]|matches[password_admin2]', [
+        'matches' => 'password tidak sama!',
+        'min_length' => 'password terlalu singkat!'
+      ]);
+      $this->form_validation->set_rules('password_admin2', 'Password', 'required|trim|matches[password_admin1]');
+
+
+      if ($this->form_validation->run() ==  false) {
+        $data['judul'] = 'Registration';
+        $this->load->view('templates/auth_header', $data);
+        $this->load->view('auth/registration_Admin');
+        $this->load->view('templates/auth_footer');
+      } else {
+        $data  = [
+          'nip' => htmlspecialchars($this->input->post('nip', true)),
+          'nama' => htmlspecialchars($this->input->post('nama', true)),
+          'email' => htmlspecialchars($this->input->post('email', true)),
+          'no_telpon' => htmlspecialchars($this->input->post('no_telpon', true)),
+          'password' => md5($this->input->post('password_admin1')),
+          'role_id' => 1,
+          'date_created' => time(),
+        ];
+
+        $this->db->insert('admin', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+                                        Register Berhasil! Silahkan Login</div>');
+        redirect('admin/listadmin');
+      }
+    }
+
     function getById($id)
     {
         return $this->db->get_where($this->_table, ["id" => $id])->row();

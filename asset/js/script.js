@@ -10,6 +10,46 @@ $(document).ready(function () {
   });
   // ============================== /Sidebar Nav ==============================
 
+  // ============================== Navbar User ==============================
+  // Hide Header on on scroll down
+  // var didScroll;
+  // var lastScrollTop = 0;
+  // var delta = 5;
+  // var navbarHeight = $('nav').outerHeight();
+  //
+  // $(window).scroll(function(event){
+  //     didScroll = true;
+  // });
+  //
+  // setInterval(function() {
+  //     if (didScroll) {
+  //         hasScrolled();
+  //         didScroll = false;
+  //     }
+  // }, 100);
+  //
+  // function hasScrolled() {
+  //     var st = $(this).scrollTop();
+  //     // Make sure they scroll more than delta
+  //     if(Math.abs(lastScrollTop - st) <= delta)
+  //         return;
+  //
+  //     // If they scrolled down and are past the navbar, add class .nav-up.
+  //     // This is necessary so you never see what is "behind" the navbar.
+  //     if (st > lastScrollTop && st > navbarHeight){
+  //         // Scroll Down
+  //         $('nav').removeClass('nav-down').addClass('nav-up');
+  //     } else {
+  //         // Scroll Up
+  //         if(st + $(window).height() < $(document).height()) {
+  //             $('nav').removeClass('nav-up').addClass('nav-down');
+  //         }
+  //     }
+  //
+  //     lastScrollTop = st;
+  // }
+  // ============================== /Navbar User ==============================
+
 
 
   // =================================== deadline ==============================
@@ -24,6 +64,7 @@ $(document).ready(function () {
   let detik = parseInt(cariDetik * 60)
 
   function changeclock() {
+    $('.timer p').removeClass('d-none')
     if (detik == '0' && menit == '0' && jam == '0') {
       clearInterval();
       $('.timer p').text(`Done`).removeClass('text-danger')
@@ -102,6 +143,29 @@ $(document).ready(function () {
     $('.list-reset').addClass('d-none')
   })
   // ============================== Button Reset Data ==============================
+
+  $('.aksi-td').on('click', '.UpdateModal', function (e) {
+    e.preventDefault();
+
+    let href = $(this).attr('href');
+
+    if (href.indexOf('selesai') !== -1) {
+      $('#ModalStatus #judulModal').html('Ruangan selesai digunakan?');
+      $('#ModalStatus .modal-body').html('Klik Selesai jika Peminjaman telah selesai');
+      $('#ModalStatus #btn-StatusModal').html('Selesai');
+    } else if (href.indexOf('cancel') !== -1) {
+      $('#ModalStatus #judulModal').html('Yakin Ingin membatalkan Peminjaman?');
+      $('#ModalStatus .modal-body').html('Klik ok jika peminjaman dibatalkan');
+      $('#ModalStatus #btn-StatusModal').html('OK');
+    } else {
+      $('#ModalStatus #judulModal').html('Yakin Ingin konfirmasi');
+      $('#ModalStatus .modal-body').html('Klik ok jika ingin konfirmasi');
+      $('#ModalStatus #btn-StatusModal').html('OK');
+    }
+
+    $('#ModalStatus').modal('show');
+    $('#ModalStatus #btn-StatusModal').attr('href', href);
+  })
 
 
 });

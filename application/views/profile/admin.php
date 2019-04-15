@@ -38,7 +38,9 @@
             </tr>
             <tr>
               <td>Jabatan</td>
-              <td><?= $admin['role_id']; ?></td>
+              <td>
+                <?= getRoleHelpers($admin['role_id'])['role'] ?>
+              </td>
             </tr>
 
           </table>

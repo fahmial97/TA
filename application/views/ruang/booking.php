@@ -9,9 +9,9 @@
         <div class="col-md-8">
           <div class="card-body text-center">
             <h5 class="card-title text-center"><?= $dataBooking->no_ruang ?></h5>
-              <div class="mb-4 p-2 badge <?= statusHelpers($dataBooking->id_status)['style'] ?>">
-                <?= statusHelpers($dataBooking->id_status)['status'] ?>
-              </div>
+            <div class="mb-4 p-2 badge <?= statusHelpers($dataBooking->id_status)['style'] ?>">
+              <?= statusHelpers($dataBooking->id_status)['status'] ?>
+            </div>
             <input type="hidden" name="id" value="<?= $dataBooking->id ?>">
             <input type="hidden" name="id_user" value="<?= $user['id'] ?>">
 

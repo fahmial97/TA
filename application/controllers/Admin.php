@@ -12,6 +12,8 @@ class Admin extends CI_Controller
     $this->load->model("m_ruang");
     $this->load->model("profile_model");
     $this->load->model("m_pinjam");
+    $this->load->model("m_profileAdmin");
+
     $this->load->library('form_validation');
 
     if (!$this->session->userdata('nip')) {
@@ -130,6 +132,56 @@ class Admin extends CI_Controller
 
 
   // ==================================================================================================
+  public function admin()
+  {
+    $data['judul'] = 'List Mahasiswa';
+    $data['all_admin'] = $this->m_profileAdmin->getAll();
+    $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
+
+
+    $this->load->view('templates/admin_header', $data);
+    $this->load->view('admin/listAdmin', $data);
+    $this->load->view('templates/admin_footer');
+  }
+
+  function addAdmin()
+  {
+    $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
+    $data['judul'] = 'Tambah Admin';
+    $data['status'] = $this->m_profileAdmin->getAllStatus();
+
+    $admin = $this->m_profileAdmin;
+    $validation = $this->form_validation;
+    $validation->set_rules($admin->rules());
+
+    if ($validation->run()) {
+      // setting konfigurasi upload
+      $config['upload_path']    = './asset/img/ruang/';
+      $config['allowed_types']  = 'gif|jpg|png';
+      $config['max_width']      = 2048;
+      $config['max_height']     = 2048;
+      // load library upload
+      $this->load->library('upload', $config);
+      if (!$this->upload->do_upload('image')) {
+        $error = $this->upload->display_errors();
+        // menampilkan pesan error
+        $this->session->set_flashdata('error', 'Maaf Gambar Tidak Sesuai');
+        redirect('admin/listAdmin'); //selesai proses di redirect
+      } else {
+        $result = $this->upload->data();
+        $admin->save($result);
+        $this->session->set_flashdata('success', 'Admin Berhasil Ditambahkan');
+        redirect('admin/listAdmin'); //selesai proses di redirect
+      }
+    }
+
+    $this->load->view('templates/admin_header', $data);
+    $this->load->view("admin/new_admin");
+    $this->load->view('templates/admin_footer');
+  }
+
+
+
   // ========================================== Mahasiswa ============================================
   // ==================================================================================================
 
@@ -138,7 +190,6 @@ class Admin extends CI_Controller
     $data['judul'] = 'List Mahasiswa';
     $data['all_user'] = $this->profile_model->getAll();
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
-
 
     $this->load->view('templates/admin_header', $data);
     $this->load->view('admin/mahasiswa', $data);

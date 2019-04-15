@@ -9,16 +9,29 @@ body {
 
 
 /* ********************************* Navbar ********************************* */
+
+/* nav {
+    position: fixed;
+    top: 0;
+    transition: top 0.2s ease-in-out;
+    width: 100%;
+}
+
+.nav-up {
+    top: -100px;
+} */
+
+
 .sidenav {
   box-shadow: 1px 1px 10px;
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 1;
+  z-index: 999;
   top: 0;
   left: 0;
   background-color: #eceeee;
-  opacity: -80%;
+  opacity: 1;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 50px;

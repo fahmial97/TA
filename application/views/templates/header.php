@@ -16,8 +16,7 @@
 </head>
 
 <body>
-
-  <nav class="navbar navbar-expand-sm navbar-dark pt-3 sticky-top mb-5 text-center" style="background-color:	#0e5e8c;">
+  <nav class="navbar navbar-expand-sm navbar-dark pt-3 mb-5 text-center" style="background-color:	#0e5e8c;">
     <div class="container">
       <!-- Navbar-sm -->
       <div id="mySidenav" class="sidenav d-sm-none text-left">

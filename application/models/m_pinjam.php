@@ -8,11 +8,11 @@ class m_pinjam extends CI_Model
 
   public function getAllPinjam()
   {
-    $this->db->join('user', 'user.id = proses_peminjaman.id_user');
-    $this->db->join('tb_ruang', 'tb_ruang.id = proses_peminjaman.id_ruang');
-    $this->db->join('status', 'status.id = proses_peminjaman.id_status');
+    // $this->db->join('user', 'user.id = proses_peminjaman.id_user');
+    // $this->db->join('tb_ruang', 'tb_ruang.id = proses_peminjaman.id_ruang');
+    // $this->db->join('status', 'status.id = proses_peminjaman.id_status');
 
-    $this->db->order_by('proses_peminjaman.id', 'desc');
+    $this->db->order_by('id', 'desc');
     return  $this->db->get($this->_table)->result();
   }
 

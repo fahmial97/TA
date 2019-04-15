@@ -19,3 +19,15 @@ function statusHelpers($status)
     'status' => $status['nama_status']
   ];
 }
+
+function getUserHelpers($userId)
+{
+  $ci = get_instance();
+  return $ci->db->get_where('user', ['id' => $userId])->row_array();
+}
+
+function getRoleHelpers($RoleId)
+{
+  $ci = get_instance();
+  return $ci->db->get_where('user_role', ['id' => $RoleId])->row_array();
+}

@@ -26,8 +26,6 @@
 
           }
            ?>
-
-
              <hr class=" d-none d-md-block">
 
         </div>
@@ -44,7 +42,6 @@
   </div>
 </div>
 
-
   <div class="container text-center py-3" >
     <h1 class="d-none d-md-block">About</h1>
     <h4 class="d-block d-md-none">About</h4>    <hr>
@@ -52,5 +49,4 @@
        adalah sebuah aplikasi berbasis website yang dapat lihat askfasfnaf asf asf asf afasfaef fsege rger ergerg ergerg
      </p>
     <a class="btn btn-primary  btn-sm text-center" href="<?= base_url()?>ruang" role="button">Lihat Ruang</a>
-
   </div>

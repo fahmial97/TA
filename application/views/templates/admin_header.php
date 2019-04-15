@@ -35,6 +35,11 @@
         </a>
 
       </div>
+      <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('Validasi/index'); ?>">
+          <i class="fas fa-fw fa-chair"></i>
+          <span>Pesanan Masuk</span></a>
+      </li>
       <hr class="sidebar-divider my-0">
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('admin/ruang'); ?>">
@@ -44,14 +49,20 @@
       <hr class="sidebar-divider my-0">
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('admin/'); ?>">
-          <i class="fas fa-fw fa-bookmark"></i>
-          <span>Peminjaman Ruang</span></a>
+          <i class="fas fa-fw fa-history"></i>
+          <span>History Peminjaman</span></a>
       </li>
       <hr class="sidebar-divider">
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('admin/mahasiswa') ?>">
           <i class="fas fa-fw fa-users"></i>
           <span>Mahasiswa</span></a>
+      </li>
+      <hr class="sidebar-divider">
+      <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('admin/admin') ?>">
+          <i class="fas fa-fw fa-user-cog"></i>
+          <span>Admin</span></a>
       </li>
       <hr class="sidebar-divider">
 

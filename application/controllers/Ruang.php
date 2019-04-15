@@ -38,15 +38,23 @@ class Ruang extends CI_Controller
 
   public function bookingRuang()
   {
-    $data['judul'] = 'Ruang Pesanan';
-    $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
-
     $tb_ruang = $this->m_pinjam;
-    $tb_ruang->prosesPinjam();
 
-    $this->session->set_flashdata('success', 'Berhasil Meminjam Ruangan, <a href="' . base_url('ruang/dataBooking') . '">Lihat Disini</a>
- ');
-    redirect('ruang');
+    //validasi jam buka jam tutup
+    $waktuBuka = "08:00";
+    $waktuTutup = "16:00";
+    $jam_pinjam = time();
+    $datePinjam = date('H:i', strtotime('+2 hours', $jam_pinjam));
+
+    if ($datePinjam > $waktuBuka && $datePinjam < $waktuTutup) {
+      $tb_ruang->prosesPinjam();
+
+      $this->session->set_flashdata('success', 'Berhasil Meminjam Ruangan, <a href="' . base_url('ruang/dataBooking') . '">Lihat Disini</a>');
+      redirect('ruang');
+    } else {
+      $this->session->set_flashdata('error', 'Gagal meminjam ruangan, waktu peminjaman sudah habis');
+      redirect('ruang');
+    }
   }
 
   public function dataBooking()
