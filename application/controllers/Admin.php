@@ -13,19 +13,59 @@ class Admin extends CI_Controller
     $this->load->model("profile_model");
     $this->load->model("m_pinjam");
     $this->load->model("m_profileAdmin");
+    // $this->load->helper("url");
 
+    $this->load->library('pagination');
     $this->load->library('form_validation');
 
     if (!$this->session->userdata('nip')) {
       redirect('auth/loginadmin');
     }
   }
-  public function index()
+  public function index($offset = 0)
   {
+    $dataPinjam = $this->db->get('proses_peminjaman');
+
+    $config['base_url'] = base_url() . 'admin/index';
+    $config['total_rows'] = $dataPinjam->num_rows();
+    $config['per_page'] = 10;
+
+    // Config Pagination Bootstrap
+    $config['attributes'] = ['class' => 'page-link'];
+
+    $config['full_tag_open'] = '<ul class="pagination">';
+    $config['full_tag_close'] = '</ul>';
+
+    $config['first_link'] = 'First Page';
+    $config['first_tag_open'] = '<li class="page-item">';
+    $config['first_tag_close'] = '</li>';
+
+    $config['last_link'] = 'Last Page';
+    $config['last_tag_open'] = '<li class="page-item">';
+    $config['last_tag_close'] = '</li>';
+
+    $config['next_link'] = '&raquo';
+    $config['next_tag_open'] = '<li class="page-item">';
+    $config['next_tag_close'] = '</li>';
+
+    $config['prev_link'] = '&laquo';
+    $config['prev_tag_open'] = '<li class="page-item">';
+    $config['prev_tag_close'] = '</li>';
+
+    $config['cur_tag_open'] = '<li class="page-item active"><a href="#" class="page-link">';
+    $config['cur_tag_close'] = '</a></li>';
+
+    $config['num_tag_open'] = '<li class="page-item">';
+    $config['num_tag_close'] = '</li>';
+
+
+    $this->pagination->initialize($config);
+    $data['page'] = $this->pagination->create_links();
+    $data['offset'] = $offset;
 
     $data['judul'] = 'Halaman Admin';
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
-    $data["proses_peminjaman"] = $this->m_pinjam->getAllPinjam();
+    $data["proses_peminjaman"] = $this->m_pinjam->getAllHistory($config['per_page'], $offset);
 
     $this->load->view('templates/admin_header', $data);
     $this->load->view('admin/index', $data);
@@ -37,7 +77,7 @@ class Admin extends CI_Controller
 
     $data['judul'] = 'Halaman Admin';
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
-    $data["tb_ruang"] = $this->m_ruang->getAll();
+    $data["tb_ruang"] = $this->m_ruang->getAllruang();
 
     $this->load->view('templates/admin_header', $data);
     $this->load->view('admin/ruang', $data);
@@ -130,11 +170,10 @@ class Admin extends CI_Controller
     redirect('admin');
   }
 
-
   // ==================================================================================================
   public function admin()
   {
-    $data['judul'] = 'List Mahasiswa';
+    $data['judul'] = 'List Admin';
     $data['all_admin'] = $this->m_profileAdmin->getAll();
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
 
@@ -166,12 +205,12 @@ class Admin extends CI_Controller
         $error = $this->upload->display_errors();
         // menampilkan pesan error
         $this->session->set_flashdata('error', 'Maaf Gambar Tidak Sesuai');
-        redirect('admin/listAdmin'); //selesai proses di redirect
+        redirect('admin/Admin'); //selesai proses di redirect
       } else {
         $result = $this->upload->data();
         $admin->save($result);
         $this->session->set_flashdata('success', 'Admin Berhasil Ditambahkan');
-        redirect('admin/listAdmin'); //selesai proses di redirect
+        redirect('admin/Admin'); //selesai proses di redirect
       }
     }
 
@@ -180,6 +219,14 @@ class Admin extends CI_Controller
     $this->load->view('templates/admin_footer');
   }
 
+  function deleteADmin($id)
+  {
+    if (!isset($id)) show_404();
+
+    $this->m_profileAdmin->delete($id);
+    $this->session->set_flashdata('success', 'Data Berhasil Mahasiswa  Dihapus');
+    redirect('admin/listAdmin');
+  }
 
 
   // ========================================== Mahasiswa ============================================

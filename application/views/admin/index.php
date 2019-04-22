@@ -16,7 +16,7 @@
     <h1 class="h3 text-gray-800">History Peminjaman</h1>
     <table class="table table-responsive table-striped">
       <thead class="bg-info text-white">
-        <?php $no = 1; ?>
+        <?php  ?>
         <tr>
           <th>#</th>
           <th>Gambar</th>
@@ -31,7 +31,8 @@
         </tr>
       </thead>
       <tbody class="table table-hover">
-        <?php foreach ($proses_peminjaman as $pp) : ?>
+        <?php $no = $offset + 1;
+        foreach ($proses_peminjaman as $pp) : ?>
           <tr>
             <td><?= $no++; ?></td>
 
@@ -108,6 +109,9 @@
 
       </tbody>
     </table>
+    <div class="justify-content-center d-flex">
+      <?php echo $page; ?>
+    </div>
   </div>
   <!-- /.container-fluid -->
 

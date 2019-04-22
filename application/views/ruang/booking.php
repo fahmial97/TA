@@ -1,6 +1,10 @@
 <div class="container">
   <h4 class="text-center m-3 m-sm-5 ">Masukkan Data Peminjam</h4>
-  <form method="post" enctype="multipart/form-data" action="<?= base_url('ruang/bookingRuang'); ?>">
+  <form method="post" enctype="multipart/form-data" action="<?php if ($dataBooking->id_status == 1) {
+                                                              echo base_url('ruang/bookingRuang');
+                                                            } else {
+                                                              echo base_url('ruang/pesanRuang');
+                                                            } ?>">
     <div class="card mb-3">
       <div class="row no-gutters">
         <div class="col-md-4">
@@ -9,11 +13,12 @@
         <div class="col-md-8">
           <div class="card-body text-center">
             <h5 class="card-title text-center"><?= $dataBooking->no_ruang ?></h5>
-            <div class="mb-4 p-2 badge <?= statusHelpers($dataBooking->id_status)['style'] ?>">
+            <div class="btn btn-sm btn-<?= statusHelpers($dataBooking->id_status)['style'] ?> mb-3">
               <?= statusHelpers($dataBooking->id_status)['status'] ?>
             </div>
             <input type="hidden" name="id" value="<?= $dataBooking->id ?>">
             <input type="hidden" name="id_user" value="<?= $user['id'] ?>">
+            <input type="hidden" name="id_status" value="<?= $dataBooking->id_status ?>">
 
             <div class="row mb-3">
               <h6 class="pl-3 pt-md-2">Data 1 :</h6>
@@ -68,10 +73,16 @@
                 <button type="button" id="btn-reset-form" class="btn btn-danger btn-sm"><i class="fas fa-minus-square pr-1"></i>Reset Data</button>
               </div>
             </div>
-
-            <div class="text-right mt-3">
-              <input type="submit" class="btn btn-success" value="Pinjam">
-            </div>
+            <?php if ($dataBooking->id_status == 1) {
+              echo '<div class="text-right mt-3">
+                    <input type="submit" class="btn btn-success" value="Pinjam">
+                    </div>';
+            } else {
+              echo '<div class="text-right mt-3">
+               
+                    <input type="submit" class="btn btn-success" value="Pesan">
+                    </div>';
+            } ?>
 
             <input type="hidden" id="jumlah-form" value="2">
 

@@ -21,11 +21,37 @@ class m_ruang extends CI_Model
       ]
     ];
   }
-
+  function getALLruang()
+  {
+    return $this->db->get_where($this->_table)->result();
+  }
 
   function getAll()
   {
-    return $this->db->get($this->_table)->result();
+    $tersedia = $this->db->get_where($this->_table, ['id_status' => 1])->result();
+    $sedangDigunakan = $this->db->get_where($this->_table, ['id_status' => 3])->result();
+
+    if (count($tersedia) > 0) {
+      return $tersedia;
+    } else if (count($sedangDigunakan) > 0) {
+      $this->db->select_min('id');
+      $db_sedang = $this->db->get_where('proses_peminjaman', ['id_status' => 3, 'status_booking' => 2])->row_array();
+      $db_data = $this->db->get_where('proses_peminjaman', ['id' => $db_sedang['id']])->row_array()['id_ruang'];
+
+      if ($db_sedang['id'] != null) {
+        return $this->db->get_where($this->_table, ['id' => $db_data])->result();
+      } else {
+        // tampilkan semua tabel yg statusnya dipinjam/dipesan
+        return $sedangDigunakan;
+      }
+    } else {
+      // jika tinggal proses
+      $this->db->select_min('id');
+      $db_sedang = $this->db->get_where('proses_peminjaman', ['id_status' => 5])->row_array()['id'];
+      $db_data = $this->db->get_where('proses_peminjaman', ['id' => $db_sedang])->result();
+
+      return $db_data;
+    }
   }
 
   function getById($id)

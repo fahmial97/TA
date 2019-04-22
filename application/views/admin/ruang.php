@@ -39,7 +39,7 @@
             <?= $r->no_ruang ?>
           </td>
           <td>
-            <?= $r->id_status ?>
+            <div class="mb-2 btn btn-sm btn-<?= statusHelpers($r->id_status)['style'] ?>"><?= statusHelpers($r->id_status)['status'] ?></div>
           </td>
           <td width="250">
             <a href="<?= site_url('admin/editRuang/' . $r->id) ?>" class="btn btn-small text-success"><i class="fas fa-edit"></i> Edit

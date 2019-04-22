@@ -1,9 +1,9 @@
 <!-- Begin Page Content -->
 <div class="container">
-  <?php if ($this->session->flashdata('success')): ?>
-  <div class="alert alert-success" role="alert">
-    <?= $this->session->flashdata('success'); ?>
-  </div>
+  <?php if ($this->session->flashdata('success')) : ?>
+    <div class="alert alert-success" role="alert">
+      <?= $this->session->flashdata('success'); ?>
+    </div>
   <?php endif; ?>
   <!-- Page Heading -->
   <div class="row pb-3">
@@ -16,39 +16,39 @@
   </div>
 
   <table class="table table-responsive-sm table-striped ">
-      <thead class="bg-info text-white">
-        <?php $no = 1; ?>
+    <thead class="bg-info text-white">
+      <?php $no = 1; ?>
+      <tr>
+        <td>#</td>
+        <td>Foto</td>
+        <td>Nama</td>
+        <td>NIM</td>
+        <td>Email</td>
+        <td>No. Telpon</td>
+        <td>Role Id</td>
+        <td>Aksi</td>
+      </tr>
+    </thead>
+    <tbody class="">
+      <?php
+      foreach ($all_admin as $a) : ?>
         <tr>
-          <td>#</td>
-          <td>Foto</td>
-          <td>Nama</td>
-          <td>NIM</td>
-          <td>Email</td>
-          <td>No. Telpon</td>
-          <td>Role Id</td>
-          <td>Aksi</td>
+          <td><?= $no++; ?></td>
+          <td> <img src="<?= base_url('asset/img/profile/' . $a['image']) ?>" width="100" /></td>
+          <td><?= $a['nama']; ?></td>
+          <td><?= $a['nip']; ?> </td>
+          <td><?= $a['email']; ?> </td>
+          <td><?= $a['no_telpon']; ?> </td>
+          <td><?= getRoleHelpers($a['role_id'])['role'] ?></td>
+          <td>
+            <a onclick="deleteConfirm('<?= site_url('admin/deleteadmin/' . $a['id']) ?>')" href="#!" class="btn btn-small text-danger">
+              <i class="fas fa-trash"></i> Hapus
+            </a>
+          </td>
         </tr>
-      </thead>
-           <tbody class="">
-              <?php
-                foreach($all_admin as $a):?>
-                 <tr>
-                   <td><?= $no++; ?></td>
-                   <td>	<img src="<?= base_url('asset/img/profile/'.$a['image']) ?>" width="100" /></td>
-                   <td><?= $a['nama']; ?></td>
-                   <td><?= $a['nip']; ?> </td>
-                   <td><?= $a['email']; ?> </td>
-                   <td><?= $a['no_telpon']; ?> </td>
-                   <td><?= getRoleHelpers($a['role_id'])['role'] ?></td>
-                   <td>
-                     <a onclick="deleteConfirm('<?= site_url('admin/deleteMahasiswa/'.$a['id']) ?>')" href="#!" class="btn btn-small text-danger">
-                       <i class="fas fa-trash"></i> Hapus
-                     </a>
-                   </td>
-                 </tr>
-                 <?php endforeach;?>
-           </tbody>
-     </table>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
 
 
 </div>
@@ -64,7 +64,7 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="modal-body">Data Mahasiswa yang dihapus tidak akan bisa dikembalikan.</div>
+      <div class="modal-body">Data Admin yang dihapus tidak akan bisa dikembalikan.</div>
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
         <a id="btn-deleteAdmin" class="btn btn-danger" href="#">Delete</a>
@@ -74,7 +74,7 @@
 </div>
 
 <script>
-  function deleteConfirm(url){
+  function deleteConfirm(url) {
     $('#btn-deleteAdmin').attr('href', url);
     $('#deleteModalAdmin').modal();
   }

@@ -31,3 +31,16 @@ function getRoleHelpers($RoleId)
   $ci = get_instance();
   return $ci->db->get_where('user_role', ['id' => $RoleId])->row_array();
 }
+
+function getDataHitungMundur($id)
+{
+  //ambil data waktu
+  $ci = get_instance();
+  $cari_waktu = $ci->db->get_where('proses_peminjaman', ['id_ruang' => $id, 'id_status' => 2])->row_array();
+
+  if ($cari_waktu != null) {
+    return $cari_waktu['jam_selesai'];
+  } else {
+    return $ci->db->get_where('proses_peminjaman', ['id_ruang' => $id, 'id_status' => 3])->row_array()['jam_selesai'];
+  }
+}

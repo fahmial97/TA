@@ -37,8 +37,8 @@
       </div>
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('Validasi/index'); ?>">
-          <i class="fas fa-fw fa-chair"></i>
-          <span>Pesanan Masuk</span></a>
+          <i class="fas fa-vote-yea"></i>
+          <span>Peminjaman Ruang</span></a>
       </li>
       <hr class="sidebar-divider my-0">
       <li class="nav-item">
