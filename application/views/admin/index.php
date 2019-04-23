@@ -27,6 +27,7 @@
           <th style="width:150px;">Nama</th>
           <th style="width:150px;">Nim</th>
           <th>No Telpon</th>
+          <th>Status</th>
           <th>Aksi</th>
         </tr>
       </thead>
@@ -37,7 +38,7 @@
             <td><?= $no++; ?></td>
 
             <td>
-              <img src="<?= base_url('asset/img/ruang/' . prosesHelpers($pp->id_ruang)['gambar']) ?>" width="60" />
+              <img src="<?= base_url('asset/img/ruang/' . prosesHelpers($pp->id_ruang)['gambar']) ?>" width="50" />
 
             </td>
             <td>
@@ -98,6 +99,11 @@
               ?>
             </td>
             <td>
+              <div class="text-<?= statusHelpers($pp->id_status)['style'] ?>">
+                <?= statusHelpers($pp->id_status)['status'] ?>
+              </div>
+            </td>
+            <td>
               <a onclick="deleteConfirm('<?= site_url('ruang/deleteDataBooking/' . $pp->id) ?>')" href="#!" class="btn btn-small text-danger">
                 <i class="fas fa-trash"></i> Hapus
               </a>
@@ -105,7 +111,6 @@
             </td>
           </tr>
         <?php endforeach; ?>
-
 
       </tbody>
     </table>
