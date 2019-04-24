@@ -42,7 +42,7 @@ class Ruang extends CI_Controller
     $jam_pinjam = time();
     $datePinjam = date('H:i', strtotime('+2 hours', $jam_pinjam));
 
-    $pinjamRabu = date('d', strtotime('mon'));
+    $pinjamRabu = date('d', strtotime('tue'));
     $hariIni = date('d', time());
 
     if ($hariIni == $pinjamRabu) {
@@ -93,7 +93,7 @@ class Ruang extends CI_Controller
     $jam_pinjam = time();
     $datePinjam = date('H:i', strtotime('+2 hours', $jam_pinjam));
 
-    $pinjamRabu = date('d', strtotime('mon'));
+    $pinjamRabu = date('d', strtotime('tue'));
     $hariIni = date('d', time());
 
     if ($hariIni == $pinjamRabu) {
