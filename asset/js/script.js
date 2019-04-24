@@ -53,21 +53,21 @@ $(document).ready(function () {
 
 
   // =================================== deadline ==============================
-  let valid = $('.timer p').text()
+  let valid = $('.timer p').eq(0).text()
   let eliminasi = valid.substr(0, 1)
   let cariJam = (valid / 60 / 60).toString()
-  let jam = cariJam.split('.')[0]
   let cariMenit = '0' + cariJam.toString().substr(cariJam.toString().indexOf("."))
   let cariArray = (cariMenit * 60).toString()
-  let menit = cariArray.split('.')[0]
   let cariDetik = '0.' + cariArray.split('.')[1]
+  let jam = cariJam.split('.')[0]
+  let menit = cariArray.split('.')[0]
   let detik = parseInt(cariDetik * 60)
 
   function changeclock() {
-    $('.timer p').removeClass('d-none')
+    $('.timer p').eq(0).removeClass('d-none')
     if (detik == '0' && menit == '0' && jam == '0') {
       clearInterval();
-      $('.timer p').text(`Done`).removeClass('text-danger')
+      $('.timer p').eq(0).text(`Done`).removeClass('text-danger')
     } else {
       if (eliminasi !== '-') {
         detik--;
@@ -91,7 +91,7 @@ $(document).ready(function () {
           }
         }
 
-        $('.timer p').text(`${jam} : ${menit} : ${detik}`)
+        $('.timer p').eq(0).text(`${jam} : ${menit} : ${detik}`)
 
       }
     }
@@ -100,6 +100,8 @@ $(document).ready(function () {
   setInterval(changeclock, 1000)
 
   // ============================== deadline ==============================
+
+
 
 
   // ============================== Button Tambah Data ==============================
