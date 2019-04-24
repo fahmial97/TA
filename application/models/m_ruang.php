@@ -41,8 +41,14 @@ class m_ruang extends CI_Model
       if ($db_sedang['id'] != null) {
         return $this->db->get_where($this->_table, ['id' => $db_data])->result();
       } else {
-        // tampilkan semua tabel yg statusnya dipinjam/dipesan
-        return $sedangDigunakan;
+        $db_proses = $this->db->get_where('proses_peminjaman', ['id_status' => 5])->result();
+
+        if (count($db_proses) > 0) {
+          return $db_proses;
+        } else {
+          // tampilkan semua tabel yg statusnya dipinjam/dipesan
+          return $sedangDigunakan;
+        }
       }
     } else {
       // jika tinggal proses

@@ -53,51 +53,58 @@ $(document).ready(function () {
 
 
   // =================================== deadline ==============================
-  let valid = $('.timer p').eq(0).text()
-  let eliminasi = valid.substr(0, 1)
-  let cariJam = (valid / 60 / 60).toString()
-  let cariMenit = '0' + cariJam.toString().substr(cariJam.toString().indexOf("."))
-  let cariArray = (cariMenit * 60).toString()
-  let cariDetik = '0.' + cariArray.split('.')[1]
-  let jam = cariJam.split('.')[0]
-  let menit = cariArray.split('.')[0]
-  let detik = parseInt(cariDetik * 60)
+  $('.timer p').each((el) => {
+    let timer = $('.timer p')[el]
+    valid = $(timer).text()
 
-  function changeclock() {
-    $('.timer p').eq(0).removeClass('d-none')
-    if (detik == '0' && menit == '0' && jam == '0') {
-      clearInterval();
-      $('.timer p').eq(0).text(`Done`).removeClass('text-danger')
-    } else {
-      if (eliminasi !== '-') {
-        detik--;
-        if (detik < 0) {
-          detik = 59;
-          menit--;
+    let eliminasi = valid.substr(0, 1)
+    let cariJam = (valid / 60 / 60).toString()
+    let cariMenit = '0' + cariJam.toString().substr(cariJam.toString().indexOf("."))
+    let cariArray = (cariMenit * 60).toString()
+    let cariDetik = '0.' + cariArray.split('.')[1]
+    let jam = cariJam.split('.')[0]
+    let menit = cariArray.split('.')[0]
+    let detik = parseInt(cariDetik * 60)
 
-          if (menit < 0) {
-            menit = 59
-            jam--;
-            if (jam < 0) {
+    function changeclock() {
+      $(timer).removeClass('d-none')
+      if (detik == '0' && menit == '0' && jam == '0') {
+        clearInterval();
+        $(timer).text(`Done`).removeClass('text-danger')
+      } else {
+        if (eliminasi !== '-') {
+          detik--;
+          if (detik < 0) {
+            detik = 59;
+            menit--;
 
+            if (menit < 0) {
+              menit = 59
               jam--;
+              if (jam < 0) {
+
+                jam--;
+              }
             }
           }
-        }
 
-        if (jam < 1) {
-          if (menit < 6) {
-            $('.timer p').addClass('text-danger')
+          if (jam < 1) {
+            if (menit < 6) {
+              $('.timer p').addClass('text-danger')
+            }
           }
+
+          $(timer).text(`${jam} : ${menit} : ${detik}`)
+
         }
-
-        $('.timer p').eq(0).text(`${jam} : ${menit} : ${detik}`)
-
       }
     }
-  }
-  // changeclock()
-  setInterval(changeclock, 1000)
+    // changeclock()
+    setInterval(changeclock, 1000)
+  })
+
+
+
 
   // ============================== deadline ==============================
 

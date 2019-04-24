@@ -46,6 +46,7 @@
       <?php } else { ?>
         <div class="card mb-4 shadow">
           <div class="row no-gutters">
+
             <div class="col-md-3">
               <img class="card-img-top" src="<?= base_url('asset/img/ruang/' . prosesHelpers($r->id_ruang)['gambar']) ?>" max_width="500" />
             </div>
@@ -56,22 +57,22 @@
                 <h6 class="timer ">
                   <?php
                   $deadline = $r->jam_pinjam;
-                  $tampil =  $deadline + 600 - time();
+                  $tampil =  $deadline + 3000 - time();
                   if ($tampil > 0) {
-                    echo '<b>Waktu Tunggu</b>';
+                    echo '<b>Sisa Waktu Konfirmasi Peminjaman Ruangan</b>';
                     echo '<p class="d-none">  ' . $tampil . '</p>';
                   }
                   ?>
                 </h6>
-                <div class="text-md-right pt-md-5 pl-md-5 ">
-                </div>
               </div>
             </div>
-
           </div>
         </div>
+        <!-- <h6 class="text-center">Ruang Diatas adalah ruang dengan Waktu Tunggu Tercepat</h6> -->
+
       <?php } ?>
     <?php endforeach; ?>
+
     <br class="d-sm-block">
 
   </div>

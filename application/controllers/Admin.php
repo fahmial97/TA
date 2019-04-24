@@ -83,6 +83,12 @@ class Admin extends CI_Controller
     $this->load->view('admin/ruang', $data);
     $this->load->view('templates/admin_footer');
   }
+  function bukaRuang()
+  { }
+
+  function TutupRuang()
+  { }
+
 
   function addRuang()
   {
@@ -169,6 +175,7 @@ class Admin extends CI_Controller
     $this->session->set_flashdata('success', 'Berhasil Dihapus');
     redirect('admin');
   }
+
 
   // ==================================================================================================
   public function admin()
