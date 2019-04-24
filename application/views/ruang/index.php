@@ -34,7 +34,7 @@
                   ?>
                 </div>
                 <div class="text-md-right pt-md-5 pl-md-5 ">
-                  <a class="btn btn-info" href=" <?= base_url('ruang/booking/') ?><?= $r->id ?>">
+                  <a class="btn btn-info" href=" <?= base_url('ruang/booking/') ?><?= encrypt_url($r->id) ?>">
                     <i class="far fa-bookmark pr-2"></i> Pinjam
                   </a>
                 </div>

@@ -56,7 +56,8 @@ class m_ruang extends CI_Model
 
   function getById($id)
   {
-    return $this->db->get_where($this->_table, ["id" => $id])->row();
+    $decrypt = decrypt_url($id);
+    return $this->db->get_where($this->_table, ["id" => $decrypt])->row();
   }
 
 

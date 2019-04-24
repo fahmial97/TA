@@ -61,9 +61,9 @@ class Ruang extends CI_Controller
     // validasi waktu peminjaman
     if ($datePinjam > "08:00" && $datePinjam < $jamTutup) {
 
-      // $getDataUser = $tb_ruang->getDataUser();
+      $getDataUser = $tb_ruang->getDataUser();
 
-      // if ($getDataUser == 0) {
+      if ($getDataUser == 0) {
       //jika tidak ada data yang aktif di dalam table maka proses pemesanan dilanjutkan
       $stats_ruang = $tb_ruang->statusRuang();
       $id_ruang = $this->db->get_where('proses_peminjaman', ['id_ruang' => $stats_ruang->id, 'id_status' => 5])->row();
@@ -79,9 +79,9 @@ class Ruang extends CI_Controller
       } else {
         return $this->session->set_flashdata('error', 'Gagal Meminjam Ruang');
       }
-      // } else {
-      //   return $this->session->set_flashdata('error', 'Gagal Meminjam Ruang, Anda sedang dalam Proses Peminjaman, <a href="' . base_url('ruang/dataBooking') . '">Lihat Disini</a>');
-      // }
+      } else {
+        return $this->session->set_flashdata('error', 'Gagal Meminjam Ruang, Anda sedang dalam Proses Peminjaman, <a href="' . base_url('ruang/dataBooking') . '">Lihat Disini</a>');
+      }
     } else {
       return $this->session->set_flashdata('error', 'Gagal meminjam ruangan, waktu peminjaman sudah habis');
     }
@@ -111,9 +111,9 @@ class Ruang extends CI_Controller
 
     if ($datePinjam > "08:00" && $datePinjam < $jamTutup) {
 
-      // $getDataUser = $tb_ruang->getDataUser();
+      $getDataUser = $tb_ruang->getDataUser();
 
-      // if ($getDataUser == 0) {
+      if ($getDataUser == 0) {
 
       $stats_ruang = $tb_ruang->statsRuang();
       $id_ruang = $this->db->get_where('proses_peminjaman', ['id_ruang' => $stats_ruang->id_ruang, 'id_status' => 2])->row();
@@ -130,9 +130,9 @@ class Ruang extends CI_Controller
       } else {
         return $this->session->set_flashdata('error', 'Gagal Meminjam Ruang');
       }
-      // } else {
-      //   return $this->session->set_flashdata('error', 'Gagal Meminjam Ruang, Anda sedang dalam Proses Peminjaman, <a href="' . base_url('ruang/dataBooking') . '">Lihat Disini</a>');
-      // }
+      } else {
+        return $this->session->set_flashdata('error', 'Gagal Meminjam Ruang, Anda sedang dalam Proses Peminjaman, <a href="' . base_url('ruang/dataBooking') . '">Lihat Disini</a>');
+      }
     } else {
       return $this->session->set_flashdata('error', 'Gagal meminjam ruangan, waktu peminjaman sudah habis');
     }
