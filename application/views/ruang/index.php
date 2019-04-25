@@ -14,6 +14,7 @@
       <span class="jam"></span>
     </p>
   </div>
+  <!-- <?= date('N'); ?> -->
 
   <div class="container">
     <?php foreach ($tb_ruang as $r) : ?>

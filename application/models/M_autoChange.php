@@ -5,8 +5,9 @@ class M_autoChange extends CI_Model {
 
     public function prosesData()
     {
-        $this->_autoChangeProses();
-        $this->_autoChangeSedang();
+        // $this->_autoChangeProses();
+        // $this->_autoChangeSedang();
+        $this->_autoChangeUserPesan();
     }
 
     private function _autoChangeProses(){
@@ -46,6 +47,35 @@ class M_autoChange extends CI_Model {
                     
                 }
             }
+        }
+    }
+
+    private function _autoChangeUserPesan(){
+        $this->db->select_min('id');
+        $data = $this->db->get_where('proses_peminjaman',['id_status'=>2])->row_array()['id'];
+
+        if($data != null){
+            $cariRuang = $this->db->get_where('tb_ruang',['id_status'=>1])->row_array()['id'];
+
+            if($cariRuang != null){
+
+                $this->db->where('id_ruang', $cariRuang);
+                $this->db->where('id_status', 3);
+                // $this->db->or_where('id_status', 5);
+                $cariPesan = $this->db->get('proses_peminjaman')->result_array();
+
+                if(count($cariPesan) < 1){
+                    $dataUpdate = [
+                        'id_ruang' => $cariRuang,
+                        'id_status' => 5,
+                        'jam_pinjam' => time(),
+                        'jam_selesai' => strtotime('+2 hours', time())
+                    ];
+                    $this->db->update('proses_peminjaman',$dataUpdate,['id'=>$data]);
+                }
+                
+            }
+            
         }
     }
 
