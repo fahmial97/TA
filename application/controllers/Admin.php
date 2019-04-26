@@ -78,6 +78,11 @@ class Admin extends CI_Controller
     $data['judul'] = 'Halaman Admin';
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
     $data["tb_ruang"] = $this->m_ruang->getAllruang();
+    $data['jam_buka'] = $this->m_ruang->getAllJam();
+    $data['status_buka'] = [
+      'buka',
+      'tutup'
+    ];
 
     $this->load->view('templates/admin_header', $data);
     $this->load->view('admin/ruang', $data);

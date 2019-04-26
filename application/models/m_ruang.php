@@ -26,6 +26,12 @@ class m_ruang extends CI_Model
     return $this->db->get_where($this->_table)->result();
   }
 
+  public function getAllJam()
+  {
+    return $this->db->get('waktu_ruang')->result();
+    
+  }
+
   function getAll()
   {
     $tersedia = $this->db->get_where($this->_table, ['id_status' => 1])->result();
