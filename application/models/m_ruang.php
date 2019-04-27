@@ -29,7 +29,30 @@ class m_ruang extends CI_Model
   public function getAllJam()
   {
     return $this->db->get('waktu_ruang')->result();
-    
+  }
+
+  public function updateWaktuRuang()
+  {
+    $input = $this->input;
+    $id = $input->post('id');
+    $data = [
+      'status' => $input->post('status'),
+      'jam_buka' => $input->post('jam_buka') . ':' . $input->post('menit_buka'),
+      'jam_tutup' => $input->post('jam_tutup') . ':' . $input->post('menit_tutup')
+    ];
+
+    $this->db->update('waktu_ruang', $data, ['id' => $id]);
+
+    if ($this->db->affected_rows() > 0) {
+      return $this->session->set_flashdata('success', 'Berhasil update jadwal');
+    } else {
+      return $this->session->set_flashdata('error', 'Gagal update jadwal');
+    }
+  }
+
+  public function getStatusBuka()
+  {
+    return $this->db->get_where('waktu_ruang', ['id' => date('N', time())])->row();
   }
 
   function getAll()

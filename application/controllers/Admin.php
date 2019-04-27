@@ -74,26 +74,37 @@ class Admin extends CI_Controller
   // ======================== Ruang =======================
   public function ruang()
   {
-
     $data['judul'] = 'Halaman Admin';
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
     $data["tb_ruang"] = $this->m_ruang->getAllruang();
+    $data['status_buka'] = $this->m_ruang->getStatusBuka();
+
+    $this->load->view('templates/admin_header', $data);
+    $this->load->view('admin/ruang', $data);
+    $this->load->view('templates/admin_footer');
+  }
+
+  public function jadwalRuang()
+  {
+    $data['judul'] = 'Jadwal Ruang';
+    $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
     $data['jam_buka'] = $this->m_ruang->getAllJam();
+
     $data['status_buka'] = [
       'buka',
       'tutup'
     ];
 
     $this->load->view('templates/admin_header', $data);
-    $this->load->view('admin/ruang', $data);
+    $this->load->view('admin/jadwal_ruang', $data);
     $this->load->view('templates/admin_footer');
   }
-  function bukaRuang()
-  { }
 
-  function TutupRuang()
-  { }
-
+  public function updateWaktuRuang()
+  {
+    $this->m_ruang->updateWaktuRuang();
+    redirect('admin/jadwal-ruang');
+  }
 
   function addRuang()
   {

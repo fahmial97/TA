@@ -45,6 +45,10 @@
       <hr class="sidebar-divider my-0">
       <li class="nav-item <?php if ($this->uri->segment(2) == 'ruang') {
                             echo 'active';
+                          } else if ($this->uri->segment(2) == 'jadwal-ruang') {
+                            echo 'active';
+                          } elseif ($this->uri->segment(2) == 'addRuang') {
+                            echo 'active';
                           } ?>">
         <a class="nav-link" href="<?= base_url('admin/ruang'); ?>">
           <i class="fas fa-fw fa-chair"></i>
