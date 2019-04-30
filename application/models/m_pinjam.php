@@ -55,13 +55,18 @@ class m_pinjam extends CI_Model
     return $this->db->get_where('proses_peminjaman', ['id_ruang' => $id, 'id_status' => $id_status])->row();
   }
 
-  public function prosesPinjam()
+  public function prosesPinjam($jamTutup)
   {
+    if (date('H:i', strtotime('+2 hours', time())) > $jamTutup) {
+      $jamTutupnya = strtotime($jamTutup);
+    } else {
+      $jamTutupnya = strtotime('+2 hours', time());
+    }
+
     $user = $_POST['id_user'];
     $tb_ruang = $_POST['id'];
     $status = 5;
     $jam_pinjam = time();
-    $jam_selesai = strtotime('+2 hours', $jam_pinjam);
     $nim_pinjam = $_POST['nim_pinjam'];
     $nama_pinjam = $_POST['nama_pinjam'];
     $no_telpon_pinjam = $_POST['no_telpon_pinjam'];
@@ -80,7 +85,7 @@ class m_pinjam extends CI_Model
       'id_ruang' => $tb_ruang,
       'id_status' => $status,
       'jam_pinjam' => $jam_pinjam,
-      'jam_selesai' => $jam_selesai,
+      'jam_selesai' => $jamTutupnya,
       'nama_pinjam' => $nama,
       'nim_pinjam' => $nim,
       'no_telpon_pinjam' => $nomer,
@@ -91,9 +96,14 @@ class m_pinjam extends CI_Model
     $this->db->insert('proses_peminjaman', $data);
   }
 
-  public function prosesBooking($mulai)
+  public function prosesBooking($mulai, $jamTutup)
   {
     $input = $this->input;
+    if (date('H:i', strtotime('+2 hours', $mulai)) > $jamTutup) {
+      $jamTutupnya = strtotime($jamTutup);
+    } else {
+      $jamTutupnya = strtotime('+2 hours', $mulai);
+    }
 
     $nim_pinjam = $input->post('nim_pinjam', true);
     $nama_pinjam = $input->post('nama_pinjam', true);
@@ -113,7 +123,7 @@ class m_pinjam extends CI_Model
       'id_ruang' => $input->post('id', true),
       'id_status' => 2,
       'jam_pinjam' => $mulai,
-      'jam_selesai' => strtotime('+2 hours', $mulai),
+      'jam_selesai' => $jamTutupnya,
       'nama_pinjam' => $nama,
       'nim_pinjam' => $nim,
       'no_telpon_pinjam' => $nomer,

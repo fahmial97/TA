@@ -11,11 +11,31 @@
     </div>
   <?php endif; ?>
 
-  <!-- Page Heading -->
-  <h1 class="h3 text-gray-800">Ruang</h1>
-  <div class="text-right m-3">
-    <a href="<?= base_url('admin/addRuang') ?>" class="btn btn-primary">Tambah Ruang <i class="fas fa-plus pl-2"></i></a>
+
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <h3 class="text-gray-800"> Ruang</h3>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="row">
+        <div class="col-6 col-lg-4 ml-auto px-0 text-right">
+          <a href="<?= base_url('admin/jadwal-ruang') ?>" class="btn btn-info btn-sm">Jam Buka <i class="far fa-calendar-alt pl-2"></i></a>
+        </div>
+        <div class="col-6 col-lg-4 text-right">
+          <a href="<?= base_url('admin/addRuang') ?>" class="btn btn-primary btn-sm">Tambah Ruang <i class="fas fa-plus pl-2"></i></a>
+        </div>
+      </div>
+    </div>
   </div>
+  <hr class="p-0 m-0">
+
+  <div class="row mt-4">
+    <div class="col-6">
+      <h5 class="text-gray-800"> <?php $hari = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
+                                  echo $hari[date("w", time())];  ?>, <?= ucfirst($status_buka->status); ?> ( <?= $status_buka->jam_buka; ?> s/d <?= $status_buka->jam_tutup; ?> )</h5>
+    </div>
+  </div>
+
   <table class="table table-responsive-sm ">
     <thead class="bg-info text-white">
       <?php $no = 1; ?>
@@ -30,6 +50,7 @@
     </thead>
     <tbody class="table table-hover">
       <?php foreach ($tb_ruang as $r) : ?>
+
         <tr>
           <td><?= $no++; ?></td>
           <td>

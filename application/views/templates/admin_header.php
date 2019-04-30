@@ -35,31 +35,45 @@
         </a>
 
       </div>
-      <li class="nav-item <?php if($this->uri->segment(1) == 'Validasi'){echo 'active';} ?>">
-        <a class="nav-link" href="<?= base_url('Validasi/index'); ?>">
+      <li class="nav-item <?php if ($this->uri->segment(1) == 'validasi') {
+                            echo 'active';
+                          } ?>">
+        <a class="nav-link" href="<?= base_url('validasi/index'); ?>">
           <i class="fas fa-vote-yea"></i>
           <span>Peminjaman Ruang</span></a>
       </li>
       <hr class="sidebar-divider my-0">
-      <li class="nav-item <?php if($this->uri->segment(2) == 'ruang'){echo 'active';} ?>">
+      <li class="nav-item <?php if ($this->uri->segment(2) == 'ruang') {
+                            echo 'active';
+                          } else if ($this->uri->segment(2) == 'jadwal-ruang') {
+                            echo 'active';
+                          } elseif ($this->uri->segment(2) == 'addRuang') {
+                            echo 'active';
+                          } ?>">
         <a class="nav-link" href="<?= base_url('admin/ruang'); ?>">
           <i class="fas fa-fw fa-chair"></i>
           <span>Ruang</span></a>
       </li>
       <hr class="sidebar-divider my-0">
-      <li class="nav-item <?php if($this->uri->segment(2) == ''){echo 'active';} ?>">
+      <li class="nav-item <?php if ($this->uri->segment(2) == '') {
+                            echo 'active';
+                          } ?>">
         <a class="nav-link" href="<?= base_url('admin/'); ?>">
           <i class="fas fa-fw fa-history"></i>
           <span>History Peminjaman</span></a>
       </li>
       <hr class="sidebar-divider">
-      <li class="nav-item <?php if($this->uri->segment(2) == 'mahasiswa'){echo 'active';} ?>">
+      <li class="nav-item <?php if ($this->uri->segment(2) == 'mahasiswa') {
+                            echo 'active';
+                          } ?>">
         <a class="nav-link" href="<?= base_url('admin/mahasiswa') ?>">
           <i class="fas fa-fw fa-users"></i>
           <span>Mahasiswa</span></a>
       </li>
       <hr class="sidebar-divider">
-      <li class="nav-item <?php if($this->uri->segment(2) == 'admin'){echo 'active';} ?>">
+      <li class="nav-item <?php if ($this->uri->segment(2) == 'admin') {
+                            echo 'active';
+                          } ?>">
         <a class="nav-link" href="<?= base_url('admin/admin') ?>">
           <i class="fas fa-fw fa-user-cog"></i>
           <span>Admin</span></a>

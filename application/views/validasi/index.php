@@ -33,90 +33,93 @@
     </thead>
     <tbody class="table table-hover">
       <?php foreach ($proses_peminjaman as $pp) : ?>
-        <tr>
-          <td><?= $no++; ?></td>
-          <td>
-            <img src="<?= base_url('asset/img/ruang/' . prosesHelpers($pp->id_ruang)['gambar']) ?>" width="60" />
+        <?php if ($pp->id_status == 2 || $pp->id_status == 3 || $pp->id_status == 5) { ?>
+          <tr>
+            <td><?= $no++; ?></td>
+            <td>
+              <img src="<?= base_url('asset/img/ruang/' . prosesHelpers($pp->id_ruang)['gambar']) ?>" width="60" />
 
-          </td>
-          <td>
-            <?= prosesHelpers($pp->id_ruang)['no_ruang'] ?>
-          </td>
-          <td>
-            <?php
-            $hari = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
-            $bulan = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-            echo $hari[date("w", $pp->jam_pinjam)] . ", <br>" . date("j ", $pp->jam_pinjam);
-            echo $bulan[date("n", $pp->jam_pinjam)] . "  " . date("Y");
-            ?>
-          </td>
-          <td>
-            <?= date('H : i', $pp->jam_pinjam); ?>
-          </td>
-          <td>
-            <?= date('H : i', $pp->jam_selesai); ?>
-          </td>
-          <td>
-            <?= ' 1) ' . getUserHelpers($pp->id_user)['nama'] ?> <br>
-            <?php
-            $i = 2;
-            $data = $pp->nama_pinjam;
-            $dataExplode = explode(",", $data);
-            array_pop($dataExplode);
-            foreach ($dataExplode as $value) {
-              echo $i . ') ' . $value . '<br>';
-              $i++;
-            }
-            ?>
+            </td>
+            <td>
+              <?= prosesHelpers($pp->id_ruang)['no_ruang'] ?>
+            </td>
+            <td>
+              <?php
+              $hari = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
+              $bulan = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+              echo $hari[date("w", $pp->jam_pinjam)] . ", <br>" . date("j ", $pp->jam_pinjam);
+              echo $bulan[date("n", $pp->jam_pinjam)] . "  " . date("Y");
+              ?>
+            </td>
+            <td>
+              <?= date('H : i', $pp->jam_pinjam); ?>
+            </td>
+            <td>
+              <?= date('H : i', $pp->jam_selesai); ?>
+            </td>
+            <td>
+              <?= ' 1) ' . getUserHelpers($pp->id_user)['nama'] ?> <br>
+              <?php
+              $i = 2;
+              $data = $pp->nama_pinjam;
+              $dataExplode = explode(",", $data);
+              array_pop($dataExplode);
+              foreach ($dataExplode as $value) {
+                echo $i . ') ' . $value . '<br>';
+                $i++;
+              }
+              ?>
 
-          </td>
-          <td>
-            <?= ' 1) ' . getUserHelpers($pp->id_user)['nim'] ?> <br>
-            <?php
-            $i = 2;
-            $data = $pp->nim_pinjam;
-            $dataExplode = explode(",", $data);
-            array_pop($dataExplode);
-            foreach ($dataExplode as $value) {
-              echo $i . ') ' . $value . '<br>';
-              $i++;
-            }
-            ?>
-          </td>
-          <td>
-            <?= ' 1) ' . getUserHelpers($pp->id_user)['no_telpon'] ?> <br>
-            <?php
-            $i = 2;
-            $data = $pp->no_telpon_pinjam;
-            $dataExplode = explode(",", $data);
-            array_pop($dataExplode);
-            foreach ($dataExplode as $value) {
-              echo $i . ') ' . $value . '<br>';
-              $i++;
-            }
-            ?>
-          </td>
-          <td>
-            <div class="text-<?= statusHelpers($pp->id_status)['style'] ?>">
-              <?= statusHelpers($pp->id_status)['status'] ?>
-            </div>
-          </td>
-          <td class="aksi-td">
-            <?php
-            $ids = $pp->id_status;
-            if ($ids == 5) {
-              echo '<a href="' . site_url('validasi/confirm/') . $pp->id . '" class="btn btn-primary btn-sm UpdateModal">
+            </td>
+            <td>
+              <?= ' 1) ' . getUserHelpers($pp->id_user)['nim'] ?> <br>
+              <?php
+              $i = 2;
+              $data = $pp->nim_pinjam;
+              $dataExplode = explode(",", $data);
+              array_pop($dataExplode);
+              foreach ($dataExplode as $value) {
+                echo $i . ') ' . $value . '<br>';
+                $i++;
+              }
+              ?>
+            </td>
+            <td>
+              <?= ' 1) ' . getUserHelpers($pp->id_user)['no_telpon'] ?> <br>
+              <?php
+              $i = 2;
+              $data = $pp->no_telpon_pinjam;
+              $dataExplode = explode(",", $data);
+              array_pop($dataExplode);
+              foreach ($dataExplode as $value) {
+                echo $i . ') ' . $value . '<br>';
+                $i++;
+              }
+              ?>
+            </td>
+            <td>
+              <div class="text-<?= statusHelpers($pp->id_status)['style'] ?>">
+                <?= statusHelpers($pp->id_status)['status'] ?>
+              </div>
+            </td>
+            <td class="aksi-td">
+              <?php
+              $ids = $pp->id_status;
+              if ($ids == 5) {
+                echo '<a href="' . site_url('validasi/confirm/') . $pp->id . '" class="btn btn-primary btn-sm UpdateModal">
               Confirm</a> <br>';
-              echo '<a href="' . site_url('validasi/cancel/') . $pp->id . '"  class="btn btn-danger btn-sm mt-2 UpdateModal">Cancel</a>';
-            } else if ($ids == 3) {
-              echo '<a href="' . site_url('validasi/selesai/') . $pp->id . '" class="btn btn-success btn-sm mt-2 UpdateModal">
+                echo '<a href="' . site_url('validasi/cancel/') . $pp->id . '"  class="btn btn-danger btn-sm mt-2 UpdateModal">Cancel</a>';
+              } else if ($ids == 3) {
+                echo '<a href="' . site_url('validasi/selesai/') . $pp->id . '" class="btn btn-success btn-sm mt-2 UpdateModal">
                   Selesai </a>';
-            } else {
-              echo '<b> - </b>';
-            }
-            ?>
-          </td>
-        </tr>
+              } else {
+                echo '<b> - </b>';
+              } ?>
+            </td>
+          </tr>
+        <?php  } else { ?>
+
+        <?php } ?>
       <?php endforeach; ?>
     </tbody>
   </table>
