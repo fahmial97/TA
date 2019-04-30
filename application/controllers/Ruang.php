@@ -6,8 +6,8 @@ class Ruang extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-    $this->load->model("m_ruang");
-    $this->load->model("m_pinjam");
+    $this->load->model("M_ruang");
+    $this->load->model("M_pinjam");
     $this->load->library('form_validation');
   }
 
@@ -15,7 +15,9 @@ class Ruang extends CI_Controller
   {
     $data['judul'] = 'Ruang Diskusi';
     $data['user']  = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
-    $data["tb_ruang"] = $this->m_ruang->getAll();
+    $data["tb_ruang"] = $this->M_ruang->getAll();
+    $data['waktu_ruang'] = $this->M_ruang->getWaktuBuka();
+
 
     $this->load->view('templates/header', $data);
     $this->load->view('ruang/index', $data);
@@ -28,8 +30,8 @@ class Ruang extends CI_Controller
       redirect('blocked/booking');
     }
     $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
-    $data['dataBooking'] = $this->m_ruang->getById($id);
-    $data['judul'] = 'Pesan Ruang';
+    $data['dataBooking'] = $this->M_ruang->getById($id);
+    $data['judul'] = 'Pinjam Ruang';
 
     $this->load->view('templates/header', $data);
     $this->load->view('ruang/booking', $data);
@@ -38,28 +40,20 @@ class Ruang extends CI_Controller
 
   public function bookingRuang()
   {
-    //validasi jam buka jam tutup
-    $jam_pinjam = time();
-    $datePinjam = date('H:i', strtotime('+2 hours', $jam_pinjam));
+    //get data hari ini di database
+    $today = $this->M_ruang->getWaktuBuka();
 
-    $pinjamRabu = date('d', strtotime('wed'));
-    $hariIni = date('d', time());
-
-    if ($hariIni == $pinjamRabu) {
-      $this->_inputData($datePinjam, "24:00");
-      redirect('ruang');
-    } else {
-      $this->_inputData($datePinjam, "16:00");
-      redirect('ruang');
-    }
+    $this->_inputData($today->jam_buka, $today->jam_tutup);
+    redirect('ruang');
   }
 
-  private function _inputData($datePinjam, $jamTutup)
+  private function _inputData($jamBuka, $jamTutup)
   {
-    $tb_ruang = $this->m_pinjam;
+    $tb_ruang = $this->M_pinjam;
+    $datePinjam = date('H:i', time());
 
     // validasi waktu peminjaman
-    if ($datePinjam > "08:00" && $datePinjam < $jamTutup) {
+    if ($datePinjam > $jamBuka && $datePinjam < $jamTutup) {
 
       // $getDataUser = $tb_ruang->getDataUser();
 
@@ -70,8 +64,8 @@ class Ruang extends CI_Controller
 
       // spesifik validasi agar data yang di input kan tidak mengalami double input
       if ($stats_ruang->id_status == 1) {
-        if (count($id_ruang) < 1) {
-          $tb_ruang->prosesPinjam();
+        if (count($id_ruang)  == null) {
+          $tb_ruang->prosesPinjam($jamTutup);
           return $this->session->set_flashdata('success', 'Berhasil Meminjam Ruangan, <a href="' . base_url('ruang/dataBooking') . '">Lihat Disini</a>');
         } else {
           return $this->session->set_flashdata('error', 'Gagal Meminjam Ruang'); //spesifik vaidasi biar data gk double input
@@ -89,27 +83,19 @@ class Ruang extends CI_Controller
 
   public function pesanRuang()
   {
-    //validasi jam buka jam tutup
-    $jam_pinjam = time();
-    $datePinjam = date('H:i', strtotime('+2 hours', $jam_pinjam));
+    //get data hari ini di database
+    $today = $this->M_ruang->getWaktuBuka();
 
-    $pinjamRabu = date('d', strtotime('wed'));
-    $hariIni = date('d', time());
-
-    if ($hariIni == $pinjamRabu) {
-      $this->_updateData($datePinjam, "24:00");
-      redirect('ruang');
-    } else {
-      $this->_updateData($datePinjam, "16:00");
-      redirect('ruang');
-    }
+    $this->_updateData($today->jam_buka, $today->jam_tutup);
+    redirect('ruang');
   }
 
-  private function _updateData($datePinjam, $jamTutup)
+  private function _updateData($jamBuka, $jamTutup)
   {
-    $tb_ruang = $this->m_pinjam;
+    $tb_ruang = $this->M_pinjam;
+    $datePinjam = date('H:i', time());
 
-    if ($datePinjam > "08:00" && $datePinjam < $jamTutup) {
+    if ($datePinjam > $jamBuka && $datePinjam < $jamTutup) {
 
       // $getDataUser = $tb_ruang->getDataUser();
 
@@ -120,10 +106,14 @@ class Ruang extends CI_Controller
       $mulai = $stats_ruang->jam_selesai;
 
       if ($stats_ruang->status_booking == 2) {
-        if (count($id_ruang) < 1) {
-          $this->db->update('proses_peminjaman', ['status_booking' => 1], ['id' => $stats_ruang->id]);
-          $tb_ruang->prosesBooking($mulai);
-          return $this->session->set_flashdata('success', 'Berhasil Meminjam Ruangan, <a href="' . base_url('ruang/dataBooking') . '">Lihat Disini</a>');
+        if ($id_ruang == null) {
+          if ($mulai > $jamBuka && $mulai < $jamTutup) {
+            $this->db->update('proses_peminjaman', ['status_booking' => 1], ['id' => $stats_ruang->id]);
+            $tb_ruang->prosesBooking($mulai, $jamTutup);
+            return $this->session->set_flashdata('success', 'Berhasil Meminjam Ruangan, <a href="' . base_url('ruang/dataBooking') . '">Lihat Disini</a>');
+          } else {
+            return $this->session->set_flashdata('error', 'Gagal meminjam ruangan, waktu peminjaman sudah habis ');
+          }
         } else {
           return $this->session->set_flashdata('error', 'Gagal Meminjam Ruang');
         }
@@ -149,7 +139,7 @@ class Ruang extends CI_Controller
     }
     $data['judul'] = 'Ruang Pinjaman Anda';
     $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
-    $data['proses'] = $this->m_pinjam->getAllByUser($data['user']['id']);
+    $data['proses'] = $this->M_pinjam->getAllByUser($data['user']['id']);
 
     $this->load->view('templates/header', $data);
     $this->load->view('ruang/mybooking', $data);
@@ -160,7 +150,7 @@ class Ruang extends CI_Controller
   {
     if (!isset($id)) show_404();
 
-    $this->m_pinjam->delete($id);
+    $this->M_pinjam->delete($id);
     $this->session->set_flashdata('success', 'Berhasil Dihapus');
     redirect('admin');
   }

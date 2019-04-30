@@ -44,3 +44,8 @@ function getDataHitungMundur($id)
     return $ci->db->get_where('proses_peminjaman', ['id_ruang' => $id, 'id_status' => 3])->row_array()['jam_selesai'];
   }
 }
+
+function getHariIndonesia()
+{
+  return ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+}

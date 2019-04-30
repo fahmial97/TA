@@ -9,10 +9,10 @@ class Admin extends CI_Controller
   {
 
     parent::__construct();
-    $this->load->model("m_ruang");
-    $this->load->model("profile_model");
-    $this->load->model("m_pinjam");
-    $this->load->model("m_profileAdmin");
+    $this->load->model("M_ruang");
+    $this->load->model("Profile_model");
+    $this->load->model("M_pinjam");
+    $this->load->model("M_profileAdmin");
     // $this->load->helper("url");
 
     $this->load->library('pagination');
@@ -65,7 +65,7 @@ class Admin extends CI_Controller
 
     $data['judul'] = 'Halaman Admin';
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
-    $data["proses_peminjaman"] = $this->m_pinjam->getAllHistory($config['per_page'], $offset);
+    $data["proses_peminjaman"] = $this->M_pinjam->getAllHistory($config['per_page'], $offset);
 
     $this->load->view('templates/admin_header', $data);
     $this->load->view('admin/index', $data);
@@ -76,8 +76,8 @@ class Admin extends CI_Controller
   {
     $data['judul'] = 'Halaman Admin';
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
-    $data["tb_ruang"] = $this->m_ruang->getAllruang();
-    $data['status_buka'] = $this->m_ruang->getStatusBuka();
+    $data["tb_ruang"] = $this->M_ruang->getAllruang();
+    $data['status_buka'] = $this->M_ruang->getWaktuBuka();
 
     $this->load->view('templates/admin_header', $data);
     $this->load->view('admin/ruang', $data);
@@ -88,7 +88,7 @@ class Admin extends CI_Controller
   {
     $data['judul'] = 'Jadwal Ruang';
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
-    $data['jam_buka'] = $this->m_ruang->getAllJam();
+    $data['jam_buka'] = $this->M_ruang->getAllJam();
 
     $data['status_buka'] = [
       'buka',
@@ -110,9 +110,9 @@ class Admin extends CI_Controller
   {
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
     $data['judul'] = 'Tambah Ruang';
-    $data['status'] = $this->m_ruang->getAllStatus();
+    $data['status'] = $this->M_ruang->getAllStatus();
 
-    $tb_ruang = $this->m_ruang;
+    $tb_ruang = $this->M_ruang;
     $validation = $this->form_validation;
     $validation->set_rules($tb_ruang->rules());
 
@@ -150,7 +150,7 @@ class Admin extends CI_Controller
 
     if (!isset($id)) redirect('admin');
 
-    $tb_ruang = $this->m_ruang;
+    $tb_ruang = $this->M_ruang;
     $validation = $this->form_validation;
     $validation->set_rules($tb_ruang->rules());
 
@@ -187,7 +187,7 @@ class Admin extends CI_Controller
   {
     if (!isset($id)) show_404();
 
-    $this->m_ruang->delete($id);
+    $this->M_ruang->delete($id);
     $this->session->set_flashdata('success', 'Berhasil Dihapus');
     redirect('admin');
   }
@@ -197,7 +197,7 @@ class Admin extends CI_Controller
   public function admin()
   {
     $data['judul'] = 'List Admin';
-    $data['all_admin'] = $this->m_profileAdmin->getAll();
+    $data['all_admin'] = $this->M_profileAdmin->getAll();
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
 
 
@@ -210,9 +210,9 @@ class Admin extends CI_Controller
   {
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
     $data['judul'] = 'Tambah Admin';
-    $data['status'] = $this->m_profileAdmin->getAllStatus();
+    $data['status'] = $this->M_profileAdmin->getAllStatus();
 
-    $admin = $this->m_profileAdmin;
+    $admin = $this->M_profileAdmin;
     $validation = $this->form_validation;
     $validation->set_rules($admin->rules());
 
@@ -246,7 +246,7 @@ class Admin extends CI_Controller
   {
     if (!isset($id)) show_404();
 
-    $this->m_profileAdmin->delete($id);
+    $this->M_profileAdmin->delete($id);
     $this->session->set_flashdata('success', 'Data Berhasil Mahasiswa  Dihapus');
     redirect('admin/listAdmin');
   }
@@ -258,7 +258,7 @@ class Admin extends CI_Controller
   public function mahasiswa()
   {
     $data['judul'] = 'List Mahasiswa';
-    $data['all_user'] = $this->profile_model->getAll();
+    $data['all_user'] = $this->Profile_model->getAll();
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
 
     $this->load->view('templates/admin_header', $data);
@@ -270,7 +270,7 @@ class Admin extends CI_Controller
   {
     if (!isset($id)) show_404();
 
-    $this->profile_model->delete($id);
+    $this->Profile_model->delete($id);
     $this->session->set_flashdata('success', 'Data Berhasil Mahasiswa  Dihapus');
     redirect('admin/mahasiswa');
   }

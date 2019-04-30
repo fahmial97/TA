@@ -9,13 +9,13 @@
       <?= $this->session->flashdata('error'); ?>
     </div>
   <?php endif; ?>
-  <div class="col-9 offset-3 col-md-2 offset-md-9 ">
-    <p>
-      <span class="jam"></span>
-    </p>
-  </div>
+
 
   <div class="container">
+    <div>
+      <h5 class="text-gray-800"> <?= getHariIndonesia()[date('w')] ?>, <?= ucfirst($waktu_ruang->status); ?> ( <?= $waktu_ruang->jam_buka; ?> s/d <?= $waktu_ruang->jam_tutup; ?> )</h5>
+    </div>
+    <hr>
     <?php foreach ($tb_ruang as $r) : ?>
       <?php if ($r->id_status == 1 || $r->id_status == 3) { ?>
         <div class="card mb-4 shadow">
@@ -57,7 +57,7 @@
                 <h6 class="timer ">
                   <?php
                   $deadline = $r->jam_pinjam;
-                  $tampil =  $deadline + 3000 - time();
+                  $tampil =  $deadline + 600 - time();
                   if ($tampil > 0) {
                     echo '<b>Sisa Waktu Konfirmasi Peminjaman Ruangan</b>';
                     echo '<p class="d-none">  ' . $tampil . '</p>';

@@ -4,11 +4,11 @@ class Pesan extends CI_Controller
 {
   public function __construct()
   {
-      parent::__construct();
-      $this->load->model("m_ruang");
-      if (!$this->session->userdata('nim')) {
-        redirect('blocked/booking');
-      }
+    parent::__construct();
+    $this->load->model("m_ruang");
+    if (!$this->session->userdata('nim')) {
+      redirect('blocked/booking');
+    }
   }
 
   public function index()

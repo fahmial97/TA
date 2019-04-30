@@ -117,8 +117,9 @@
               } ?>
             </td>
           </tr>
-        <?php  } ?>
+        <?php  } else { ?>
 
+        <?php } ?>
       <?php endforeach; ?>
     </tbody>
   </table>

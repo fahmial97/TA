@@ -50,6 +50,7 @@
     </thead>
     <tbody class="table table-hover">
       <?php foreach ($tb_ruang as $r) : ?>
+
         <tr>
           <td><?= $no++; ?></td>
           <td>

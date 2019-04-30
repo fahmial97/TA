@@ -6,8 +6,8 @@ class Profile extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-    $this->load->model('profile_model');
-    $this->load->model('m_profileAdmin');
+    $this->load->model('Profile_model');
+    $this->load->model('M_profileAdmin');
     $this->load->helper('url');
   }
 
@@ -18,7 +18,7 @@ class Profile extends CI_Controller
     }
 
     $data['judul'] = 'My Profile';
-    $data['user'] = $this->profile_model->getAll();
+    $data['user'] = $this->Profile_model->getAll();
     $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
 
     $this->load->view('templates/header', $data);
@@ -30,7 +30,7 @@ class Profile extends CI_Controller
   {
     $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
     $data['judul'] = 'Edit Ruang';
-    $data['dataEdit'] = $this->profile_model->getById($id);
+    $data['dataEdit'] = $this->Profile_model->getById($id);
 
 
     $this->load->view('templates/header', $data);
@@ -42,7 +42,7 @@ class Profile extends CI_Controller
   {
     if (!isset($id)) redirect('profile/mahasiswa');
 
-    $user = $this->profile_model;
+    $user = $this->Profile_model;
     $validation = $this->form_validation;
     $validation->set_rules($user->rules());
 
@@ -77,7 +77,7 @@ class Profile extends CI_Controller
   public function ubahPassword()
   {
     $data['judul'] = 'My Profile';
-    $data['user'] = $this->profile_model->getAll();
+    $data['user'] = $this->Profile_model->getAll();
     $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
 
     $this->form_validation->set_rules('password_ini', 'Password_ini', 'reuqired|trim');
@@ -105,7 +105,7 @@ class Profile extends CI_Controller
     }
 
     $data['judul'] = 'My Profile';
-    $data['admin'] = $this->m_profileAdmin->getAll();
+    $data['admin'] = $this->M_profileAdmin->getAll();
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
 
     $this->load->view('templates/admin_header', $data);
@@ -117,7 +117,7 @@ class Profile extends CI_Controller
   {
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
     $data['judul'] = 'Edit Ruang';
-    $data['dataEditAdmin'] = $this->m_profileAdmin->getById($id);
+    $data['dataEditAdmin'] = $this->M_profileAdmin->getById($id);
 
 
     $this->load->view('templates/admin_header', $data);
@@ -129,7 +129,7 @@ class Profile extends CI_Controller
   {
     if (!isset($id)) redirect('profile/admin');
 
-    $admin = $this->m_profileAdmin;
+    $admin = $this->M_profileAdmin;
     $validation = $this->form_validation;
     $validation->set_rules($admin->rules());
 
@@ -164,7 +164,7 @@ class Profile extends CI_Controller
   public function ubahPasswordAdmin()
   {
     $data['judul'] = 'My Profile';
-    $data['admin'] = $this->m_profileAdmin->getAll();
+    $data['admin'] = $this->M_profileAdmin->getAll();
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
 
     $this->form_validation->set_rules('password_ini', 'Password_ini', 'reuqired|trim');

@@ -50,7 +50,7 @@ class m_ruang extends CI_Model
     }
   }
 
-  public function getStatusBuka()
+  public function getWaktuBuka()
   {
     return $this->db->get_where('waktu_ruang', ['id' => date('N', time())])->row();
   }
