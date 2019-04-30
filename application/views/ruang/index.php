@@ -10,7 +10,6 @@
     </div>
   <?php endif; ?>
 
-
   <div class="container">
     <div>
       <h5 class="text-gray-800"> <?= getHariIndonesia()[date('w')] ?>, <?= ucfirst($waktu_ruang->status); ?> ( <?= $waktu_ruang->jam_buka; ?> s/d <?= $waktu_ruang->jam_tutup; ?> )</h5>
