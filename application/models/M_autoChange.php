@@ -6,8 +6,7 @@ class M_autoChange extends CI_Model
 
     public function prosesData()
     {
-        $this->_autoChangeProses();
-        $this->_autoChangeSedang();
+        $this->_autoCloseRuang();
     }
 
     private function _autoChangeProses()
@@ -50,6 +49,31 @@ class M_autoChange extends CI_Model
             }
         }
     }
+
+    private function _autoCloseRuang(){
+        $data = $this->db->get_where('waktu_ruang',['id'=>date('N',time())])->row_array();
+        
+        $waktuBuka = $data['jam_buka'];
+        $waktuTutup = '19:00';
+
+        if($waktuBuka < date("H:i",time()) && $waktuTutup > date("H:i",time()) ){
+            $dataRuang = $this->db->get('tb_ruang')->result_array();
+
+            foreach($dataRuang as $data){
+                $this->db->update('tb_ruang',['id_status'=>1],['id'=>$data['id']]);
+            }
+
+            $this->_autoChangeProses();
+            $this->_autoChangeSedang();
+        }else{
+            $dataRuang = $this->db->get('tb_ruang')->result_array();
+
+            foreach($dataRuang as $data){
+                $this->db->update('tb_ruang',['id_status'=>4],['id'=>$data['id']]);
+            }
+        } 
+    }
+
 }
 
 /* End of file M_autoChange.php */
