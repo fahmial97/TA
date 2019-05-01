@@ -101,6 +101,12 @@ class m_ruang extends CI_Model
     return $this->db->get('status')->result_array();
   }
 
+  public function getDataUserPeminjam()
+  {
+    $id = $this->input->post('id_user');
+    return $this->db->get_where('user',['id'=>$id])->row_array();
+  }
+
   public function save($result)
   {
     $post = $this->input->post();

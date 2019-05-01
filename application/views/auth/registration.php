@@ -31,9 +31,9 @@
               <div class="form-group">
                 <select class="custom-select" name="fakultas" id="fakultas" value="<?= set_value('fakultas'); ?>">
                   <option selected>Pilih Fakultas</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                  <?php foreach($fakultas as $value) : ?>
+                    <option value="<?= $value['id'] ?>"><?= $value['nama_fakultas'] ?></option>
+                  <?php endforeach ; ?>
                 </select>
                 <?= form_error('fakultas', '<small class="text-danger">', '</small>'); ?>
 

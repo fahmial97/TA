@@ -6,10 +6,11 @@ class M_validasi extends CI_Model
 {
     public function validData($id)
     {
-        $data_id_ruang = $this->db->get_where('proses_peminjaman', ['id' => $id])->row_array()['id_ruang'];
+        $data_id_ruang = $this->db->get_where('proses_peminjaman', ['id' => $id])->row_array();
 
         $this->db->update('proses_peminjaman', ['id_status' => 3], ['id' => $id]);
-        $this->db->update('tb_ruang', ['id_status' => 3], ['id' => $data_id_ruang]);
+        $this->db->update('tb_ruang', ['id_status' => 3], ['id' => $data_id_ruang['id_ruang']]);
+        $this->db->update('user', ['peminjaman' => 'sudah'], ['id' => $data_id_ruang['id_user']]);
     }
 
     public function validCancel($id)

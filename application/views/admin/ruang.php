@@ -44,8 +44,7 @@
         <th>Gambar</th>
         <th>Nomor ruang</th>
         <th>Status</th>
-        <th>Action</th>
-        <th></th>
+        <th class="text-center">Action</th>
       </tr>
     </thead>
     <tbody class="table table-hover">
@@ -63,11 +62,12 @@
             <div class="mb-2 btn btn-sm btn-<?= statusHelpers($r->id_status)['style'] ?>"><?= statusHelpers($r->id_status)['status'] ?></div>
           </td>
           <td width="250">
-            <a href="<?= site_url('admin/editRuang/' . $r->id) ?>" class="btn btn-small text-success"><i class="fas fa-edit"></i> Edit
+            <a href="<?= site_url('admin/edit_ruang/' . encrypt_url($r->id)); ?>" class="btn btn-small text-success"><i class="fas fa-edit"></i> Edit
             </a>
             <a onclick="deleteConfirm('<?= site_url('admin/deleteRuang/' . $r->id) ?>')" href="#!" class="btn btn-small text-danger">
               <i class="fas fa-trash"></i> Hapus
             </a>
+            
           </td>
         </tr>
       <?php endforeach; ?>

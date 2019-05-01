@@ -43,8 +43,16 @@ class Ruang extends CI_Controller
     //get data hari ini di database
     $today = $this->M_ruang->getWaktuBuka();
 
-    $this->_inputData($today->jam_buka, $today->jam_tutup);
-    redirect('ruang');
+    //amnbil mengenai data user yang meminjam
+    $getDataUser = $this->M_ruang->getDataUserPeminjam();
+
+    if($getDataUser['peminjaman'] == 'belum'){
+      $this->_inputData($today->jam_buka, $today->jam_tutup);
+      redirect('ruang');
+    }else{
+      $this->session->set_flashdata('error', 'Gagal Meminjam Ruang, Peminjaman hanya boleh 1 kali per 1 hari');
+      redirect('ruang');
+    }
   }
 
   private function _inputData($jamBuka, $jamTutup)
@@ -58,7 +66,7 @@ class Ruang extends CI_Controller
       // $getDataUser = $tb_ruang->getDataUser();
 
       // if ($getDataUser == 0) {
-      //jika tidak ada data yang aktif di dalam table maka proses pemesanan dilanjutkan
+      // jika tidak ada data yang aktif di dalam table maka proses pemesanan dilanjutkan
       $stats_ruang = $tb_ruang->statusRuang();
       $id_ruang = $this->db->get_where('proses_peminjaman', ['id_ruang' => $stats_ruang->id, 'id_status' => 5])->row();
 
@@ -86,8 +94,16 @@ class Ruang extends CI_Controller
     //get data hari ini di database
     $today = $this->M_ruang->getWaktuBuka();
 
-    $this->_updateData($today->jam_buka, $today->jam_tutup);
-    redirect('ruang');
+    //amnbil mengenai data user yang meminjam
+    $getDataUser = $this->M_ruang->getDataUserPeminjam();
+
+    if($getDataUser['peminjaman'] == 'belum'){
+      $this->_updateData($today->jam_buka, $today->jam_tutup);
+      redirect('ruang');
+    }else{
+      $this->session->set_flashdata('error', 'Gagal Meminjam Ruang, Peminjaman hanya boleh 1 kali per 1 hari');
+      redirect('ruang');
+    }
   }
 
   private function _updateData($jamBuka, $jamTutup)

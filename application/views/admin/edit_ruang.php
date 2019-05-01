@@ -28,9 +28,12 @@
 							<div class="form-group">
 								<label for="status">Status</label>
 								<select class="custom-select" name="status" id="status">
-									<option selected><?=$tb_ruang->status ?></option>
 									<?php foreach ($status as $s): ?>
-										<option value="<?= $s['id'] ?>"><?= $s['nama_status'] ?></option>
+									<?php if($tb_ruang->id_status == $s['id']) : ?>
+											<option value="<?= $s['id'] ?>" selected><?= $s['nama_status'] ?></option>
+										<?php else : ?>
+											<option value="<?= $s['id'] ?>"><?= $s['nama_status'] ?></option>
+									<?php endif; ?>
 									<?php endforeach; ?>
 								</select>
 

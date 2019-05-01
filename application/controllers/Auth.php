@@ -75,27 +75,135 @@ class Auth extends CI_Controller
 
     if ($this->form_validation->run() ==  false) {
       $data['judul'] = 'Registration';
+      $data['fakultas'] = $this->db->get('data_fakultas')->result_array();
+
       $this->load->view('templates/auth_header', $data);
       $this->load->view('auth/registration');
       $this->load->view('templates/auth_footer');
     } else {
+      $email = $this->input->post('email', true);
       $data  = [
         'nim' => htmlspecialchars($this->input->post('nim', true)),
         'nama' => htmlspecialchars($this->input->post('nama', true)),
-        'fakultas' => htmlspecialchars($this->input->post('fakultas', true)),
-        'email' => htmlspecialchars($this->input->post('email', true)),
+        'id_fakultas' => htmlspecialchars($this->input->post('fakultas', true)),
+        'email' => htmlspecialchars($email),
         'no_telpon' => htmlspecialchars($this->input->post('no_telpon', true)),
         'image' => 'default.jpg',
-        'password' => md5($this->input->post('password1'), PASSWORD_DEFAULT),
-        'role_id' => 2,
+        'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
+        'role_id' => 3,
+        'is_active' => 2,
         'date_created' => time(),
       ];
 
+      $token = base64_encode(random_bytes(32));
+      $user_token = [
+          'email' => $email,
+          'token' => $token,
+          'date_created' => time()
+      ];
+
       $this->db->insert('user', $data);
+      $this->db->insert('user_token', $user_token);
+
+      $this->_sendEmail($token, 'verify');
+
       $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-                                    Register Berhasil! Silahkan Login</div>');
-      redirect('auth');
+          Selamat!, akun telah dibuat. Silahkan aktivasi email anda!
+      </div>');
+
+      redirect('auth');                              
     }
+  }
+
+  public function verify()
+  {
+    $email = $this->input->get('email');
+    $token = $this->input->get('token');
+
+    $user = $this->db->get_where('user', ['email' => $email])->row_array();
+
+    if ($user) {
+        $user_token = $this->db->get_where('user_token', ['token' => $token])->row_array();
+        if ($user_token) {
+            if (time() -  $user_token['date_created'] < (60 * 60 * 24)) {
+
+                $this->db->update('user', ['is_active' => 1], ['email' => $email]);
+
+                $this->db->delete('user_token', ['email' => $email]);
+
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+                    ' . $email . ' berhasil di aktivasi, Silahkan login!
+                </div>');
+                redirect('auth');
+            } else {
+
+                $this->db->delete('user', ['email' => $email]);
+                $this->db->delete('user_token', ['email' => $email]);
+
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+                    Akun gagal diaktivasi, token sudah kadaluarsa!
+                </div>');
+                redirect('auth');
+            }
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+              Akun gagal diaktivasi, token salah!
+            </div>');
+            redirect('auth');
+        }
+    } else {
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+          Akun gagal diaktivasi, email salah
+        </div>');
+        redirect('auth');
+    }
+  }
+
+  private function _sendEmail($token, $type)
+  {
+      $config = [
+          'protocol' => 'smtp',
+          'smtp_host' => 'ssl://smtp.googlemail.com',
+          'smtp_user' => 'loginlengkap@gmail.com',
+          'smtp_pass' => 'Login1234',
+          'smtp_port' => 465,
+          'mailtype' => 'html',
+          'charset' => 'utf-8',
+          'newline' => "\r\n"
+      ];
+
+      $this->load->library('email', $config);
+      $this->email->initialize($config);
+
+      $this->email->from('loginlengkap@gmail.com', 'Ruang Dikusi Perpustakaan Mercu Buana');
+      $this->email->to($this->input->post('email'));
+
+      $dataVerif = [
+          'email' => $this->input->post('email'),
+          'nama' => $this->db->get_where('user', ['email' => $this->input->post('email')])->row_array()['nama'],
+          'token' => $token
+      ];
+
+      if ($type == 'verify') {
+
+          $this->email->subject('Account Verification');
+          $this->load->model('Verify_model','verif');
+          
+          $this->email->message($this->verif->verif($dataVerif));
+      } else if ($type == 'forgot') {
+
+          $this->email->subject('Account Verification');
+          $this->load->model('Verify_model', 'verif');
+
+          $this->email->message($this->verif->forgot($dataVerif));
+      }
+
+      if ($this->email->send()) {
+          return true;
+      } else {
+          echo $this->email->print_debugger();
+          die;
+      }
   }
 
   public function logout()
@@ -107,9 +215,6 @@ class Auth extends CI_Controller
                                     Berhasil Log Out!</div>');
     redirect('auth');
   }
-
-
-
 
   // ==================================================================================================
   // ========================================== Role Admin ============================================

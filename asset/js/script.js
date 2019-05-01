@@ -17,9 +17,6 @@ $(document).ready(function () {
     $(this).addClass('d-none').next().removeClass('d-none');
   })
 
-
-
-
   // =================================== deadline ==============================
   $('.timer p').each((el) => {
     let timer = $('.timer p')[el]

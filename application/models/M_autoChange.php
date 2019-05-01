@@ -10,6 +10,7 @@ class M_autoChange extends CI_Model
         $this->_autoChangeSedang();
         $this->_autoChangeUserPesan();
         $this->_autoCloseRuang();
+        $this->_autoChangeStatusPeminjaman();
     }
 
     private function _autoChangeProses()
@@ -53,7 +54,8 @@ class M_autoChange extends CI_Model
         }
     }
 
-    private function _autoChangeUserPesan(){
+    private function _autoChangeUserPesan()
+    {
         $this->db->select_min('id');
         $data = $this->db->get_where('proses_peminjaman',['id_status'=>2])->row_array()['id'];
 
@@ -64,7 +66,7 @@ class M_autoChange extends CI_Model
 
                 $this->db->where('id_ruang', $cariRuang);
                 $this->db->where('id_status', 3);
-                // $this->db->or_where('id_status', 5);
+                $this->db->or_where('id_status', 5);
                 $cariPesan = $this->db->get('proses_peminjaman')->result_array();
 
                 if(count($cariPesan) < 1){
@@ -80,28 +82,54 @@ class M_autoChange extends CI_Model
             }
             
         }
-    private function _autoCloseRuang(){
+    }
+
+    private function _autoCloseRuang()
+    {
         $data = $this->db->get_where('waktu_ruang',['id'=>date('N',time())])->row_array();
         
         $waktuBuka = $data['jam_buka'];
-        $waktuTutup = '19:00';
+        $waktuTutup = $data['jam_tutup'];
 
         if($waktuBuka < date("H:i",time()) && $waktuTutup > date("H:i",time()) ){
+            $this->db->update('waktu_ruang', ['status'=>'buka'],['id'=>date('N',time())]);
             $dataRuang = $this->db->get('tb_ruang')->result_array();
 
             foreach($dataRuang as $data){
                 $this->db->update('tb_ruang',['id_status'=>1],['id'=>$data['id']]);
             }
-
-            $this->_autoChangeProses();
-            $this->_autoChangeSedang();
+            $this->db->update('waktu_ruang', ['status'=>'buka'],['id'=>date('N',time())]);
+            
         }else{
+            $this->db->update('waktu_ruang', ['status'=>'tutup'],['id'=>date('N',time())]);
             $dataRuang = $this->db->get('tb_ruang')->result_array();
-
+            
             foreach($dataRuang as $data){
                 $this->db->update('tb_ruang',['id_status'=>4],['id'=>$data['id']]);
             }
+
+            $this->db->where('id_status', 2);
+            $this->db->or_where('id_status', 3);
+            $this->db->or_where('id_status', 5);
+            $cariPesan = $this->db->get('proses_peminjaman')->result_array();
+            if(count($cariPesan) > 0){
+                foreach ($cariPesan as $value) {
+                    $this->db->update('proses_peminjaman', ['id_status'=>6],['id'=>$value['id']]);
+                }
+            }
+            
         } 
+    }
+
+    public function _autoChangeStatusPeminjaman()
+    {  
+        if(date('H:i',time()) > '01:00' && date('H:i',time()) < '01:05' ){
+            $dataUser = $this->db->get_where('user',['peminjaman'=>'sudah'])->result_array();
+
+            foreach ($dataUser as $value) {
+                $this->db->update('user',['peminjaman'=>'belum'],['id'=>$value['id']]);
+            }
+        }
     }
 
 }

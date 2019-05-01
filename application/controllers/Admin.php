@@ -102,11 +102,11 @@ class Admin extends CI_Controller
 
   public function updateWaktuRuang()
   {
-    $this->m_ruang->updateWaktuRuang();
+    $this->M_ruang->updateWaktuRuang();
     redirect('admin/jadwal-ruang');
   }
 
-  function addRuang()
+  public function addRuang()
   {
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
     $data['judul'] = 'Tambah Ruang';
@@ -142,7 +142,7 @@ class Admin extends CI_Controller
     $this->load->view('templates/admin_footer');
   }
 
-  function editRuang($id)
+  public function edit_ruang($id)
   {
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
     $data['judul'] = 'Edit Ruang';
@@ -173,14 +173,15 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('success', 'Berhasil disimpan');
         redirect('admin/ruang'); //selesai proses di redirect
       }
+    }else{
+      $data["tb_ruang"] = $tb_ruang->getById($id);
+      $data['status'] = $tb_ruang->getAllStatus();
+      if (!$data["tb_ruang"]) show_404();
+  
+      $this->load->view('templates/admin_header', $data);
+      $this->load->view('admin/edit_ruang', $data);
+      $this->load->view('templates/admin_footer');
     }
-
-    $data["tb_ruang"] = $tb_ruang->getById($id);
-    if (!$data["tb_ruang"]) show_404();
-
-    $this->load->view('templates/admin_header', $data);
-    $this->load->view('admin/edit_ruang', $data);
-    $this->load->view('templates/admin_footer');
   }
 
   function deleteRuang($id)

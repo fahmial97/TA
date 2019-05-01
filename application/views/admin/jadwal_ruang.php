@@ -27,27 +27,13 @@
                  <form method="post" action="<?= base_url('admin/updateWaktuRuang') ?>">
                      <input type="hidden" name="id" value="<?= $jam->id; ?>">
                      <div class="card shadow-sm mb-5">
-                         <div class="row no-gutters m-2 text-center">
+                         <div class="row no-gutters m-1 text-center">
                              <div class="col-6 col-md-1 p-md-2">
                                  <h6 class="font-weight-bold">Hari</h6>
                                  <h6><?= ucfirst($jam->hari) ?></h6>
                              </div>
-                             <div class="col-6 col-md-2 p-md-2">
-                                 <h6 class="font-weight-bold">Status<h6>
-                                         <select class="custom-select" id="inputGroupSelect01" name="status" disabled>
-                                             <option>Pilih Status</option>
-
-                                             <?php foreach ($status_buka as $buka) : ?>
-                                                 <?php if ($jam->status == $buka) : ?>
-                                                     <option value="<?= $buka; ?>" selected><?= ucfirst($buka); ?></option>
-                                                 <?php else : ?>
-                                                     <option value="<?= $buka; ?>"><?= ucfirst($buka); ?></option>
-                                                 <?php endif; ?>
-                                             <?php endforeach; ?>
-
-                                         </select>
-                             </div>
-                             <div class="col-6 col-md-4  p-md-2">
+                             
+                             <div class="col-6 col-md-5  p-md-2">
                                  <h6 class="font-weight-bold">Buka</h6>
                                  <div class="row">
                                      <div class="col-6">
@@ -97,7 +83,7 @@
                                      </div>
                                  </div>
                              </div>
-                             <div class="col-6 col-md-4 p-md-2">
+                             <div class="col-6 col-md-5 p-md-2">
                                  <h6 class=" font-weight-bold">Tutup</h6>
                                  <div class="row">
                                      <div class="col-6">
