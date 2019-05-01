@@ -37,6 +37,9 @@
                   <div class="text-center">
                     <a class="small" href="<?= base_url ('auth/registration');?>">Belum Punya akun? Daftar Disini!</a>
                   </div>
+                  <div class="text-center">
+                    <a class="small" href="<?= base_url ('auth/forgot');?>">Lupa Passowrd?</a>
+                  </div>
                 </div>
               </div>
             </div>
