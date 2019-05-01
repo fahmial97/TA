@@ -246,11 +246,11 @@ class Auth extends CI_Controller
     // jika usernya ada
     if ($admin) {
       // cek password
-      if (md5($password) == $admin['password']) {
+      if (password_verify($password, $admin['password'])) {
 
         $data = [
           'nip' => $admin['nip'],
-          'role_id' => $user['role_id'],
+          'role_id' => $admin['role_id'],
           'id' => $admin['id']
         ];
         $this->session->set_userdata($data);
@@ -296,7 +296,7 @@ class Auth extends CI_Controller
         'email' => htmlspecialchars($this->input->post('email', true)),
         'no_telpon' => htmlspecialchars($this->input->post('no_telpon', true)),
         'image' => 'default.jpg',
-        'password' => md5($this->input->post('password_admin1')),
+        'password' => password_hash($this->input->post('password_admin1',true),PASSWORD_DEFAULT),
         'role_id' => 1,
         'date_created' => time(),
       ];

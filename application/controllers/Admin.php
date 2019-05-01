@@ -106,6 +106,7 @@ class Admin extends CI_Controller
     redirect('admin/jadwal-ruang');
   }
 
+  
   public function addRuang()
   {
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
@@ -125,21 +126,21 @@ class Admin extends CI_Controller
       // load library upload
       $this->load->library('upload', $config);
       if (!$this->upload->do_upload('image')) {
-        $error = $this->upload->display_errors();
         // menampilkan pesan error
         $this->session->set_flashdata('error', 'Maaf Gambar Tidak Sesuai');
-        redirect('admin'); //selesai proses di redirect
+        redirect('admin/ruang'); //selesai proses di redirect
       } else {
         $result = $this->upload->data();
         $tb_ruang->save($result);
         $this->session->set_flashdata('success', 'Berhasil disimpan');
         redirect('admin/ruang'); //selesai proses di redirect
       }
+    }else{
+      $this->load->view('templates/admin_header', $data);
+      $this->load->view("admin/new_ruang");
+      $this->load->view('templates/admin_footer');
     }
 
-    $this->load->view('templates/admin_header', $data);
-    $this->load->view("admin/new_ruang");
-    $this->load->view('templates/admin_footer');
   }
 
   public function edit_ruang($id)
@@ -148,7 +149,7 @@ class Admin extends CI_Controller
     $data['judul'] = 'Edit Ruang';
 
 
-    if (!isset($id)) redirect('admin');
+    if (!isset($id)) redirect('admin/ruang');
 
     $tb_ruang = $this->M_ruang;
     $validation = $this->form_validation;
@@ -173,11 +174,11 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('success', 'Berhasil disimpan');
         redirect('admin/ruang'); //selesai proses di redirect
       }
-    }else{
+    } else {
       $data["tb_ruang"] = $tb_ruang->getById($id);
       $data['status'] = $tb_ruang->getAllStatus();
       if (!$data["tb_ruang"]) show_404();
-  
+
       $this->load->view('templates/admin_header', $data);
       $this->load->view('admin/edit_ruang', $data);
       $this->load->view('templates/admin_footer');
@@ -190,7 +191,7 @@ class Admin extends CI_Controller
 
     $this->M_ruang->delete($id);
     $this->session->set_flashdata('success', 'Berhasil Dihapus');
-    redirect('admin');
+    redirect('admin/ruang');
   }
 
 
@@ -211,45 +212,47 @@ class Admin extends CI_Controller
   {
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
     $data['judul'] = 'Tambah Admin';
-    $data['status'] = $this->M_profileAdmin->getAllStatus();
+    $data['user_role'] = $this->db->get('user_role')->result_array();
 
     $admin = $this->M_profileAdmin;
     $validation = $this->form_validation;
     $validation->set_rules($admin->rules());
 
+
     if ($validation->run()) {
       // setting konfigurasi upload
-      $config['upload_path']    = './asset/img/ruang/';
+      $config['upload_path']    = './asset/img/profile/';
       $config['allowed_types']  = 'gif|jpg|png';
       $config['max_width']      = 2048;
       $config['max_height']     = 2048;
       // load library upload
       $this->load->library('upload', $config);
       if (!$this->upload->do_upload('image')) {
-        $error = $this->upload->display_errors();
+        $this->upload->display_errors();
         // menampilkan pesan error
         $this->session->set_flashdata('error', 'Maaf Gambar Tidak Sesuai');
-        redirect('admin/Admin'); //selesai proses di redirect
+        redirect('admin/admin'); //selesai proses di redirect
       } else {
         $result = $this->upload->data();
         $admin->save($result);
         $this->session->set_flashdata('success', 'Admin Berhasil Ditambahkan');
-        redirect('admin/Admin'); //selesai proses di redirect
+        redirect('admin/Admin');
       }
+    }else{
+      $this->load->view('templates/admin_header', $data);
+      $this->load->view("admin/new_admin");
+      $this->load->view('templates/admin_footer');
     }
 
-    $this->load->view('templates/admin_header', $data);
-    $this->load->view("admin/new_admin");
-    $this->load->view('templates/admin_footer');
   }
 
-  function deleteADmin($id)
+  function deleteAdmin($id)
   {
     if (!isset($id)) show_404();
 
     $this->M_profileAdmin->delete($id);
-    $this->session->set_flashdata('success', 'Data Berhasil Mahasiswa  Dihapus');
-    redirect('admin/listAdmin');
+    $this->session->set_flashdata('success', 'Data Admin berhasil Dihapus');
+    redirect('admin/admin');
   }
 
 
