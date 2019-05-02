@@ -19,7 +19,7 @@
     <div class="col-12 col-lg-6">
       <div class="row">
         <div class="col-6 col-lg-4 ml-auto px-0 text-right">
-          <a href="<?= base_url('admin/jadwal-ruang') ?>" class="btn btn-info btn-sm">Jadwal Ruang <i class="far fa-calendar-alt pl-2"></i></a>
+          <a href="<?= base_url('admin/jadwal-ruang') ?>" class="btn btn-info btn-sm">Waktu Buka <i class="far fa-calendar-alt pl-2"></i></a>
         </div>
         <div class="col-6 col-lg-4 text-right">
           <a href="<?= base_url('admin/tambah-ruang') ?>" class="btn btn-primary btn-sm">Tambah Ruang <i class="fas fa-plus pl-2"></i></a>
@@ -34,9 +34,9 @@
       <h5 class="text-gray-800"> <?php
                                   echo getHariIndonesia()[date("w", time())];  ?>, <?= ucfirst($status_buka->status); ?> ( <?= $status_buka->jam_buka; ?> s/d <?= $status_buka->jam_tutup; ?> )</h5>
     </div>
-    <!-- <div class="col-6 text-right">
+    <div class="col-6 text-right">
       <h5 class="text-gray-800">24 Mei 2019 (Cuti Bersama) </h5>
-    </div> -->
+    </div>
   </div>
 
   <table class="table table-responsive-sm ">
