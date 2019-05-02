@@ -45,11 +45,11 @@
 
           </table>
           <div class="text-right">
-            <a class="btn btn-outline-info btn-sm" href="<?= base_url('') ?>profile/getDataEditAdmin/<?= $admin['id'] ?>" role="button">
+            <a class="btn btn-outline-info btn-sm" href="<?= base_url('') ?>profile/edit/<?= encrypt_url($admin['id']) ?>" role="button">
               Edit <i class="fas fa-user-edit pl-2"></i>
             </a>
           </div>
-          <p class="card-text"><small class="text-muted">Bergabung Sejak <?= date('d F Y H:I', $admin['date_created']); ?></small></p>
+          <p class="card-text"><small class="text-muted">Bergabung Sejak <?= date('d F Y', $admin['date_created']); ?></small></p>
 
         </div>
       </div>

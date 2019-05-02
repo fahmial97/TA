@@ -55,11 +55,16 @@ class profile_model extends CI_Model
 
 	public function update($id, $result) //variabel id diinclude di fungsi modelnya terus di cari pakai id nya
 	{
+		$cariDataGambar = $this->db->get_where('user',['id'=>$id])->row_array()['image'];
+
+		if($cariDataGambar != 'default.jpg'){
+		unlink(FCPATH .'asset/img/profile/' . $cariDataGambar);
+		}
 		// data yang diambil dari form terus di masukin ke databasenya
 		$data = [
 			'image' => $result['file_name'],
 			'nama' => $this->input->post('nama'),
-			'fakultas' => $this->input->post('fakultas'),
+			'id_fakultas' => $this->input->post('fakultas'),
 			'email' => $this->input->post('email'),
 			'no_telpon' => $this->input->post('no_telpon')
 		];

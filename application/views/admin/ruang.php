@@ -19,10 +19,10 @@
     <div class="col-12 col-lg-6">
       <div class="row">
         <div class="col-6 col-lg-4 ml-auto px-0 text-right">
-          <a href="<?= base_url('admin/jadwal-ruang') ?>" class="btn btn-info btn-sm">Jam Buka <i class="far fa-calendar-alt pl-2"></i></a>
+          <a href="<?= base_url('admin/jadwal-ruang') ?>" class="btn btn-info btn-sm">Jadwal Ruang <i class="far fa-calendar-alt pl-2"></i></a>
         </div>
         <div class="col-6 col-lg-4 text-right">
-          <a href="<?= base_url('admin/addRuang') ?>" class="btn btn-primary btn-sm">Tambah Ruang <i class="fas fa-plus pl-2"></i></a>
+          <a href="<?= base_url('admin/tambah-ruang') ?>" class="btn btn-primary btn-sm">Tambah Ruang <i class="fas fa-plus pl-2"></i></a>
         </div>
       </div>
     </div>
@@ -31,9 +31,12 @@
 
   <div class="row mt-4">
     <div class="col-6">
-      <h5 class="text-gray-800"> <?php $hari = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
-                                  echo $hari[date("w", time())];  ?>, <?= ucfirst($status_buka->status); ?> ( <?= $status_buka->jam_buka; ?> s/d <?= $status_buka->jam_tutup; ?> )</h5>
+      <h5 class="text-gray-800"> <?php
+                                  echo getHariIndonesia()[date("w", time())];  ?>, <?= ucfirst($status_buka->status); ?> ( <?= $status_buka->jam_buka; ?> s/d <?= $status_buka->jam_tutup; ?> )</h5>
     </div>
+    <!-- <div class="col-6 text-right">
+      <h5 class="text-gray-800">24 Mei 2019 (Cuti Bersama) </h5>
+    </div> -->
   </div>
 
   <table class="table table-responsive-sm ">
@@ -62,7 +65,7 @@
             <div class="mb-2 btn btn-sm btn-<?= statusHelpers($r->id_status)['style'] ?>"><?= statusHelpers($r->id_status)['status'] ?></div>
           </td>
           <td width="250">
-            <a href="<?= site_url('admin/edit_ruang/' . encrypt_url($r->id)); ?>" class="btn btn-small text-success"><i class="fas fa-edit"></i> Edit
+            <a href="<?= site_url('admin/edit-ruang/' . encrypt_url($r->id)); ?>" class="btn btn-small text-success"><i class="fas fa-edit"></i> Edit
             </a>
             <a onclick="deleteConfirm('<?= site_url('admin/deleteRuang/' . $r->id) ?>')" href="#!" class="btn btn-small text-danger">
               <i class="fas fa-trash"></i> Hapus

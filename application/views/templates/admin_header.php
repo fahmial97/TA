@@ -35,10 +35,10 @@
         </a>
 
       </div>
-      <li class="nav-item <?php if ($this->uri->segment(1) == 'validasi') {
+      <li class="nav-item <?php if ($this->uri->segment(2) == 'validasi') {
                             echo 'active';
                           } ?>">
-        <a class="nav-link" href="<?= base_url('validasi/index'); ?>">
+        <a class="nav-link" href="<?= base_url('admin/validasi'); ?>">
           <i class="fas fa-vote-yea"></i>
           <span>Peminjaman Ruang</span></a>
       </li>
@@ -47,7 +47,7 @@
                             echo 'active';
                           } else if ($this->uri->segment(2) == 'jadwal-ruang') {
                             echo 'active';
-                          } elseif ($this->uri->segment(2) == 'addRuang') {
+                          } elseif ($this->uri->segment(2) == 'tambah-ruang') {
                             echo 'active';
                           } ?>">
         <a class="nav-link" href="<?= base_url('admin/ruang'); ?>">
@@ -55,10 +55,10 @@
           <span>Ruang</span></a>
       </li>
       <hr class="sidebar-divider my-0">
-      <li class="nav-item <?php if ($this->uri->segment(2) == '') {
+      <li class="nav-item <?php if ($this->uri->segment(2) == 'histori-peminjaman') {
                             echo 'active';
                           } ?>">
-        <a class="nav-link" href="<?= base_url('admin/'); ?>">
+        <a class="nav-link" href="<?= base_url('admin/histori-peminjaman'); ?>">
           <i class="fas fa-fw fa-history"></i>
           <span>History Peminjaman</span></a>
       </li>
@@ -71,10 +71,10 @@
           <span>Mahasiswa</span></a>
       </li>
       <hr class="sidebar-divider">
-      <li class="nav-item <?php if ($this->uri->segment(2) == 'admin') {
+      <li class="nav-item <?php if ($this->uri->segment(2) == 'list-admin') {
                             echo 'active';
                           } ?>">
-        <a class="nav-link" href="<?= base_url('admin/admin') ?>">
+        <a class="nav-link" href="<?= base_url('admin/list-admin') ?>">
           <i class="fas fa-fw fa-user-cog"></i>
           <span>Admin</span></a>
       </li>

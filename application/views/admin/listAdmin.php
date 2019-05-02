@@ -16,7 +16,7 @@
       <h1 class="h3 text-gray-800">Daftar Admin</h1>
     </div>
     <div class="col-6 text-right pt-0 pb-3">
-      <a href="<?= base_url('admin/addAdmin') ?>" class="btn btn-primary btn-sm">Tambah Admin <i class="fas fa-plus pl-2"></i></a>
+      <a href="<?= base_url('admin/tambah-admin') ?>" class="btn btn-primary btn-sm">Tambah Admin <i class="fas fa-plus pl-2"></i></a>
     </div>
   </div>
 

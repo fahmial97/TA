@@ -27,7 +27,7 @@
             </tr>
             <tr>
               <td>Fakultas</td>
-              <td><?= $user['fakultas']; ?></td>
+              <td><?=dataFakultas($user['id_fakultas']); ?></td>
             </tr>
             <tr>
               <td>No.Telpon</td>
@@ -39,7 +39,7 @@
             </tr>
           </table>
           <div class="text-right">
-            <a class="btn btn-outline-info btn-sm" href="<?= base_url('') ?>profile/getDataEdit/<?= $user['id'] ?>" role="button">
+            <a class="btn btn-outline-info btn-sm" href="<?= base_url('') ?>profile/edit/<?= encrypt_url($user['id']); ?>" role="button">
               Edit <i class="fas fa-user-edit pl-2"></i>
             </a>
           </div>

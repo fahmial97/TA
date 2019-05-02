@@ -31,7 +31,7 @@
                    <td><?= $u->nama; ?></td>
                    <td><?= $u->nim; ?> </td>
                    <td><?= $u->email; ?> </td>
-                   <td><?= $u->fakultas; ?> </td>
+                   <td><?= dataFakultas($u->id_fakultas); ?> </td>
                    <td><?= $u->no_telpon; ?> </td>
                    <td>
                      <a onclick="deleteConfirm('<?= site_url('admin/deleteMahasiswa/'.$u->id) ?>')" href="#!" class="btn btn-small text-danger">

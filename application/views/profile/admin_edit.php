@@ -1,5 +1,5 @@
-<div class="container">
 
+<div class="container">
       <form method="post" enctype="multipart/form-data" action="<?= base_url('profile/editAdmin/'.$dataEditAdmin->id.''); ?>">
         <div class="form-group">
           <label for="image">Foto</label>
@@ -11,7 +11,7 @@
         <div class="form-group">
           <label for="nim">NIP</label>
           <input class="form-control "
-           type="text" name="nip" value="<?=$dataEditAdmin->nip ?>" readonly/>
+           type="text" name="nip" value="<?=$dataEditAdmin->nip ?>" disabled/>
           <div class="invalid-feedback">
           </div>
         </div>

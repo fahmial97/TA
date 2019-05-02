@@ -45,6 +45,12 @@ function getDataHitungMundur($id)
   }
 }
 
+function dataFakultas($id)
+{
+  $ci = get_instance();
+  return $ci->db->get('data_fakultas', ['id' => $id])->row_array()['nama_fakultas'];
+}
+
 function getHariIndonesia()
 {
   return ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];

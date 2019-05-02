@@ -12,16 +12,7 @@
     </div>
     <div class="card-body">
       <!-- <form method="post" enctype="multipart/form-data" > -->
-      <?= form_open_multipart('admin/addAdmin'); ?>
-      <div class="form-group">
-        <label for="image">Foto</label>
-        <input class="form-control-file <?= form_error('image') ? 'is-invalid' : '' ?>" type="file" name="image" />
-        <input type="hidden" name="old_image">
-        <div class="invalid-feedback">
-          <?= form_error('image', '<small class="text-danger">', '</small>') ?>
-        </div>
-      </div>
-
+      <form action="<?= base_url('admin/addAdmin'); ?>" method="post">
       <div class="form-group">
         <input type="number" class="form-control form-control-user" id="nip" name="nip" placeholder="NIP" value="<?= set_value('nip'); ?>">
         <?= form_error('nip', '<small class="text-danger">', '</small>'); ?>
@@ -63,7 +54,7 @@
       <div class="text-right">
         <input class="btn btn-success" type="submit" name="btn" value="Save" />
       </div>
-      <?= form_close(); ?>
+      </form>
       <!-- </form> -->
 
     </div>

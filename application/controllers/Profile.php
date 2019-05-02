@@ -28,10 +28,11 @@ class Profile extends CI_Controller
 
   function getDataEdit($id)
   {
+    $decrypt = decrypt_url($id);
     $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
     $data['judul'] = 'Edit Ruang';
-    $data['dataEdit'] = $this->Profile_model->getById($id);
-
+    $data['dataEdit'] = $this->Profile_model->getById($decrypt);
+    $data['fakultas'] = $this->db->get('data_fakultas')->result_array();
 
     $this->load->view('templates/header', $data);
     $this->load->view('profile/edit', $data);
@@ -105,7 +106,7 @@ class Profile extends CI_Controller
     }
 
     $data['judul'] = 'My Profile';
-    $data['admin'] = $this->M_profileAdmin->getAll();
+    $data['data_admin'] = $this->M_profileAdmin->getAll();
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
 
     $this->load->view('templates/admin_header', $data);
@@ -113,12 +114,12 @@ class Profile extends CI_Controller
     $this->load->view('templates/admin_footer');
   }
 
-  function getDataEditAdmin($id)
+  public function edit_admin($id)
   {
+    $decryptId = decrypt_url($id);
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
     $data['judul'] = 'Edit Ruang';
-    $data['dataEditAdmin'] = $this->M_profileAdmin->getById($id);
-
+    $data['dataEditAdmin'] = $this->M_profileAdmin->getById($decryptId);
 
     $this->load->view('templates/admin_header', $data);
     $this->load->view('profile/admin_edit', $data);
@@ -127,11 +128,9 @@ class Profile extends CI_Controller
 
   public function editAdmin($id)
   {
-    if (!isset($id)) redirect('profile/admin');
-
     $admin = $this->M_profileAdmin;
     $validation = $this->form_validation;
-    $validation->set_rules($admin->rules());
+    $validation->set_rules($admin->rules_edit());
 
     if ($validation->run()) {
       // setting konfigurasi upload
@@ -144,7 +143,6 @@ class Profile extends CI_Controller
       $this->load->library('upload', $config);
 
       if (!$this->upload->do_upload('image')) {
-        $error = $this->upload->display_errors();
         // menampilkan pesan error
         $this->session->set_flashdata('error', 'Maaf File/Ukuran Gambar Tidak Sesuai');
         redirect('profile/admin'); //selesai proses di redirect
@@ -154,10 +152,12 @@ class Profile extends CI_Controller
         $this->session->set_flashdata('success', 'Data Berhasil Diubah');
         redirect('profile/admin'); //selesai proses di redirect
       }
+    }else{
+      redirect('profile/edit_admin');
     }
 
-    $data["admin"] = $admin->getById($id);
-    if (!$data["admin"]) show_404();
+    // $data["admin"] = $admin->getById($id);
+    // if (!$data["admin"]) show_404();
   }
 
 

@@ -26,8 +26,16 @@
 
         <div class="form-group">
           <label for="fakultas">Fakultas</label>
-          <input class="form-control"
-           type="text" name="fakultas"  placeholder="" value="<?=$dataEdit->fakultas ?>"/>
+            <select class="custom-select" name="fakultas" id="fakultas">
+              <option>Pilih Fakultas</option>
+              <?php foreach($fakultas as $value) : ?>
+                <?php if($value['id'] == $dataEdit->id_fakultas) : ?>
+                  <option value="<?= $value['id'] ?>" selected><?= $value['nama_fakultas'] ?></option>
+                <?php else : ?>
+                  <option value="<?= $value['id'] ?>"><?= $value['nama_fakultas'] ?></option>  
+                <?php endif ; ?>
+              <?php endforeach; ?>
+            </select>
           <div class="invalid-feedback">
           </div>
         </div>

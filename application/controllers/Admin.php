@@ -26,7 +26,7 @@ class Admin extends CI_Controller
   {
     $dataPinjam = $this->db->get('proses_peminjaman');
 
-    $config['base_url'] = base_url() . 'admin/index';
+    $config['base_url'] = base_url() . 'admin/histori-peminjaman';
     $config['total_rows'] = $dataPinjam->num_rows();
     $config['per_page'] = 10;
 
@@ -218,26 +218,10 @@ class Admin extends CI_Controller
     $validation = $this->form_validation;
     $validation->set_rules($admin->rules());
 
-
     if ($validation->run()) {
-      // setting konfigurasi upload
-      $config['upload_path']    = './asset/img/profile/';
-      $config['allowed_types']  = 'gif|jpg|png';
-      $config['max_width']      = 2048;
-      $config['max_height']     = 2048;
-      // load library upload
-      $this->load->library('upload', $config);
-      if (!$this->upload->do_upload('image')) {
-        $this->upload->display_errors();
-        // menampilkan pesan error
-        $this->session->set_flashdata('error', 'Maaf Gambar Tidak Sesuai');
-        redirect('admin/admin'); //selesai proses di redirect
-      } else {
-        $result = $this->upload->data();
-        $admin->save($result);
-        $this->session->set_flashdata('success', 'Admin Berhasil Ditambahkan');
-        redirect('admin/Admin');
-      }
+      $admin->save();
+      $this->session->set_flashdata('success', 'Admin Berhasil Ditambahkan');
+      redirect('admin/list-admin');
     }else{
       $this->load->view('templates/admin_header', $data);
       $this->load->view("admin/new_admin");
@@ -252,7 +236,7 @@ class Admin extends CI_Controller
 
     $this->M_profileAdmin->delete($id);
     $this->session->set_flashdata('success', 'Data Admin berhasil Dihapus');
-    redirect('admin/admin');
+    redirect('admin/list-admin');
   }
 
 
