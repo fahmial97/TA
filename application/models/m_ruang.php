@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class m_ruang extends CI_Model
+class M_ruang extends CI_Model
 {
 
   private $_table = "tb_ruang";
@@ -131,5 +131,14 @@ class m_ruang extends CI_Model
   public function delete($id)
   {
     return $this->db->delete($this->_table, ['id' => $id]);
+  }
+
+  public function ubahStatus($status,$id)
+  {
+    if($status == 0){
+      $this->db->update('waktu_ruang',['libur'=>1], ['id'=>$id]);
+    }else{
+      $this->db->update('waktu_ruang', ['libur' => 0], ['id' => $id]);
+    }
   }
 }

@@ -30,7 +30,7 @@ class Profile extends CI_Controller
   {
     $decrypt = decrypt_url($id);
     $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
-    $data['judul'] = 'Edit Ruang';
+    $data['judul'] = 'Edit Profile';
     $data['dataEdit'] = $this->Profile_model->getById($decrypt);
     $data['fakultas'] = $this->db->get('data_fakultas')->result_array();
 
@@ -118,7 +118,7 @@ class Profile extends CI_Controller
   {
     $decryptId = decrypt_url($id);
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
-    $data['judul'] = 'Edit Ruang';
+    $data['judul'] = 'Edit Profile Admin';
     $data['dataEditAdmin'] = $this->M_profileAdmin->getById($decryptId);
 
     $this->load->view('templates/admin_header', $data);
@@ -163,7 +163,7 @@ class Profile extends CI_Controller
 
   public function ubahPasswordAdmin()
   {
-    $data['judul'] = 'My Profile';
+    $data['judul'] = 'Ubah Password Admin';
     $data['admin'] = $this->M_profileAdmin->getAll();
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
 

@@ -31,8 +31,10 @@
 
   <div class="row mt-4">
     <div class="col-6">
-      <h5 class="text-gray-800"> <?php
-                                  echo getHariIndonesia()[date("w", time())];  ?>, <?= ucfirst($status_buka->status); ?> ( <?= $status_buka->jam_buka; ?> s/d <?= $status_buka->jam_tutup; ?> )</h5>
+      <h5 class="text-gray-800">
+        <?php echo getHariIndonesia()[date("w", time())];  ?>,
+        <?= ucfirst($status_buka->status); ?> ( <?= $status_buka->jam_buka; ?> s/d <?= $status_buka->jam_tutup; ?> )
+      </h5>
     </div>
     <!-- <div class="col-6 text-right">
       <h5 class="text-gray-800">24 Mei 2019 (Cuti Bersama) </h5>
@@ -48,6 +50,10 @@
         <th>Nomor ruang</th>
         <th>Status</th>
         <th class="text-center">Action</th>
+        <th class="text-center">edit</th>
+
+
+
       </tr>
     </thead>
     <tbody class="table table-hover">
@@ -70,8 +76,19 @@
             <a onclick="deleteConfirm('<?= site_url('admin/deleteRuang/' . $r->id) ?>')" href="#!" class="btn btn-small text-danger">
               <i class="fas fa-trash"></i> Hapus
             </a>
-            
           </td>
+          <td>
+            <select class="custom-select" name="status" id="status">
+              <?php foreach ($status as $s) : ?>
+                <?php if ($r->id_status == $s->id) : ?>
+                  <option value="<?= $s->id ?>" selected><?= $s->nama_status ?></option>
+                <?php else : ?>
+                  <option value="<?= $s->id ?>"><?= $s->nama_status ?></option>
+                <?php endif; ?>
+              <?php endforeach; ?>
+            </select>
+          </td>
+
         </tr>
       <?php endforeach; ?>
 

@@ -2,7 +2,7 @@
 	<h4>Edit Ruang</h4>
 				<div class="card mb-3">
 					<div class="card-header text-right">
-						<a href="<?= site_url('admin/') ?>"><i class="fas fa-arrow-left"></i> Back</a>
+						<a href="<?= site_url('admin/ruang') ?>"><i class="fas fa-arrow-left"></i> Back</a>
 					</div>
 
 					<div class="card-body">

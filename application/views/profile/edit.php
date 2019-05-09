@@ -29,7 +29,7 @@
             <select class="custom-select" name="fakultas" id="fakultas">
               <option>Pilih Fakultas</option>
               <?php foreach($fakultas as $value) : ?>
-                <?php if($value['id'] == $dataEdit->id_fakultas) : ?>
+                <?php if($value['id'] == $dataEdit->id) : ?>
                   <option value="<?= $value['id'] ?>" selected><?= $value['nama_fakultas'] ?></option>
                 <?php else : ?>
                   <option value="<?= $value['id'] ?>"><?= $value['nama_fakultas'] ?></option>  

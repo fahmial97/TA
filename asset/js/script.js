@@ -142,4 +142,12 @@ $(document).ready(function () {
   })
 
 
+  $('.ngecek-libur').on('change','.yang-dicek',function(){
+    let val = this.value;
+    let idHari = this.dataset.id;
+    $.getJSON('./ubahStatusLibur/'+val+'/'+idHari,(status)=>{
+      location.reload();
+    });
+  });
+  
 });

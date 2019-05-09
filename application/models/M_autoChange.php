@@ -10,7 +10,7 @@ class M_autoChange extends CI_Model
         $this->_autoChangeSedang();
         $this->_autoChangeUserPesan();
         $this->_autoCloseRuang();
-        $this->_autoChangeStatusPeminjaman();
+        // $this->_autoChangeStatusPeminjaman();
     }
 
     private function _autoChangeProses()
@@ -92,15 +92,18 @@ class M_autoChange extends CI_Model
         $waktuTutup = $data['jam_tutup'];
 
         if($waktuBuka < date("H:i",time()) && $waktuTutup > date("H:i",time()) ){
-            $this->db->update('waktu_ruang', ['status'=>'buka'],['id'=>date('N',time())]);
+            $waktuPlus = date('H:i', strtotime($waktuBuka) + 180);
+
             $dataRuang = $this->db->get('tb_ruang')->result_array();
 
-            foreach($dataRuang as $data){
-                $this->db->update('tb_ruang',['id_status'=>1],['id'=>$data['id']]);
+            if ($waktuBuka < date("H:i", time()) && $waktuPlus > date("H:i", time()) ) {
+                foreach ($dataRuang as $data) {
+                    $this->db->update('tb_ruang', ['id_status' => 1], ['id' => $data['id']]);
+                }
             }
             $this->db->update('waktu_ruang', ['status'=>'buka'],['id'=>date('N',time())]);
             
-        }else{
+        }else {
             $this->db->update('waktu_ruang', ['status'=>'tutup'],['id'=>date('N',time())]);
             $dataRuang = $this->db->get('tb_ruang')->result_array();
             

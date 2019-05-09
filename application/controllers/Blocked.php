@@ -33,4 +33,14 @@ class Blocked extends CI_Controller
     $this->load->view('blocked/404', $data);
     $this->load->view('templates/footer');
   }
+
+  // ==================================== Admin ====================================
+
+  public function tolak()
+  {
+    $data['judul'] = 'akses ditolak';
+    $data['admin'] = $this-> db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
+ 
+    $this->load->view( 'blocked/aksestolak', $data);
+  }
 }

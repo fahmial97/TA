@@ -48,7 +48,7 @@ function getDataHitungMundur($id)
 function dataFakultas($id)
 {
   $ci = get_instance();
-  return $ci->db->get('data_fakultas', ['id' => $id])->row_array()['nama_fakultas'];
+  return $ci->db->get_where('data_fakultas', ['id' => $id])->row_array()['nama_fakultas'];
 }
 
 function getHariIndonesia()

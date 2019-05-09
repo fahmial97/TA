@@ -25,9 +25,8 @@
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion " id="accordionSidebar">
+    <ul class="navbar-nav  sidebar sidebar-dark accordion " id="accordionSidebar" style="background-color:#004e66">
       <!-- Sidebar - Brand -->
       <div class="sidebar-brand d-flex align-items-center justify-content-center">
         <a class="sidebar-brand-text mx-3" href="<?= base_url(); ?>">
@@ -43,6 +42,7 @@
           <span>Peminjaman Ruang</span></a>
       </li>
       <hr class="sidebar-divider my-0">
+
       <li class="nav-item <?php if ($this->uri->segment(2) == 'ruang') {
                             echo 'active';
                           } else if ($this->uri->segment(2) == 'jadwal-ruang') {
@@ -55,6 +55,7 @@
           <span>Ruang</span></a>
       </li>
       <hr class="sidebar-divider my-0">
+
       <li class="nav-item <?php if ($this->uri->segment(2) == 'histori-peminjaman') {
                             echo 'active';
                           } ?>">
@@ -63,6 +64,7 @@
           <span>History Peminjaman</span></a>
       </li>
       <hr class="sidebar-divider">
+
       <li class="nav-item <?php if ($this->uri->segment(2) == 'mahasiswa') {
                             echo 'active';
                           } ?>">
@@ -71,14 +73,18 @@
           <span>Mahasiswa</span></a>
       </li>
       <hr class="sidebar-divider">
-      <li class="nav-item <?php if ($this->uri->segment(2) == 'list-admin') {
-                            echo 'active';
-                          } ?>">
-        <a class="nav-link" href="<?= base_url('admin/list-admin') ?>">
-          <i class="fas fa-fw fa-user-cog"></i>
-          <span>Admin</span></a>
-      </li>
-      <hr class="sidebar-divider">
+
+      <?php if ($this->session->userdata('role_id') == 1) : ?>
+        <li class="nav-item <?php if ($this->uri->segment(2) == 'list-admin') {
+                              echo 'active';
+                            } ?>">
+          <a class="nav-link" href="<?= base_url('admin/list-admin') ?>">
+            <i class="fas fa-fw fa-user-cog"></i>
+            <span>Admin</span></a>
+        </li>
+        <hr class="sidebar-divider">
+      <?php endif; ?>
+
 
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('auth/logoutAdmin'); ?>" data-toggle="modal" data-target="#logoutModal">
@@ -87,7 +93,11 @@
       </li>
       <hr class="sidebar-divider d-none d-md-block">
     </ul>
-    <!-- ==================== End of Sidebar ==================== -->
+    <!-- ==================================================================================== -->
+    <!-- ================================ End of Sidebar ================================ -->
+    <!-- =============================================================================== -->
+
+
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">

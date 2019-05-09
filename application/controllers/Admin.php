@@ -202,10 +202,16 @@ class Admin extends CI_Controller
     $data['all_admin'] = $this->M_profileAdmin->getAll();
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
 
+    if($this->session->userdata('role_id') == 1) {
+      $this->load->view('templates/admin_header', $data);
+      $this->load->view('admin/listAdmin', $data);
+      $this->load->view('templates/admin_footer');
+    } else{
+      redirect('blocked/tolak');
+    }
+    
+    
 
-    $this->load->view('templates/admin_header', $data);
-    $this->load->view('admin/listAdmin', $data);
-    $this->load->view('templates/admin_footer');
   }
 
   function addAdmin()
@@ -237,6 +243,11 @@ class Admin extends CI_Controller
     $this->M_profileAdmin->delete($id);
     $this->session->set_flashdata('success', 'Data Admin berhasil Dihapus');
     redirect('admin/list-admin');
+  }
+
+  public function ubahStatusLibur($status,$id)
+  {
+    echo json_encode($this->M_ruang->ubahStatus( $status, $id));
   }
 
 

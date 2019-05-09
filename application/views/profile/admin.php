@@ -45,7 +45,7 @@
 
           </table>
           <div class="text-right">
-            <a class="btn btn-outline-info btn-sm" href="<?= base_url('') ?>profile/edit/<?= encrypt_url($admin['id']) ?>" role="button">
+            <a class="btn btn-outline-info btn-sm" href="<?= base_url('') ?>profile/edit-admin/<?= encrypt_url($admin['id']) ?>" role="button">
               Edit <i class="fas fa-user-edit pl-2"></i>
             </a>
           </div>
