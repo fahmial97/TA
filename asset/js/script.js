@@ -1,5 +1,13 @@
 $(document).ready(function () {
 
+  // ============================== thumbnail foto ==============================
+   $('.custom-file-input').on('change', function () {
+     let fileName = $(this).val().split('\\').pop();
+     $(this).next('.custom-file-label').addClass("selected").html(fileName);
+   });
+  // ============================== thumbnail foto ==============================
+  
+
   // ============================== Sidebar Nav ==============================
   $('#btnRes').click(function () {
     $('#mySidenav').css('width', '80%');
@@ -73,6 +81,12 @@ $(document).ready(function () {
 
   // ============================== deadline ==============================
 
+  // // ============================== Tooltip ==============================
+  
+  // $(function () {
+  //   $('[data-toggle="tooltip"]').tooltip()
+  // })
+  // // ============================== Tooltip pindah ke footer admin==============================
 
 
 
@@ -118,6 +132,9 @@ $(document).ready(function () {
   })
   // ============================== Button Reset Data ==============================
 
+
+
+  // ============================== Modal Popup ==============================
   $('.aksi-td').on('click', '.UpdateModal', function (e) {
     e.preventDefault();
 
@@ -149,5 +166,33 @@ $(document).ready(function () {
       location.reload();
     });
   });
+
+  $('.table').on('change','.cbx',function(){
+    let value = this.value;
+    if($(this).prop('checked')){
+
+      $('#idRuangKeterangan').val(value);
+      $('#modalKeteranganRuang').modal('show');
+    }else{
+      $.getJSON('./ubahStatusRuang/' + value, (status) => {
+        location.reload();
+      });
+    }
+  });
+
+  $('.close').click(function(){
+   closeCheck();
+  });
+
+  $('.closeBtnCheck').click(function(){
+    closeCheck();
+  });
+
+  function closeCheck(){
+    let value = '#cbx' + $('#idRuangKeterangan').val();
+    $(value).prop('checked', false);
+  }
   
 });
+
+

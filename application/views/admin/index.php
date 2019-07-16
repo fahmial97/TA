@@ -1,147 +1,108 @@
-  <!-- Begin Page Content -->
-  <div class="container-fluid">
-    <?php if ($this->session->flashdata('success')) : ?>
-      <div class="alert alert-success" role="alert">
-        <?= $this->session->flashdata('success'); ?>
-      </div>
-    <?php endif; ?>
-    <?php if ($this->session->flashdata('error')) : ?>
-      <div class="alert alert-danger" role="alert">
-        <?= $this->session->flashdata('error'); ?>
-      </div>
-    <?php endif; ?>
+<div class="container">
+  <h4 class="mb-3">Dashboard Admin</h4>
 
-
-    <!-- Page Heading -->
-    <h1 class="h3 text-gray-800">History Peminjaman</h1>
-    <table class="table table-responsive table-striped">
-      <thead class="bg-info text-white">
-        <?php  ?>
-        <tr>
-          <th>#</th>
-          <th>Gambar</th>
-          <th>No Ruang</th>
-          <th>Tanggal</th>
-          <th style="width:100px;">Jam Mulai</th>
-          <th>Jam Selesai</th>
-          <th style="width:150px;">Nama</th>
-          <th style="width:150px;">Nim</th>
-          <th>No Telpon</th>
-          <th>Status</th>
-          <th>Aksi</th>
-        </tr>
-      </thead>
-      <tbody class="table table-hover">
-        <?php $no = $offset + 1;
-        foreach ($proses_peminjaman as $pp) : ?>
-          <tr>
-            <td><?= $no++; ?></td>
-
-            <td>
-              <img src="<?= base_url('asset/img/ruang/' . prosesHelpers($pp->id_ruang)['gambar']) ?>" width="50" />
-
-            </td>
-            <td>
-              <?= prosesHelpers($pp->id_ruang)['no_ruang'] ?>
-            </td>
-            <td>
-              <?php
-              $hari = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
-              $bulan = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-              echo $hari[date("w", $pp->jam_pinjam)] . ", <br>" . date("j ", $pp->jam_pinjam);
-              echo $bulan[date("n", $pp->jam_pinjam)] . "  " . date("Y");
-              ?>
-            </td>
-            <td>
-              <?= date('H : i', $pp->jam_pinjam); ?>
-            </td>
-            <td>
-              <?= date('H : i', $pp->jam_selesai); ?>
-            </td>
-            <td>
-              <?= ' 1) ' . getUserHelpers($pp->id_user)['nama'] ?> <br>
-              <?php
-              $i = 2;
-              $data = $pp->nama_pinjam;
-              $dataExplode = explode(",", $data);
-              array_pop($dataExplode);
-              foreach ($dataExplode as $value) {
-                echo $i . ') ' . $value . '<br>';
-                $i++;
-              }
-              ?>
-
-            </td>
-            <td>
-              <?= ' 1) ' . getUserHelpers($pp->id_user)['nim'] ?> <br>
-              <?php
-              $i = 2;
-              $data = $pp->nim_pinjam;
-              $dataExplode = explode(",", $data);
-              array_pop($dataExplode);
-              foreach ($dataExplode as $value) {
-                echo $i . ') ' . $value . '<br>';
-                $i++;
-              }
-              ?>
-            </td>
-            <td>
-              <?= ' 1) ' . getUserHelpers($pp->id_user)['no_telpon'] ?> <br>
-              <?php
-              $i = 2;
-              $data = $pp->no_telpon_pinjam;
-              $dataExplode = explode(",", $data);
-              array_pop($dataExplode);
-              foreach ($dataExplode as $value) {
-                echo $i . ') ' . $value . '<br>';
-                $i++;
-              }
-              ?>
-            </td>
-            <td>
-              <div class="text-<?= statusHelpers($pp->id_status)['style'] ?>">
-                <?= statusHelpers($pp->id_status)['status'] ?>
+  <div class="row">
+    <!-- ruang -->
+    <div class="col-md-4 col-12 p-3">
+      <a href="<?= base_url('admin/ruang') ?>" style="text-decoration:none">
+        <div class="card border-left-info shadow-sm h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="font-weight-bold text-info text-uppercase mb-1">Ruang</div>
+                <h2 class="p-2 mb-0 font-weight-bold text-gray-800"> <?= $tb_ruang ?></h2>
               </div>
-            </td>
-            <td>
-              <a onclick="deleteConfirm('<?= site_url('ruang/deleteDataBooking/' . $pp->id) ?>')" href="#!" class="btn btn-small text-danger">
-                <i class="fas fa-trash"></i> Hapus
-              </a>
-            </td>
-            </td>
-          </tr>
-        <?php endforeach; ?>
-
-      </tbody>
-    </table>
-    <div class="justify-content-center d-flex">
-      <?php echo $page; ?>
+              <div class="col-auto">
+                <i class="fas fa-chair fa-3x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
     </div>
-  </div>
-  <!-- /.container-fluid -->
 
-  <!-- Modal Delete Peminjaman Ruang -->
-  <div class="modal fade" id="deletePeminjaman" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Anda Yakin?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
+    <!-- validasi -->
+    <div class="col-md-4 col-12 p-3">
+      <a href="<?= base_url('admin/validasi') ?>" style="text-decoration:none">
+        <div class="card border-left-info shadow-sm h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="font-weight-bold text-info text-uppercase mb-1">Ruang digunakan</div>
+                <h2 class="p-2 mb-0 font-weight-bold text-gray-800"><?= $sedang_digunakan ?> </h2>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-vote-yea fa-3x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="modal-body">Ruang Peminjaman yang dihapus tidak akan bisa dikembalikan.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a id="btn-deletePeminjaman" class="btn btn-danger" href="#">Delete</a>
+      </a>
+    </div>
+
+    <!-- histori-peminjaman -->
+    <div class="col-md-4 col-12  p-3">
+      <a href="<?= base_url('admin/histori-peminjaman') ?>" style="text-decoration:none">
+        <div class="card border-left-info shadow-sm h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="font-weight-bold text-info text-uppercase mb-1">Proses Peminjaman</div>
+                <h2 class="p-2 mb-0 font-weight-bold text-gray-800"><?= $proses ?> </h2>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-history fa-3x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
         </div>
+      </a>
+    </div>
+
+
+    <!-- mahasiswa -->
+    <div class="col-md-6 col-12  p-3">
+      <a href="<?= base_url('admin/mahasiswa') ?>" style="text-decoration:none">
+        <div class="card border-left-success shadow-sm h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="font-weight-bold text-success text-uppercase mb-1">Mahasiswa</div>
+                <h2 class=" p-2 mb-0 font-weight-bold text-gray-800"><?= $user ?></h2>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-users fa-3x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!---admin -->
+    <?php if ($this->session->userdata('role_id') == 1) : ?>
+      <div class="col-md-6 col-12  p-3">
+        <a href="<?= base_url('admin/list-admin') ?>" style="text-decoration:none">
+          <div class="card border-left-warning shadow-sm h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="font-weight-bold text-warning text-uppercase mb-1">Admin</div>
+                  <h2 class="p-2 mb-0 font-weight-bold text-gray-800"><?= $admin ?></h2>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-user-cog fa-3x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
       </div>
-    </div>
+    <?php else : ?>
+      <div class="d-none"></div>
+    <?php endif; ?>
+
+
   </div>
 
-  <script>
-    function deleteConfirm(url) {
-      $('#btn-deletePeminjaman').attr('href', url);
-      $('#deletePeminjaman').modal();
-    }
-  </script>
+</div>

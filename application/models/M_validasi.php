@@ -23,9 +23,7 @@ class M_validasi extends CI_Model
     public function validSelesai($id)
     {
         $data_id_ruang = $this->db->get_where('proses_peminjaman', ['id' => $id])->row_array()['id_ruang'];
-
         $this->db->update('proses_peminjaman', ['id_status' => 6,'status_booking'=>2], ['id' => $id]);
-
         $this->_gantiDipesan($data_id_ruang);
     }
 

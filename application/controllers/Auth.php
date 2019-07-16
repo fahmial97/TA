@@ -10,6 +10,9 @@ class Auth extends CI_Controller
 
   public function index()
   {
+    if ($this->session->userdata('nim')) {
+      redirect('');
+    }
     $this->form_validation->set_rules('nim', 'Nim', 'required|trim');
     $this->form_validation->set_rules('password', 'Password', 'required|trim');
 
@@ -25,6 +28,7 @@ class Auth extends CI_Controller
     }
   }
 
+  //login user
   private function _login()
   {
     $nim = $this->input->post('nim');
@@ -65,8 +69,12 @@ class Auth extends CI_Controller
     }
   }
 
+  //registrasi user
   public function registration() //
   {
+    if ($this->session->userdata('nim')) {
+      redirect('');
+    }
     $this->form_validation->set_rules('nim', 'Nim', 'required|trim|is_unique[user.nim]', [
       'is_unique' => 'Nim Sudah pernah digunakan!'
     ]);
@@ -100,12 +108,12 @@ class Auth extends CI_Controller
         'no_telpon' => htmlspecialchars($this->input->post('no_telpon', true)),
         'image' => 'default.jpg',
         'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-        'role_id' => 3,
-        'is_active' => 2,
+        'is_active' => 0,
         'date_created' => time(),
         'peminjaman' => 'belum'
       ];
 
+      //siapkan token
       $token = base64_encode(random_bytes(32));
       $user_token = [
         'email' => $email,
@@ -126,7 +134,6 @@ class Auth extends CI_Controller
     }
   }
 
-
   //aktivasi email
   // 1 x 24 jam
   public function verify()
@@ -139,10 +146,9 @@ class Auth extends CI_Controller
     if ($user) {
       $user_token = $this->db->get_where('user_token', ['token' => $token])->row_array();
       if ($user_token) {
-        if (time() -  $user_token['date_created'] < (60 * 60 * 24)) {
-
+       
+        if (time() -  $user_token['date_created'] < (60 * 60 * 24)) {  //24 jam
           $this->db->update('user', ['is_active' => 1], ['email' => $email]);
-
           $this->db->delete('user_token', ['email' => $email]);
 
           $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
@@ -178,8 +184,8 @@ class Auth extends CI_Controller
     $config = [
       'protocol' => 'smtp',
       'smtp_host' => 'ssl://smtp.googlemail.com',
-      'smtp_user' => 'loginlengkap@gmail.com',
-      'smtp_pass' => 'Login1234',
+      'smtp_user' => 'diskusiperpus@gmail.com',
+      'smtp_pass' => '2019diskusiperpus',
       'smtp_port' => 465,
       'mailtype' => 'html',
       'charset' => 'utf-8',
@@ -189,7 +195,7 @@ class Auth extends CI_Controller
     $this->load->library('email', $config);
     $this->email->initialize($config);
 
-    $this->email->from('loginlengkap@gmail.com', 'Ruang Dikusi Perpustakaan Mercu Buana');
+    $this->email->from( 'diskusiperpus@gmail.com', 'Ruang Dikusi Perpustakaan Mercu Buana');
     $this->email->to($this->input->post('email'));
 
     $dataVerif = [
@@ -220,6 +226,7 @@ class Auth extends CI_Controller
     }
   }
 
+  //lupa password
   public function forgot()
   {
     $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', [
@@ -261,7 +268,7 @@ class Auth extends CI_Controller
   }
 
 
-  //lupa password
+  //ganti password
   public function resetPassword()
   {
     $email = $this->input->get('email');
@@ -330,6 +337,7 @@ class Auth extends CI_Controller
     }
   }
 
+  //logout user
   public function logout()
   {
     $this->session->unset_userdata('nim');
@@ -346,6 +354,9 @@ class Auth extends CI_Controller
 
   public function loginAdmin()
   {
+    if ($this->session->userdata('nip')) {
+      redirect('admin');
+    }
     $this->form_validation->set_rules('nip', 'Nip', 'required|trim');
     $this->form_validation->set_rules('password', 'Password', 'required|trim');
 
@@ -388,47 +399,6 @@ class Auth extends CI_Controller
     } else {
       $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
                                       Nim Belum Terdaftar</div>');
-      redirect('auth/loginAdmin');
-    }
-  }
-
-  public function registrationAdmin() //
-  {
-    $this->form_validation->set_rules('nip', 'Nip', 'required|trim|is_unique[admin.nip]', [
-      'is_unique' => 'Nip Sudah pernah digunakan!'
-    ]);
-    $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
-    $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[admin.email]', [
-      'is_unique' => 'Email Sudah pernah digunakan!'
-    ]);
-    $this->form_validation->set_rules('no_telpon', 'No_telpon', 'required|trim');
-    $this->form_validation->set_rules('password_admin1', 'Password', 'required|trim|min_length[5]|matches[password_admin2]', [
-      'matches' => 'password tidak sama!',
-      'min_length' => 'password terlalu singkat!'
-    ]);
-    $this->form_validation->set_rules('password_admin2', 'Password', 'required|trim|matches[password_admin1]');
-
-
-    if ($this->form_validation->run() ==  false) {
-      $data['judul'] = 'Registration';
-      $this->load->view('templates/auth_header', $data);
-      $this->load->view('auth/registration_Admin');
-      $this->load->view('templates/auth_footer');
-    } else {
-      $data  = [
-        'nip' => htmlspecialchars($this->input->post('nip', true)),
-        'nama' => htmlspecialchars($this->input->post('nama', true)),
-        'email' => htmlspecialchars($this->input->post('email', true)),
-        'no_telpon' => htmlspecialchars($this->input->post('no_telpon', true)),
-        'image' => 'default.jpg',
-        'password' => password_hash($this->input->post('password_admin1', true), PASSWORD_DEFAULT),
-        'role_id' => 1,
-        'date_created' => time(),
-      ];
-
-      $this->db->insert('admin', $data);
-      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-                                      Register Berhasil! Silahkan Login</div>');
       redirect('auth/loginAdmin');
     }
   }

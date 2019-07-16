@@ -22,7 +22,6 @@ class Validasi extends CI_Controller
 
     public function index()
     {
-
         $data['judul'] = 'Peminjaman Ruang';
         $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
         $data["proses_peminjaman"] = $this->M_pinjam->getAllPinjam();

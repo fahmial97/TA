@@ -32,8 +32,11 @@
       </tr>
     </thead>
     <tbody class="table table-hover">
+      <?php $jumlah = 0; ?>
       <?php foreach ($proses_peminjaman as $pp) : ?>
-        <?php if ($pp->id_status == 2 || $pp->id_status == 3 || $pp->id_status == 5) { ?>
+        <?php if ($pp->id_status == 2 || $pp->id_status == 3 || $pp->id_status == 5) {
+          $jumlah++;
+          ?>
           <tr>
             <td><?= $no++; ?></td>
             <td>
@@ -117,12 +120,19 @@
               } ?>
             </td>
           </tr>
-        <?php  } else { ?>
+        <?php  } ?>
 
-        <?php } ?>
       <?php endforeach; ?>
     </tbody>
   </table>
+  <?php if ($jumlah < 1) { ?>
+    <div class="text-center m-5 py-5">
+      <h3 class="">Tidak ada Peminjaman</h3>
+    </div>
+    <br><br><br><br>
+  <?php } ?>
+
+
 </div>
 <!-- /.container-fluid -->
 

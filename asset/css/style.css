@@ -1,3 +1,7 @@
+/* ********************************************************************************************************* */
+/* ************************************************* Mahasiswa ***************************************** */
+/* ********************************************************************************************************* */
+
 /* Font */
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
@@ -7,20 +11,7 @@ body {
 
 /* Font */
 
-
 /* ********************************* Navbar ********************************* */
-
-/* nav {
-    position: fixed;
-    top: 0;
-    transition: top 0.2s ease-in-out;
-    width: 100%;
-}
-
-.nav-up {
-    top: -100px;
-} */
-
 
 .sidenav {
   box-shadow: 1px 1px 10px;
@@ -44,7 +35,6 @@ body {
   display: block;
   padding-left: 15px;
 }
-
 
 
 .logo_ruang {
@@ -92,28 +82,8 @@ body {
   max-width: 200px;
   max-height: 100px;
 }
-
 /* ********************************* /Navbar ********************************* */
-/* ********************************* Jam ********************************* */
-.jam {
-  font-size: 28px;
-  font-weight: bold;
-  color: rgb(44, 138, 250);
-}
 
-.icon-fa {
-  font-size: 28px;
-  color: rgb(44, 138, 250);
-}
-
-/* ********************************* Jam ********************************* */
-
-/* Pesanan Saya */
-.pemesanan>td {
-  color: rgb(26, 123, 194);
-}
-
-/* Pesanan Saya */
 
 /* ********************************* Footer  ********************************* */
 .page-footer {
@@ -145,8 +115,94 @@ hr.stripe {
 .copy {
   color: #6794a9;
 }
-
 /* ********************************* End Footer  ********************************* */
+
+
+
+
+
+
+/* ********************************************************************************************************* */
+/* ************************************************* Admin ***************************************** */
+/* ********************************************************************************************************* */
+
+
+
+/* *********** checkbox on off ruang *********** */
+.toggleRuang {
+  position: relative;
+  display: block;
+  width: 40px;
+  height: 20px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+}
+
+.toggleRuang:before {
+  content: "";
+  position: relative;
+  top: 3px;
+  left: 3px;
+  width: 34px;
+  height: 14px;
+  display: block;
+  background: #9A9999;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.toggleRuang span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  display: block;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(154, 153, 153, 0.5);
+  transition: all 0.2s ease;
+}
+
+.toggleRuang span:before {
+  content: "";
+  position: absolute;
+  display: block;
+  margin: -18px;
+  width: 56px;
+  height: 56px;
+  background: rgba(79, 46, 220, 0.5);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 1;
+  pointer-events: none;
+}
+
+.cbx:checked+.toggleRuang:before {
+  background: rgba(64, 191, 196, 0.349);
+}
+
+.cbx:checked+.toggleRuang span {
+  background: rgba(56, 183, 187, 0.842);
+  transform: translateX(20px);
+  transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25), background 0.15s ease;
+  box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
+}
+
+.cbx:checked+.toggleRuang span:before {
+  transform: scale(1);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+/* *********** /checkbox on off ruang *********** */
+
+
+/* ********************************************* Admin  ********************************************* */
+
+
+
 
 
 /* Rsponsive */

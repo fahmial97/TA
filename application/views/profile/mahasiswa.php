@@ -10,24 +10,29 @@
       <?= $this->session->flashdata('error'); ?>
     </div>
   <?php endif; ?>
+
+
   <!-- Page Heading -->
   <h1 class="h3 mb-4 text-gray-800">Profile</h1>
   <div class="card mb-3" style="max-width:1000px">
     <div class="row no-gutters">
-      <div class="col-md-4">
+      <div class="col-4">
         <img src="<?= base_url('asset/img/profile/') . $user['image']; ?>" class="card-img" style="width:300px;">
       </div>
-      <div class="col-md-8">
+      <div class="col-8">
         <div class="card-body">
-          <h5 class="card-title"><?= $user['nama']; ?></h5>
           <table class="table table-responsive-sm">
+            <tr>
+              <td>Nama</td>
+              <td><?= $user['nama']; ?></td>
+            </tr>
             <tr>
               <td>NIM</td>
               <td><?= $user['nim']; ?></td>
             </tr>
             <tr>
               <td>Fakultas</td>
-              <td><?=dataFakultas($user['id_fakultas']); ?></td>
+              <td><?= dataFakultas($user['id_fakultas']); ?></td>
             </tr>
             <tr>
               <td>No.Telpon</td>

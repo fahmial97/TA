@@ -16,6 +16,7 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
+  <link rel="stylesheet" href="<?= base_url('asset/css/style.css') ?>">
   <link href="<?= base_url('asset/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="<?= base_url('asset/img/favicon.png') ?>">
 
@@ -29,11 +30,17 @@
     <ul class="navbar-nav  sidebar sidebar-dark accordion " id="accordionSidebar" style="background-color:#004e66">
       <!-- Sidebar - Brand -->
       <div class="sidebar-brand d-flex align-items-center justify-content-center">
-        <a class="sidebar-brand-text mx-3" href="<?= base_url(); ?>">
+        <a class="sidebar-brand-text mx-3">
           <img src="<?= base_url('asset/img/logo_ruang.png') ?>" style="width: 140px;" alt="">
         </a>
-
       </div>
+      <li class="nav-item <?php if ($this->uri->segment(2) == '') {
+                            echo 'active';
+                          } ?>">
+        <a class="nav-link" href="<?= base_url('admin/'); ?>">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
       <li class="nav-item <?php if ($this->uri->segment(2) == 'validasi') {
                             echo 'active';
                           } ?>">
@@ -41,7 +48,6 @@
           <i class="fas fa-vote-yea"></i>
           <span>Peminjaman Ruang</span></a>
       </li>
-      <hr class="sidebar-divider my-0">
 
       <li class="nav-item <?php if ($this->uri->segment(2) == 'ruang') {
                             echo 'active';
@@ -54,7 +60,6 @@
           <i class="fas fa-fw fa-chair"></i>
           <span>Ruang</span></a>
       </li>
-      <hr class="sidebar-divider my-0">
 
       <li class="nav-item <?php if ($this->uri->segment(2) == 'histori-peminjaman') {
                             echo 'active';
@@ -63,7 +68,6 @@
           <i class="fas fa-fw fa-history"></i>
           <span>History Peminjaman</span></a>
       </li>
-      <hr class="sidebar-divider">
 
       <li class="nav-item <?php if ($this->uri->segment(2) == 'mahasiswa') {
                             echo 'active';
@@ -72,7 +76,6 @@
           <i class="fas fa-fw fa-users"></i>
           <span>Mahasiswa</span></a>
       </li>
-      <hr class="sidebar-divider">
 
       <?php if ($this->session->userdata('role_id') == 1) : ?>
         <li class="nav-item <?php if ($this->uri->segment(2) == 'list-admin') {
@@ -82,22 +85,17 @@
             <i class="fas fa-fw fa-user-cog"></i>
             <span>Admin</span></a>
         </li>
-        <hr class="sidebar-divider">
       <?php endif; ?>
-
-
+      <hr class="sidebar-divider">
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('auth/logoutAdmin'); ?>" data-toggle="modal" data-target="#logoutModal">
           <i class="fas fa-fw fa-sign-out-alt"></i>
           <span>Logout</span></a>
       </li>
-      <hr class="sidebar-divider d-none d-md-block">
     </ul>
     <!-- ==================================================================================== -->
     <!-- ================================ End of Sidebar ================================ -->
     <!-- =============================================================================== -->
-
-
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -111,12 +109,55 @@
           </button>
 
           <!-- Topbar Navbar -->
-          <div class=" text-left" style="color:rgb(4, 112, 158);">
+          <div class="text-left" style="color:rgb(4, 112, 158);">
             <i class="fas fa-users-cog pr-2"></i>Admin Page
           </div>
+
+
           <ul class="navbar-nav ml-auto">
 
+            <!-- Nav Item - Alerts -->
+            <!-- <li class="nav-item dropdown no-arrow ml-auto">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                
+                <span class="badge badge-danger badge-counter">3+</span>
+              </a>
+             
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in " aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                  Alerts Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 12, 2019</div>
+                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-success">
+                      <i class="fas fa-donate text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 7, 2019</div>
+                    $290.29 has been deposited into your account!
+                  </div>
+                </a>
+             
+                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+              </div>
+            </li> -->
+
             <div class="topbar-divider d-none d-sm-block"></div>
+
+
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

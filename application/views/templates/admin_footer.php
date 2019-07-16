@@ -1,7 +1,15 @@
 <footer class="text-center mt-5 pt-5">
   <p>copyright @2019</p>
 
+
+
 </footer>
+
+<script>
+  $(function() {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
 </div>
 <!-- End of Main Content -->
 

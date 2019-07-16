@@ -21,6 +21,8 @@ class M_ruang extends CI_Model
       ]
     ];
   }
+
+
   function getALLruang()
   {
     return $this->db->get_where($this->_table)->result();
@@ -29,6 +31,17 @@ class M_ruang extends CI_Model
   public function getAllJam()
   {
     return $this->db->get('waktu_ruang')->result();
+  }
+
+  public function updateKeterangan()
+  {
+    $input = $this->input;
+    $id = $input->post('idRuang');
+    $data = [
+      'id_keterangan' => 1,
+      'keterangan' => $input->post('input_keterangan')
+    ];
+    $this->db->update( $this->_table,$data,['id'=>$id]);
   }
 
   public function updateWaktuRuang()
@@ -55,38 +68,52 @@ class M_ruang extends CI_Model
     return $this->db->get_where('waktu_ruang', ['id' => date('N', time())])->row();
   }
 
+  public function getRuangNonAktif()
+  {
+    $keterangan = $this->db->get_where($this->_table, ['id_keterangan' => 1])->result();
+
+    if(count($keterangan) > 0){
+      return [
+        'validasi' => 1,
+        'data' => $keterangan
+      ];
+    }else{
+      return ['validasi'=>0];
+    }
+  }
+
   function getAll()
   {
     $tersedia = $this->db->get_where($this->_table, ['id_status' => 1])->result();
     $sedangDigunakan = $this->db->get_where($this->_table, ['id_status' => 3])->result();
-
+  
     if (count($tersedia) > 0) {
-      return $tersedia;
-    } else if (count($sedangDigunakan) > 0) {
-      $this->db->select_min('id');
-      $db_sedang = $this->db->get_where('proses_peminjaman', ['id_status' => 3, 'status_booking' => 2])->row_array();
-      $db_data = $this->db->get_where('proses_peminjaman', ['id' => $db_sedang['id']])->row_array()['id_ruang'];
+        return $tersedia;
+      } else if (count($sedangDigunakan) > 0) {
+        $this->db->select_min('id');
+        $db_sedang = $this->db->get_where('proses_peminjaman', ['id_status' => 3, 'status_booking' => 2])->row_array();
+        $db_data = $this->db->get_where('proses_peminjaman', ['id' => $db_sedang['id']])->row_array()['id_ruang'];
 
-      if ($db_sedang['id'] != null) {
-        return $this->db->get_where($this->_table, ['id' => $db_data])->result();
-      } else {
-        $db_proses = $this->db->get_where('proses_peminjaman', ['id_status' => 5])->result();
-
-        if (count($db_proses) > 0) {
-          return $db_proses;
+        if ($db_sedang['id'] != null) {
+          return $this->db->get_where($this->_table, ['id' => $db_data])->result();
         } else {
-          // tampilkan semua tabel yg statusnya dipinjam/dipesan
-          return $sedangDigunakan;
-        }
-      }
-    } else {
-      // jika tinggal proses
-      $this->db->select_min('id');
-      $db_sedang = $this->db->get_where('proses_peminjaman', ['id_status' => 5])->row_array()['id'];
-      $db_data = $this->db->get_where('proses_peminjaman', ['id' => $db_sedang])->result();
+          $db_proses = $this->db->get_where('proses_peminjaman', ['id_status' => 5])->result();
 
-      return $db_data;
-    }
+          if (count($db_proses) > 0) {
+            return $db_proses;
+          } else {
+            // tampilkan semua tabel yg statusnya dipinjam/dipesan
+            return $sedangDigunakan;
+          }
+        }
+      } else {
+        // jika tinggal proses
+        $this->db->select_min('id');
+        $db_sedang = $this->db->get_where('proses_peminjaman', ['id_status' => 5])->row_array()['id'];
+        $db_data = $this->db->get_where('proses_peminjaman', ['id' => $db_sedang])->result();
+
+        return $db_data;
+      }
   }
 
   function getById($id)
@@ -126,6 +153,11 @@ class M_ruang extends CI_Model
     ];
 
     $this->db->update($this->_table, $data, ['id' => $id]);
+  }
+
+  public function OffKeteranganRuang($id)
+  {
+    $this->db->update('tb_ruang', ['id_keterangan'=>0],['id'=> $id]);
   }
 
   public function delete($id)

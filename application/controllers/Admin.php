@@ -22,59 +22,32 @@ class Admin extends CI_Controller
       redirect('auth/loginadmin');
     }
   }
-  public function index($offset = 0)
+
+  // Dashboard Admin
+  public function index()
   {
-    $dataPinjam = $this->db->get('proses_peminjaman');
+    $header['judul'] = 'Dashboard Admin';
+    $header['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
 
-    $config['base_url'] = base_url() . 'admin/histori-peminjaman';
-    $config['total_rows'] = $dataPinjam->num_rows();
-    $config['per_page'] = 10;
+    $data['tb_ruang'] = $this->db->get('tb_ruang')->num_rows();
+    $data['user'] = $this->db->get('user')->num_rows();
+    $data['admin'] = $this->db->get('admin')->num_rows();
+    $data['proses_peminjaman'] = $this->db->get('proses_peminjaman')->num_rows();
+    $data['sedang_digunakan'] = $this->M_pinjam->sedangDigunakan();
+    $data['proses'] = $this->M_pinjam->sedangDigunakan();
 
-    // Config Pagination Bootstrap
-    $config['attributes'] = ['class' => 'page-link'];
-
-    $config['full_tag_open'] = '<ul class="pagination">';
-    $config['full_tag_close'] = '</ul>';
-
-    $config['first_link'] = 'First Page';
-    $config['first_tag_open'] = '<li class="page-item">';
-    $config['first_tag_close'] = '</li>';
-
-    $config['last_link'] = 'Last Page';
-    $config['last_tag_open'] = '<li class="page-item">';
-    $config['last_tag_close'] = '</li>';
-
-    $config['next_link'] = '&raquo';
-    $config['next_tag_open'] = '<li class="page-item">';
-    $config['next_tag_close'] = '</li>';
-
-    $config['prev_link'] = '&laquo';
-    $config['prev_tag_open'] = '<li class="page-item">';
-    $config['prev_tag_close'] = '</li>';
-
-    $config['cur_tag_open'] = '<li class="page-item active"><a href="#" class="page-link">';
-    $config['cur_tag_close'] = '</a></li>';
-
-    $config['num_tag_open'] = '<li class="page-item">';
-    $config['num_tag_close'] = '</li>';
-
-
-    $this->pagination->initialize($config);
-    $data['page'] = $this->pagination->create_links();
-    $data['offset'] = $offset;
-
-    $data['judul'] = 'Halaman Admin';
-    $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
-    $data["proses_peminjaman"] = $this->M_pinjam->getAllHistory($config['per_page'], $offset);
-
-    $this->load->view('templates/admin_header', $data);
+    $this->load->view('templates/admin_header', $header);
     $this->load->view('admin/index', $data);
     $this->load->view('templates/admin_footer');
+    
   }
+
+
+
   // ======================== Ruang =======================
   public function ruang()
   {
-    $data['judul'] = 'Halaman Admin';
+    $data['judul'] = 'Ruang';
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
     $data["tb_ruang"] = $this->M_ruang->getAllruang();
     $data['status_buka'] = $this->M_ruang->getWaktuBuka();
@@ -82,6 +55,13 @@ class Admin extends CI_Controller
     $this->load->view('templates/admin_header', $data);
     $this->load->view('admin/ruang', $data);
     $this->load->view('templates/admin_footer');
+  }
+
+  public function updateKeterangan()
+  {
+    $this->M_ruang->updateKeterangan();
+    $this->session->set_flashdata('success', 'Keterangan Ruang Berhasil Diubah');
+    redirect('admin/ruang');
   }
 
   public function jadwalRuang()
@@ -106,7 +86,12 @@ class Admin extends CI_Controller
     redirect('admin/jadwal-ruang');
   }
 
-  
+  public function ubahStatusRuang($val)
+  {
+    echo json_encode($this->M_ruang->OffKeteranganRuang($val));
+    
+  }
+
   public function addRuang()
   {
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
@@ -117,7 +102,7 @@ class Admin extends CI_Controller
     $validation = $this->form_validation;
     $validation->set_rules($tb_ruang->rules());
 
-    if ($validation->run()) {
+    if ($validation->run()) {-
       // setting konfigurasi upload
       $config['upload_path']    = './asset/img/ruang/';
       $config['allowed_types']  = 'gif|jpg|png';
@@ -147,10 +132,7 @@ class Admin extends CI_Controller
   {
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
     $data['judul'] = 'Edit Ruang';
-
-
     if (!isset($id)) redirect('admin/ruang');
-
     $tb_ruang = $this->M_ruang;
     $validation = $this->form_validation;
     $validation->set_rules($tb_ruang->rules());
@@ -194,6 +176,55 @@ class Admin extends CI_Controller
     redirect('admin/ruang');
   }
 
+  // riwayat Peminjaman Ruang
+  public function History($offset = 0)
+  {
+    $dataPinjam = $this->db->get('proses_peminjaman');
+
+    $config['base_url'] = base_url() . 'admin/histori-peminjaman';
+    $config['total_rows'] = $dataPinjam->num_rows();
+    $config['per_page'] = 10;
+
+    // Config Pagination Bootstrap
+    $config['attributes'] = ['class' => 'page-link'];
+
+    $config['full_tag_open'] = '<ul class="pagination">';
+    $config['full_tag_close'] = '</ul>';
+
+    $config['first_link'] = 'First Page';
+    $config['first_tag_open'] = '<li class="page-item">';
+    $config['first_tag_close'] = '</li>';
+
+    $config['last_link'] = 'Last Page';
+    $config['last_tag_open'] = '<li class="page-item">';
+    $config['last_tag_close'] = '</li>';
+
+    $config['next_link'] = '&raquo';
+    $config['next_tag_open'] = '<li class="page-item">';
+    $config['next_tag_close'] = '</li>';
+
+    $config['prev_link'] = '&laquo';
+    $config['prev_tag_open'] = '<li class="page-item">';
+    $config['prev_tag_close'] = '</li>';
+
+    $config['cur_tag_open'] = '<li class="page-item active"><a href="#" class="page-link">';
+    $config['cur_tag_close'] = '</a></li>';
+
+    $config['num_tag_open'] = '<li class="page-item">';
+    $config['num_tag_close'] = '</li>';
+
+    $this->pagination->initialize($config);
+    $data['page'] = $this->pagination->create_links();
+    $data['offset'] = $offset;
+    $data['judul'] = 'Halaman Admin';
+    $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
+    $data["proses_peminjaman"] = $this->M_pinjam->getAllHistory($config['per_page'], $offset);
+
+    $this->load->view('templates/admin_header', $data);
+    $this->load->view('admin/history', $data);
+    $this->load->view('templates/admin_footer');
+  }
+
 
   // ==================================================================================================
   public function admin()
@@ -210,8 +241,6 @@ class Admin extends CI_Controller
       redirect('blocked/tolak');
     }
     
-    
-
   }
 
   function addAdmin()
@@ -274,3 +303,13 @@ class Admin extends CI_Controller
     redirect('admin/mahasiswa');
   }
 }
+
+  // master admin :
+  //  nip : 12345
+  //  pass : 12345
+
+  //  admin biasa :
+  //  nip : 1010
+  //  pass : admin123
+
+

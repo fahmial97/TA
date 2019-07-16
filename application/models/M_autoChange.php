@@ -10,9 +10,10 @@ class M_autoChange extends CI_Model
         $this->_autoChangeSedang();
         $this->_autoChangeUserPesan();
         $this->_autoCloseRuang();
-        // $this->_autoChangeStatusPeminjaman();
+        $this->_autoChangeStatusPeminjaman();
     }
 
+    // otomatis mengubah status proses menjadi cancel jika >10 menit
     private function _autoChangeProses()
     {
         $data = $this->db->get_where('proses_peminjaman', ['id_status' => 5])->result_array();
@@ -28,6 +29,7 @@ class M_autoChange extends CI_Model
         }
     }
 
+// mengubah status sedang digunakan menjadi selesai, kemudian menjadi tersedia
     private function _autoChangeSedang()
     {
         $data = $this->db->get_where('proses_peminjaman', ['id_status' => 3])->result_array();
@@ -54,6 +56,7 @@ class M_autoChange extends CI_Model
         }
     }
 
+    // 
     private function _autoChangeUserPesan()
     {
         $this->db->select_min('id');
@@ -84,6 +87,7 @@ class M_autoChange extends CI_Model
         }
     }
 
+// otomatis tutup/buka ruang perhari
     private function _autoCloseRuang()
     {
         $data = $this->db->get_where('waktu_ruang',['id'=>date('N',time())])->row_array();
@@ -92,7 +96,7 @@ class M_autoChange extends CI_Model
         $waktuTutup = $data['jam_tutup'];
 
         if($waktuBuka < date("H:i",time()) && $waktuTutup > date("H:i",time()) ){
-            $waktuPlus = date('H:i', strtotime($waktuBuka) + 180);
+            $waktuPlus = date('H:i', strtotime($waktuBuka) + 180); //waktu buka + 3 menit
 
             $dataRuang = $this->db->get('tb_ruang')->result_array();
 
@@ -124,6 +128,8 @@ class M_autoChange extends CI_Model
         } 
     }
 
+
+// mengubah status peminjaman bagi user setiap jam 1 pagi
     public function _autoChangeStatusPeminjaman()
     {  
         if(date('H:i',time()) > '01:00' && date('H:i',time()) < '01:05' ){

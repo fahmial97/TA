@@ -36,9 +36,6 @@
         <?= ucfirst($status_buka->status); ?> ( <?= $status_buka->jam_buka; ?> s/d <?= $status_buka->jam_tutup; ?> )
       </h5>
     </div>
-    <!-- <div class="col-6 text-right">
-      <h5 class="text-gray-800">24 Mei 2019 (Cuti Bersama) </h5>
-    </div> -->
   </div>
 
   <table class="table table-responsive-sm ">
@@ -48,12 +45,8 @@
         <th>#</th>
         <th>Gambar</th>
         <th>Nomor ruang</th>
-        <th>Status</th>
-        <th class="text-center">Action</th>
-        <th class="text-center">edit</th>
-
-
-
+        <th>Action</th>
+        <th colspan="2">Status</th>
       </tr>
     </thead>
     <tbody class="table table-hover">
@@ -67,9 +60,9 @@
           <td width="150">
             <?= $r->no_ruang ?>
           </td>
-          <td>
-            <div class="mb-2 btn btn-sm btn-<?= statusHelpers($r->id_status)['style'] ?>"><?= statusHelpers($r->id_status)['status'] ?></div>
-          </td>
+          <!-- <td>
+                  <div class="mb-2 btn btn-sm btn-<?= statusHelpers($r->id_status)['style'] ?>"><?= statusHelpers($r->id_status)['status'] ?></div>
+                </td> -->
           <td width="250">
             <a href="<?= site_url('admin/edit-ruang/' . encrypt_url($r->id)); ?>" class="btn btn-small text-success"><i class="fas fa-edit"></i> Edit
             </a>
@@ -78,17 +71,20 @@
             </a>
           </td>
           <td>
-            <select class="custom-select" name="status" id="status">
-              <?php foreach ($status as $s) : ?>
-                <?php if ($r->id_status == $s->id) : ?>
-                  <option value="<?= $s->id ?>" selected><?= $s->nama_status ?></option>
-                <?php else : ?>
-                  <option value="<?= $s->id ?>"><?= $s->nama_status ?></option>
-                <?php endif; ?>
-              <?php endforeach; ?>
-            </select>
+            <?php if ($r->id_keterangan == 1) : ?>
+              <input type="checkbox" class="cbx" id="cbx<?= $r->id ?>" style="display:none" value="<?= $r->id ?>" checked />
+              <label for="cbx<?= $r->id ?>" class="toggleRuang"><span></span></label>
+            <?php else : ?>
+              <input type="checkbox" class="cbx" id="cbx<?= $r->id ?>" style="display:none" value="<?= $r->id ?>" />
+              <label for="cbx<?= $r->id ?>" class="toggleRuang"><span></span></label>
+            <?php endif; ?>
           </td>
-
+          <td>
+            <?php if ($r->id_keterangan == 1) : ?>
+              <i class=" fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="<?= $r->keterangan  ?>"></i>
+            <?php else : ?>
+            <?php endif; ?>
+          </td>
         </tr>
       <?php endforeach; ?>
 
@@ -96,6 +92,31 @@
   </table>
 </div>
 <!-- /.container-fluid -->
+<!-- Modal -->
+<div class="modal fade" id="modalKeteranganRuang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Keterangan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="<?= base_url('admin/updateKeterangan'); ?>" method="post">
+          <input type="hidden" name="idRuang" id="idRuangKeterangan">
+          <div class="input-group">
+            <input class="form-control" name="input_keterangan" required>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary closeBtnCheck" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Simpan Data</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   function deleteConfirm(url) {

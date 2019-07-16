@@ -77,19 +77,44 @@ class Profile extends CI_Controller
 
   public function ubahPassword()
   {
-    $data['judul'] = 'My Profile';
+    $data['judul'] = 'Ubah Password';
     $data['user'] = $this->Profile_model->getAll();
     $data['user'] = $this->db->get_where('user', ['nim' => $this->session->userdata('nim')])->row_array();
 
-    $this->form_validation->set_rules('password_ini', 'Password_ini', 'reuqired|trim');
-    $this->form_validation->set_rules('new_password1', 'New Password', 'reuqired|trim|min_length[5]|matches[new_password2]');
-    $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'reuqired|trim|min_length[5]|matches[new_password1]');
+    $this->form_validation->set_rules('password_ini', 'Password_ini', 'required|trim');
+    $this->form_validation->set_rules('new_password1', 'Password Baru', 'required|trim|min_length[5]|matches[new_password2]');
+    $this->form_validation->set_rules('new_password2', 'Ulangi Password ', 'required|trim|min_length[5]|matches[new_password1]');
 
 
     if ($this->form_validation->run() == false) {
       $this->load->view('templates/header', $data);
       $this->load->view('profile/password', $data);
       $this->load->view('templates/footer');
+    } else {
+      $password_ini = $this->input->post('password_ini');
+      $new_password = $this->input->post('new_password1');
+
+      if(!password_verify($password_ini, $data['user']['password'])){
+        // jika password lama salah
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password saat ini salah </div> ');
+        redirect('profile/ubahPassword'); 
+        } else {
+          if ($password_ini == $new_password) {
+            // jika password lama sama dgn baru
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password baru tidak boleh sama dengan password lama  </div>');
+            redirect('profile/ubahPassword');
+        } else {
+          //password sudah ok
+          $pasword_hash = password_hash($new_password, PASSWORD_DEFAULT);
+
+          $this->db->set('password', $pasword_hash);
+          $this->db->where('nim', $this->session->userdata('nim'));
+          $this->db->update('user');
+
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Password berhasil diubah  </div>');
+          redirect('profile/ubahPassword');
+        }
+      }
     }
   }
 
@@ -155,9 +180,6 @@ class Profile extends CI_Controller
     }else{
       redirect('profile/edit_admin');
     }
-
-    // $data["admin"] = $admin->getById($id);
-    // if (!$data["admin"]) show_404();
   }
 
 

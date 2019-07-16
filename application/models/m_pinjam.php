@@ -6,6 +6,22 @@ class m_pinjam extends CI_Model
 
   private $_table = "proses_peminjaman";
 
+
+  public function sedangDigunakan()
+  {
+    $this->db->where('id_status', 3);
+    $data = $this->db->get($this->_table)->num_rows();
+
+    return $data;
+  }
+  public function proses()
+  {
+    $this->db->where('id_status', 5);
+    $data = $this->db->get($this->_table)->num_rows();
+
+    return $data;
+  }
+
   public function getAllPinjam()
   {
     $this->db->order_by('id', 'desc');
@@ -91,7 +107,6 @@ class m_pinjam extends CI_Model
       'no_telpon_pinjam' => $nomer,
       'status_booking' => 2
     ];
-
     $this->db->update('tb_ruang', ['id_status' => 5], ['id' => $tb_ruang]);
     $this->db->insert('proses_peminjaman', $data);
   }

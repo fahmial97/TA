@@ -25,7 +25,7 @@
 								</div>
 							</div>
 
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<label for="status">Status</label>
 								<select class="custom-select" name="status" id="status">
 									<?php foreach ($status as $s): ?>
@@ -36,19 +36,14 @@
 									<?php endif; ?>
 									<?php endforeach; ?>
 								</select>
-
 								<?= form_error('status') ?>
-							</div>
+							</div> -->
 
               <div class="text-right">
                 <input class="btn btn-success" type="submit" name="btn" value="Save" />
               </div>
 						</form>
 
-					</div>
-
-					<div class="card-footer small text-muted">
-						* required fields
 					</div>
 
 </div>
