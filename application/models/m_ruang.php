@@ -23,6 +23,14 @@ class M_ruang extends CI_Model
   }
 
 
+  public function tersedia()
+  {
+    $this->db->where('id_status', 1);
+    $data = $this->db->get($this->_table)->num_rows();
+
+    return $data;
+  }
+
   function getALLruang()
   {
     return $this->db->get_where($this->_table)->result();
@@ -84,8 +92,8 @@ class M_ruang extends CI_Model
 
   function getAll()
   {
-    $tersedia = $this->db->get_where($this->_table, ['id_status' => 1])->result();
-    $sedangDigunakan = $this->db->get_where($this->_table, ['id_status' => 3])->result();
+    $tersedia = $this->db->get_where($this->_table, ['id_status' => 1, 'id_keterangan' => 0])->result();
+    $sedangDigunakan = $this->db->get_where($this->_table, ['id_status' => 3, 'id_keterangan' => 0])->result();
   
     if (count($tersedia) > 0) {
         return $tersedia;
@@ -97,7 +105,7 @@ class M_ruang extends CI_Model
         if ($db_sedang['id'] != null) {
           return $this->db->get_where($this->_table, ['id' => $db_data])->result();
         } else {
-          $db_proses = $this->db->get_where('proses_peminjaman', ['id_status' => 5])->result();
+          $db_proses = $this->db->get_where('proses_peminjaman', ['id_status' => 5 ])->result();
 
           if (count($db_proses) > 0) {
             return $db_proses;

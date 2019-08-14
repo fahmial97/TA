@@ -34,7 +34,7 @@ class Admin extends CI_Controller
     $data['admin'] = $this->db->get('admin')->num_rows();
     $data['proses_peminjaman'] = $this->db->get('proses_peminjaman')->num_rows();
     $data['sedang_digunakan'] = $this->M_pinjam->sedangDigunakan();
-    $data['proses'] = $this->M_pinjam->sedangDigunakan();
+    $data['proses'] = $this->M_pinjam->proses();
 
     $this->load->view('templates/admin_header', $header);
     $this->load->view('admin/index', $data);

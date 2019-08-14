@@ -14,27 +14,27 @@
                                         <form action="<?= base_url('profile/ubahPasswordAdmin') ?>" method="post">
 
                                             <div class="form-group row">
-                                                <label for="password_ini" class="col-4 col-form-label">Password saat ini</label>
+                                                <label for="password_lama" class="col-4 col-form-label">Password saat ini</label>
                                                 <div class="col-8">
-                                                    <input type="password" class="form-control" id="password_ini" name="password_ini">
-                                                    <?= form_error('password_ini', '<small class="text-danger">', '</small>'); ?>
+                                                    <input type="password" class="form-control" id="password_lama" name="password_lama">
+                                                    <?= form_error('password_lama', '<small class="text-danger">', '</small>'); ?>
 
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
-                                                <label for="new_password1" class="col-4 col-form-label">Password Baru</label>
+                                                <label for="password_baru1" class="col-4 col-form-label">Password Baru</label>
                                                 <div class="col-8">
-                                                    <input type="password" class="form-control" id="new_password1" name="new_password1">
+                                                    <input type="password" class="form-control" id="password_baru1" name="password_baru1">
                                                     <?= form_error('new_password1', '<small class="text-danger">', '</small>'); ?>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
-                                                <label for="new_password2" class="col-4 col-form-label">Ulangi Password</label>
+                                                <label for="password_baru2" class="col-4 col-form-label">Ulangi Password</label>
                                                 <div class="col-8">
-                                                    <input type="password" class="form-control" id="new_password2" name="new_password2">
-                                                    <?= form_error('new_password2', '<small class="text-danger">', '</small>'); ?>
+                                                    <input type="password" class="form-control" id="password_baru2" name="password_baru2">
+                                                    <?= form_error('password_baru2', '<small class="text-danger">', '</small>'); ?>
                                                 </div>
 
                                             </div>

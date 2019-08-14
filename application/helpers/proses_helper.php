@@ -55,3 +55,15 @@ function getHariIndonesia()
 {
   return ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 }
+
+function jumlah_ruang()
+{
+  $ci = get_instance();
+
+  $ci->db->where('id_status', 2);
+  $ci->db->or_where('id_status', 3);
+  $ci->db->or_where('id_status', 5);
+  $data = $ci->db->get('proses_peminjaman')->num_rows();
+
+  return $data;  
+}

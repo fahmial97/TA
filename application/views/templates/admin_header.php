@@ -23,7 +23,6 @@
 </head>
 
 <body id="page-top">
-
   <!-- Page Wrapper -->
   <div id="wrapper">
     <!-- Sidebar -->
@@ -46,7 +45,9 @@
                           } ?>">
         <a class="nav-link" href="<?= base_url('admin/validasi'); ?>">
           <i class="fas fa-vote-yea"></i>
-          <span>Peminjaman Ruang</span></a>
+          <span class="titik_notif <?php if (jumlah_ruang() > 0) {
+                                      echo 'active';
+                                    } ?>">Peminjaman Ruang</span></a>
       </li>
 
       <li class="nav-item <?php if ($this->uri->segment(2) == 'ruang') {
@@ -169,6 +170,10 @@
                 <a class="dropdown-item" href="<?= base_url('profile/admin'); ?>">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
+                </a>
+                <a class="dropdown-item" href="<?= base_url('profile/ubahPasswordAdmin'); ?>">
+                  <i class="fas fa-lock-open fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Ubah Password
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="<?= base_url('auth/logoutAdmin'); ?>" data-toggle="modal" data-target="#logoutModal">

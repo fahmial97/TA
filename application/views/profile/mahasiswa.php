@@ -14,12 +14,12 @@
 
   <!-- Page Heading -->
   <h1 class="h3 mb-4 text-gray-800">Profile</h1>
-  <div class="card mb-3" style="max-width:1000px">
+  <div class="card mb-3" >
     <div class="row no-gutters">
-      <div class="col-4">
+      <div class="col-md-4 text-center-sm">
         <img src="<?= base_url('asset/img/profile/') . $user['image']; ?>" class="card-img" style="width:300px;">
       </div>
-      <div class="col-8">
+      <div class="col-md-8">
         <div class="card-body">
           <table class="table table-responsive-sm">
             <tr>

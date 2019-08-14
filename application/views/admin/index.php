@@ -42,7 +42,7 @@
 
     <!-- histori-peminjaman -->
     <div class="col-md-4 col-12  p-3">
-      <a href="<?= base_url('admin/histori-peminjaman') ?>" style="text-decoration:none">
+      <a href="<?= base_url('admin/validasi') ?>" style="text-decoration:none">
         <div class="card border-left-info shadow-sm h-100 py-2">
           <div class="card-body">
             <div class="row no-gutters align-items-center">

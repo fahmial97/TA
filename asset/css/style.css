@@ -222,3 +222,20 @@ hr.stripe {
 }
 
 /* Rsponsive */
+
+.titik_notif::after{
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: #c52525;
+  border-radius: 1em;
+  position: absolute;
+  top: 60%;
+  right: 20px;
+  transform: translateY(-70%);
+  display: none;
+}
+
+.titik_notif.active::after{
+  display: block;
+}

@@ -7,6 +7,8 @@ class m_pinjam extends CI_Model
   private $_table = "proses_peminjaman";
 
 
+  
+
   public function sedangDigunakan()
   {
     $this->db->where('id_status', 3);
@@ -57,7 +59,7 @@ class m_pinjam extends CI_Model
     return ($data != null) ? 1 : 0;
   }
 
-  public function statusRuang()
+  public function statusRuang() 
   {
     $id = $this->input->post('id');
     return $this->db->get_where('tb_ruang', ['id' => $id])->row();

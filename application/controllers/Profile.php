@@ -189,15 +189,41 @@ class Profile extends CI_Controller
     $data['admin'] = $this->M_profileAdmin->getAll();
     $data['admin'] = $this->db->get_where('admin', ['nip' => $this->session->userdata('nip')])->row_array();
 
-    $this->form_validation->set_rules('password_ini', 'Password_ini', 'reuqired|trim');
-    $this->form_validation->set_rules('new_password1', 'New Password', 'reuqired|trim|min_length[5]|matches[new_password2]');
-    $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'reuqired|trim|min_length[5]|matches[new_password1]');
+    $this->form_validation->set_rules('password_lama', 'Password Lama', 'required|trim');
+    $this->form_validation->set_rules('password_baru1', 'Password Baru', 'required|trim|min_length[5]|matches[password_baru2]');
+    $this->form_validation->set_rules('password_baru2', 'Confirm New Password', 'required|trim|min_length[5]|matches[password_baru1]');
 
 
     if ($this->form_validation->run() == false) {
-      $this->load->view('templates/header', $data);
-      $this->load->view('profile/passwordAdmin', $data);
-      $this->load->view('templates/footer');
+      $this->load->view('templates/admin_header', $data);
+      $this->load->view('profile/admin_password', $data);
+      $this->load->view('templates/admin_footer');
+    } else {
+      $password_lama = $this->input->post('password_lama');
+      $password_baru = $this->input->post('password_baru1');
+
+      if (!password_verify($password_lama, $data['admin']['password'])) {
+        // jika password lama salah
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password saat ini salah </div> ');
+        redirect('profile/ubahPasswordAdmin');
+      } else {
+        if ($password_lama == $password_baru) {
+          // jika password lama sama dgn baru
+          $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password baru tidak boleh sama dengan password lama  </div>');
+          redirect('profile/ubahPasswordAdmin');
+        } else {
+          //password sudah ok
+          $pasword_hash = password_hash($password_baru, PASSWORD_DEFAULT);
+
+          $this->db->set('password', $pasword_hash);
+          $this->db->where('nip', $this->session->userdata('nip'));
+          $this->db->update('admin');
+
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Password berhasil diubah  </div>');
+          redirect('profile/ubahPasswordAdmin');
+        }
+      }
+      
     }
   }
 }

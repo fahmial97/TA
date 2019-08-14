@@ -6,11 +6,11 @@ class M_autoChange extends CI_Model
 
     public function prosesData()
     {
-        $this->_autoChangeProses();
-        $this->_autoChangeSedang();
-        $this->_autoChangeUserPesan();
-        $this->_autoCloseRuang();
-        $this->_autoChangeStatusPeminjaman();
+        $this->_autoChangeProses(); // otomatis mengubah status proses menjadi cancel jika >10 menit
+        $this->_autoChangeSedang(); // mengubah status sedang digunakan menjadi selesai, kemudian menjadi tersedia
+        $this->_autoChangeUserPesan(); // mengubah status peminjaman bagi user setiap jam 1 pagi
+        $this->_autoCloseRuang(); // otomatis tutup/buka ruang perhari
+        $this->_autoChangeStatusPeminjaman(); // mengubah status peminjaman bagi user setiap jam 1 pagi
     }
 
     // otomatis mengubah status proses menjadi cancel jika >10 menit

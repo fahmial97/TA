@@ -39,9 +39,14 @@
           <hr class="mt-0 mb-1"></a>
         <?php
         if ($this->session->userdata('nim')) {
+
+         echo '<a class="nav-link" href="' . base_url('profile/ubahPassword') . '">
+                  <i class="fas fa-lock-open fa-fw pr-5"></i>Ubah Password<hr class="mt-0 mb-1"></a>
+                  ';  
           echo '<a class="nav-link" href="' . base_url('auth/logout') . '" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-fw pr-5"></i>Logout<hr class="mt-0 mb-1"></a>
                   ';
+           
         } else {
           echo '<a class="nav-link" href="' . base_url('auth') . '"><i class="fas fa-sign-in-alt fa-fw pr-5"></i>Login </a>';
         }
